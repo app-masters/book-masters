@@ -9,6 +9,13 @@ import styled from "styled-components";
 import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import { TextField } from "@material-ui/core";
+import moment from "moment";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 
 export const Styles = styled.div`
   .MuiContainer-root {
@@ -52,7 +59,7 @@ export const Styles = styled.div`
     border: 1px solid #0ab6ff;
     color: #0ab6ff;
     padding: 5px 15px;
-    margin: 5px 5px 12px 5px;
+    margin: 50px 5px 20px 5px;
 
     &:hover {
       background-color: #0ab6ff;
@@ -79,29 +86,56 @@ export const Styles = styled.div`
     font-size: 15px;
     color: #6c757d;
   }
+  .btn-form {
+    border: 1px solid #0ab6ff;
+    color: #0ab6ff;
+    padding: 11px 15px;
+    margin: 0px 5px 10px 5px;
+  }
+
+  .MuiOutlinedInput-input {
+    /* imput */
+    padding: 15px 14px;
+  }
 `;
 
 export default class Product extends Component {
   id = 0;
 
+  date = moment().format("DD[/]MM [às] h:mm");
+
   handleSubmit = (event) => {
     event.preventDefault();
     const nome = event.target.elements.nome.value;
-    const usuario = JSON.stringify({ nome: nome, status: true });
-    localStorage.setItem(`@bookStatus${this.id}`, usuario);
+    const usuario = JSON.stringify({
+      nome: nome,
+      status: true,
+      dates: this.date,
+    });
+    localStorage.setItem(`@bookStatus/Book ID: ${this.id}`, usuario);
     window.location.reload();
   };
 
   handleLogout = () => {
-    localStorage.removeItem(`@bookStatus${this.id}`);
+    localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
     window.location.reload();
   };
 
   render() {
+    moment.locale("pt-BR");
+    function myFunction() {
+      var x = document.getElementById("myDIV");
+      if (x.style.display !== "none") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
     const { details } = this.props.location.state;
     this.id = details.id;
-    var user = JSON.parse(localStorage.getItem(`@bookStatus${details.id}`));
-    console.log(details);
+    var user = JSON.parse(
+      localStorage.getItem(`@bookStatus/Book ID: ${details.id}`)
+    );
 
     if (user !== null) {
       return (
@@ -133,20 +167,39 @@ export default class Product extends Component {
                 </Typography>
               </CardContent>
               <Box display="flex" justifyContent="center">
-                <Button onClick={this.handleSubmit} variant="outlined">
-                  Alugar
-                </Button>
-                <Button onClick={this.handleLogout} variant="outlined">
+                <Typography className="descriptionTitle" variant="h2">
+                  Livro Alugado. Deseja devolvevr?
+                </Typography>
+                <Button
+                  className="btn-devolver"
+                  onClick={this.handleLogout}
+                  variant="outlined"
+                >
                   Devolver
                 </Button>
               </Box>
             </Card>
-            <Typography className="descriptionTitle" variant="h2">
-              Livro Alugado. Deseja devolvevr?
-            </Typography>
-            <Button onClick={this.handleLogout} variant="outlined">
-              Devolver
-            </Button>
+          </Container>
+          <Container className="cardGrid">
+            <Card className="card">
+              <Typography variant="h5">Livro alugado por:</Typography>
+              <CardContent className="cardContent">
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Nome:</TableCell>
+                      <TableCell>Data: </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>{user.nome}</TableCell>
+                      <TableCell>{user.dates}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
           </Container>
         </Styles>
       );
@@ -180,23 +233,31 @@ export default class Product extends Component {
               </Typography>
             </CardContent>
             <Box display="flex" justifyContent="center">
-              <Button onClick={this.handleSubmit} variant="outlined">
+              <Button onClick={myFunction} variant="outlined">
                 Alugar
               </Button>
             </Box>
+            <form
+              id="myDIV"
+              style={{ display: "none" }}
+              onSubmit={this.handleSubmit}
+            >
+              <Typography>Deseja alugar esse livro?</Typography>
+              <Typography>Insira seu nome:</Typography>
+              <TextField
+                id="standard-secondary"
+                label="Seu nome"
+                variant="outlined"
+                type="text"
+                name="nome"
+                required
+              />
+              <Button className="btn-form" type="submit" variant="outlined">
+                Pegar
+              </Button>
+            </form>
           </Card>
         </Container>
-        <form onSubmit={this.handleSubmit}>
-          <p>Deseja alugar esse livro?</p>
-          <p>Insira seu nome:</p>
-          <input
-            type="text"
-            name="nome"
-            placeholder="Nome de usuário"
-            required
-          />
-          <button type="submit">Pegar</button>
-        </form>
       </Styles>
     );
   }

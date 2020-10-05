@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Biblioteca Virtual
 
-## Available Scripts
+**Por:** [Igor Westermann Lima ](https://github.com/IgorWestermann) < i.westma@gmail.com >. 
 
-In the project directory, you can run:
+## 1. Sumário
 
-### `yarn start`
+- [1. Sumário](#1-sumário)
+- [2. O Projeto](#2-funcionando)
+- [3. O Design](#3-0-design)
+     - [3.1. Feed](#31-feed)
+- [4. Dependências](#5-dependências)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 2. Sobre o projeto
+O projeto consiste na criação de um biblioteca virtual como desafio do processo de seleção de estágio da empresa [App Masters](https://appmasters.io/en/)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `yarn test`
+## 3. Inicialização
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Para inicializar o projeto primeiro, clone o repositório atraves do comando no terminal 
+`git clone https://github.com/IgorWestermann/DesafioAppMasters.git`
+`cd desafio-app-masters`
+E instale as dependencias.
+   - `npm i` para se estiver usando o NPM.
+   - `yarn i` para Yarn.
+Após instalar as dependências execute o projeto usando:
+   - `npm start` para se estiver usando o NPM.
+   - `yarn start` para Yarn.
 
-### `yarn build`
+## 4. O Design
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para o design da aplicação, decidi utilizar padrões simples mas moderno,utilizando algumas cores referentes a empresa [App Masters](https://appmasters.io/en/).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 5. Dependências 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para execução do projeto, utilizei as seguintes dependência: 
+utilizei a biblioteca visual Matirial-UI, por uma questão de afinidade.  
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### 5.1. [Material-UI](https://material-ui.com/)
+Utilizei a biblioteca visual por uma questão de afinidade.  
+#### 5.2. [React Router Dom](https://reactrouter.com/)
+O React Router Dom é uma das bibliotecas mais utilizadas para configurar navegação. 
+#### 5.3. [Styled Components](https://styled-components.com/)
+O Styled Components facilita muito na hora de criar e estilizar um componente, por isso foi escolhido.  
+#### 5.4. [Moment.js](https://momentjs.com/)
+Para receber a data utilizei essa biblioteca.

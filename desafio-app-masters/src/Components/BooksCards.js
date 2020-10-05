@@ -42,11 +42,19 @@ export const Styles = styled.div`
     border: 1px solid #0ab6ff;
     color: #0ab6ff;
     padding: 5px 15px;
-    margin-bottom: 12px;
+    margin: 5px 5px 12px 5px;
+    text-decoration: none;
 
     &:hover {
       background-color: #0ab6ff;
       color: #fff;
+      .MuiButton-label a {
+        color: #fff;
+      }
+    }
+    .MuiButton-label a {
+      text-decoration: none;
+      color: #0ab6ff;
     }
   }
 `;
