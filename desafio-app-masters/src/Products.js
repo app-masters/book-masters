@@ -76,20 +76,81 @@ export const Styles = styled.div`
   .description {
     font-weight: 300;
     font-style: normal;
-    font-size: 13px;
+    font-size: 15px;
     color: #6c757d;
   }
 `;
 
 export default class Product extends Component {
-  render() {
-    function handleClick(e) {
-      e.preventDefault();
-      console.log("O link foi clicado.");
-    }
+  id = 0;
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const nome = event.target.elements.nome.value;
+    const usuario = JSON.stringify({ nome: nome, status: true });
+    localStorage.setItem(`@bookStatus${this.id}`, usuario);
+    window.location.reload();
+  };
+
+  handleLogout = () => {
+    localStorage.removeItem(`@bookStatus${this.id}`);
+    window.location.reload();
+  };
+
+  render() {
     const { details } = this.props.location.state;
+    this.id = details.id;
+    var user = JSON.parse(localStorage.getItem(`@bookStatus${details.id}`));
     console.log(details);
+
+    if (user !== null) {
+      return (
+        <Styles>
+          <Container className="cardGrid">
+            <Button>
+              <Link to="/">
+                <ArrowBackIosIcon />
+              </Link>
+            </Button>
+            <Card className="card">
+              <CardMedia
+                style={{ paddingTop: "10px" }}
+                component="img"
+                className="cardMedia"
+                image={details.img}
+                title="Image title"
+              />
+              <CardContent className="cardContent">
+                <Typography gutterBottom variant="h5" component="h2">
+                  {details.name}
+                </Typography>
+                <Typography>{details.autor}</Typography>
+                <Typography className="descriptionTitle" variant="h2">
+                  Descrição
+                </Typography>
+                <Typography className="description">
+                  {details.description}
+                </Typography>
+              </CardContent>
+              <Box display="flex" justifyContent="center">
+                <Button onClick={this.handleSubmit} variant="outlined">
+                  Alugar
+                </Button>
+                <Button onClick={this.handleLogout} variant="outlined">
+                  Devolver
+                </Button>
+              </Box>
+            </Card>
+            <Typography className="descriptionTitle" variant="h2">
+              Livro Alugado. Deseja devolvevr?
+            </Typography>
+            <Button onClick={this.handleLogout} variant="outlined">
+              Devolver
+            </Button>
+          </Container>
+        </Styles>
+      );
+    }
     return (
       <Styles>
         <Container className="cardGrid">
@@ -111,7 +172,6 @@ export default class Product extends Component {
                 {details.name}
               </Typography>
               <Typography>{details.autor}</Typography>
-
               <Typography className="descriptionTitle" variant="h2">
                 Descrição
               </Typography>
@@ -120,17 +180,23 @@ export default class Product extends Component {
               </Typography>
             </CardContent>
             <Box display="flex" justifyContent="center">
-              <Link to="">
-                <Button onClick={handleClick} variant="outlined">
-                  Alugar
-                </Button>
-              </Link>
-              <Link to="">
-                <Button variant="outlined">Devolver</Button>
-              </Link>
+              <Button onClick={this.handleSubmit} variant="outlined">
+                Alugar
+              </Button>
             </Box>
           </Card>
         </Container>
+        <form onSubmit={this.handleSubmit}>
+          <p>Deseja alugar esse livro?</p>
+          <p>Insira seu nome:</p>
+          <input
+            type="text"
+            name="nome"
+            placeholder="Nome de usuário"
+            required
+          />
+          <button type="submit">Pegar</button>
+        </form>
       </Styles>
     );
   }

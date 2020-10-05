@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
-import { Box, Grid } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 
 export const Styles = styled.div`
@@ -82,6 +82,7 @@ class BookCard extends Component {
                   pathname: `/products/${this.props.book.id}`,
                   state: {
                     details: {
+                      id: this.props.book.id,
                       name: this.props.book.name,
                       autor: this.props.book.autor,
                       description: this.props.book.description,
