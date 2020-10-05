@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "@material-ui/core";
 
 export const Styles = styled.div`
   .footer {
@@ -21,7 +22,7 @@ export const Footer = () => (
     <footer className="footer">
       <Container fluid>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          App Masters
         </Typography>
         <Typography
           variant="subtitle1"
@@ -29,7 +30,8 @@ export const Footer = () => (
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Para mais informações, acesse nosso
+          <Link href="https://appmasters.io/en/"> site!</Link>
         </Typography>
       </Container>
     </footer>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Components/Navbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Home from "./Home";
+import Routes from "./Routes";
 import { Footer } from "./Components/Footer";
 
 class App extends Component {
@@ -10,7 +10,7 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         <Navbar />
-        <Home />
+        <Routes />
         <Footer />
       </React.Fragment>
     );

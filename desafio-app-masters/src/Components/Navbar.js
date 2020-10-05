@@ -6,22 +6,23 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import HomeIcon from "@material-ui/icons/Home";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    paddingBottom: "1px",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -37,10 +38,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: drawerWidth,
     },
   },
+  btn: {
+    fontFamily: "Poppins, sans-serif",
+    color: "#ffffff",
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  // necessary for content to be below app bar
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -74,7 +78,7 @@ function ResponsiveDrawer(props) {
         {["Página inicial", "Livros"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {index % 2 === 0 ? <HomeIcon href="/" /> : <MenuBookIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -82,8 +86,6 @@ function ResponsiveDrawer(props) {
       </List>
     </div>
   );
-
-  const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -102,12 +104,11 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Button className={classes.btn} href="/">
             Biblioteca Virtual App Masters
-          </Typography>
+          </Button>
         </Toolbar>
       </AppBar>
-      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Hidden smUp implementation="css">
         <Drawer
           container={container}
@@ -119,7 +120,7 @@ function ResponsiveDrawer(props) {
             paper: classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
         >
           {drawer}
