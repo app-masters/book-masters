@@ -13,7 +13,7 @@ const BookSchema = new Schema(
             type: String,
         },
         autor: {
-            type: [String],
+            type: Array,
             required: true
         },
         editora: {
@@ -21,7 +21,7 @@ const BookSchema = new Schema(
             required: true,
         },
         tag: {
-            type: [String]
+            type: Array
         },
 
         img: {
