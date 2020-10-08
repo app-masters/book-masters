@@ -55,27 +55,27 @@ export default class BookCardAlugado extends Component {
               <Typography variant="subtitle1" color="textSecondary">
                 {this.props.book.autor}
               </Typography>
+              <Link
+                to={{
+                  pathname: `/products/${this.props.book.id}`,
+                  state: {
+                    details: {
+                      id: this.props.book.id,
+                      name: this.props.book.name,
+                      autor: this.props.book.autor,
+                      description: this.props.book.description,
+                      img: this.props.book.img,
+                    },
+                  },
+                }}
+              >
+                <Button variant="outlined">Ver mais</Button>
+              </Link>
             </CardContent>
           </div>
         </Card>
         <div className="teste">
           <Typography>Livro alugado</Typography>
-          <Link
-            to={{
-              pathname: `/products/${this.props.book.id}`,
-              state: {
-                details: {
-                  id: this.props.book.id,
-                  name: this.props.book.name,
-                  autor: this.props.book.autor,
-                  description: this.props.book.description,
-                  img: this.props.book.img,
-                },
-              },
-            }}
-          >
-            <Button variant="outlined">Ver mais</Button>
-          </Link>
         </div>
       </Styles>
     );

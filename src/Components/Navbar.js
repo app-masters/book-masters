@@ -107,6 +107,12 @@ function ResponsiveDrawer(props) {
           <Button className={classes.btn} href="/">
             Book Masters
           </Button>
+          <Button className={classes.btn} href="/about">
+            Sobre
+          </Button>
+          <Button className={classes.btn} href="/register">
+            Registro
+          </Button>
         </Toolbar>
       </AppBar>
       <Hidden smUp implementation="css">
