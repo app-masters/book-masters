@@ -116,10 +116,8 @@ const RegisterBook = () => {
     const [tags, setTags] = useState("");
     const [coverURL, setCoverURL] = useState("");
     const [year, setYear] = useState("");
-    const [edition, setEdition] = useState("");
-    const [googleBooksInfo, setGoogleBooksInfo] = useState("");
-    const [googleBooksResponse, setGoogleBooksResponse] = useState("");
-    
+	const [edition, setEdition] = useState("");
+	
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleSubmitRegister = useCallback( (e) => {
@@ -141,41 +139,56 @@ const RegisterBook = () => {
             anoPublicacao: year,
             edicao: edition,
             status: false,
-        })
+		})
+		
         console.log(serverBook)
+        //post book
 
     },[ISBN, title, description, authors, editor, tags, coverURL,year, edition]);
 
 
 
     const searchGoogleAPI = useCallback(async () => {
-
-        setOpenDialog(true)
-        console.log("GoogleAPI")
-
-        const book = fetchBookGoogle(ISBN);
         
+		console.log("GoogleAPI")
+		
+        const bookRes = await fetchBookGoogle(ISBN);
+
+        if(bookRes.totalItems > 0){
+			
+			const book = bookRes.items[0]
+			console.log(book)
+			setTitle(book.volumeInfo.title)
+			setDescription(book.volumeInfo.description)
+			setAuthors(book.volumeInfo.authors)
+			setEditor(book.publisher)
+			if(book.imageLinks){
+				setCoverURL(book.imageLinks.medium)
+			}
+			
+			
+			if(book.categories){
+				const cat = book.categories
+				setTags(cat.reduce((tag, val) => {
+					val += tag + ";";
+				},['']))
+			}
+
+			if(book.volumeInfo.authors){
+				const auth = book.volumeInfo.authors
+
+				setAuthors(auth.reduce((tag, val) => {
+					val += tag + ";";
+				},['']))
+			}
+			
+			if(book.publishedDate){
+				setYear(book.publishedDate.substr(0,4))
+			}
+		}
 
     }, [ISBN]);
 
-    const GoogleInfoDialog = (
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)} aria-labelledby='form-dialog-title'>
-            <DialogTitle id='form-dialog-title'>Informações obtidas</DialogTitle>
-
-            <DialogContent>
-                Teste Google
-            </DialogContent>
-
-            <DialogActions>
-                <Button onClick={() => setOpenDialog(false)} color='secondary'>
-                    Cancelar
-                </Button>
-                <Button onClick={() => setOpenDialog(false)}  color='primary'>
-                    Confirmar
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
 
 	return (
 		<React.Fragment>
@@ -207,7 +220,7 @@ const RegisterBook = () => {
                             </IconButton>
 							</Grid>
 
-                            {GoogleInfoDialog}
+                            
 
 							<Grid item xs={12}>
 								<TextField
@@ -314,7 +327,7 @@ const RegisterBook = () => {
 							variant='outlined'
 						/>
 						<Grid  justify="center" alignItems="center" container item xs={12} spacing={3}>
-							<Grid item xs={12} sm={4}>
+							<Grid item xs={12} sm={6}>
 								<TextField
 									id='form-year'
 									label='Ano de publicação'
@@ -332,7 +345,7 @@ const RegisterBook = () => {
 								/>
 							</Grid>
 
-							<Grid item xs={12} sm={4}>
+							<Grid item xs={12} sm={6}>
 								<TextField
 									id='form-edition'
                                     label='Edição'
@@ -349,21 +362,7 @@ const RegisterBook = () => {
 									variant='outlined'
 								/>
 							</Grid>
-							<Grid item xs={12} sm={4}>
-								<TextField
-									id='form-pages'
-                                    label='Páginas'
-                                    type="number"
-									style={{ margin: 8 }}
-									placeholder='Páginas'
-									fullWidth
-									margin='normal'
-									InputLabelProps={{
-										shrink: true,
-									}}
-									variant='outlined'
-								/>
-							</Grid>
+							
 						</Grid>
                         <Grid container item justify="flex-end" xs={12}>
                             <Button className={useStyles.buttonSubmit} size="large" variant='contained' form='book-form' type='submit' color='primary'>
