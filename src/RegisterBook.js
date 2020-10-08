@@ -8,10 +8,12 @@ import {
     DialogContent,
     DialogTitle,
 	Grid,
+    IconButton,
 	makeStyles,
 	TextField,
 	Typography,
 } from '@material-ui/core';
+import { SearchRounded } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
@@ -117,7 +119,7 @@ const RegisterBook = () => {
     const [googleBooksInfo, setGoogleBooksInfo] = useState("");
     const [googleBooksResponse, setGoogleBooksResponse] = useState("");
     
-    const [openDialog, setOpenDialog] = useState("");
+    const [openDialog, setOpenDialog] = useState(false);
 
     const handleSubmitRegister = useCallback( (e) => {
         e.preventDefault();
@@ -127,32 +129,44 @@ const RegisterBook = () => {
         const tagsArray = tags.split(';');
 
         /**Adicioná-los ao objeto */
+        const serverBook = JSON.stringify({
+            isbn: ISBN,
+            title,
+            description,
+            autor: authorsArray,
+            editora: editor,
+            tag: tagsArray,
+            img: coverURL,
+            anoPublicacao: year,
+            edicao: edition,
+            status: false,
+        })
+        console.log(serverBook)
 
     },[ISBN, title, description, authors, editor, tags, coverURL,year, edition]);
 
 
 
-    const searchGoogleAPI = () => {
+    const searchGoogleAPI = useCallback(async () => {
 
         setOpenDialog(true)
-        console.log(ISBN)
+        console.log("GoogleAPI")
+
         /** Fetch google API */
-        fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + ISBN, {
+        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + ISBN, {
 			method: 'GET',
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-        })
-
-        if(googleBooksResponse.totalItems == 0 ){
-            setGoogleBooksInfo("Erro")
-        } else {
-            setGoogleBooksInfo("Erro")
-
+        
+        if(!response.ok){
+            console.log("Erro ao consumir API")
+            return;
         }
 
-    };
+        const responseData = response.json();
+        console.log(responseData)
+        
+
+    }, [ISBN]);
 
     const GoogleInfoDialog = (
         <Dialog open={openDialog} onClose={() => setOpenDialog(false)} aria-labelledby='form-dialog-title'>
@@ -180,7 +194,7 @@ const RegisterBook = () => {
 					<Typography variant='h3'>Registrar Novo Livro</Typography>
 					<form id='book-form'  onSubmit={e => handleSubmitRegister(e)}  autoComplete='off'>
 						<Grid justify="center" alignItems="center" container spacing={3}>
-							<Grid item xs={12} sm={10}>
+							<Grid item xs={10}>
 								<TextField
 									id='form-isbn'
 									label='ISBN'
@@ -197,10 +211,10 @@ const RegisterBook = () => {
 								/>
 							</Grid>
 
-							<Grid item xs={12} sm={2}>
-								<Button variant='contained' color='primary' onClick={searchGoogleAPI} disableElevation>
-									Pesquisar
-								</Button>
+							<Grid item xs={2} >
+                            <IconButton onClick={() => searchGoogleAPI()} aria-label="search" >
+                                <SearchRounded fontSize="large" />
+                            </IconButton>
 							</Grid>
 
                             {GoogleInfoDialog}
@@ -243,7 +257,7 @@ const RegisterBook = () => {
 
 							<Grid item xs={12}>
 								<TextField
-									id='form-title'
+									id='form-description'
 									label='Descrição'
 									style={{ margin: 8 }}
 									placeholder='Descrição'
@@ -260,8 +274,9 @@ const RegisterBook = () => {
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
-									id='form-title'
-									label='Editora'
+									id='form-editor'
+                                    label='Editora'
+                                    required
 									style={{ margin: 8 }}
 									placeholder='Editora'
                                     fullWidth
@@ -308,7 +323,7 @@ const RegisterBook = () => {
 							}}
 							variant='outlined'
 						/>
-						<Grid  justify="center" alignItems="center" container item xs={12}>
+						<Grid  justify="center" alignItems="center" container item xs={12} spacing={3}>
 							<Grid item xs={12} sm={4}>
 								<TextField
 									id='form-year'
@@ -360,8 +375,8 @@ const RegisterBook = () => {
 								/>
 							</Grid>
 						</Grid>
-                        <Grid item xs={12}>
-                            <Button className={useStyles.buttonSubmit} variant='contained' form='book-form' type='submit' color='primary'>
+                        <Grid container item justify="flex-end" xs={12}>
+                            <Button className={useStyles.buttonSubmit} size="large" variant='contained' form='book-form' type='submit' color='primary'>
                                 Salvar
                             </Button>
                         </Grid>
