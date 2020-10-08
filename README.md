@@ -6,12 +6,16 @@
 
 - [1. Sumário](#1-sumário)
 - [2. O Projeto](#2-funcionando)
-- [3. O Design](#3-0-design)
-     - [3.1. Feed](#31-feed)
-- [4. Dependências](#5-dependências)
+- [3. Inicialização](#3-funcionando)
+- [4. O Design](#3-0-design)
+- [5. Dependências](#5-dependências)
 
 ## 2. Sobre o projeto
 O projeto consiste na criação de um biblioteca virtual como desafio do processo de seleção de estágio da empresa [App Masters](https://appmasters.io/en/)
+
+### Backend Node
+
+Foi utilizada a [API](https://github.com/caiocesaroliveira/api-node-express-mongo) para Backend Node do repositório do [caiocesaroliveira](https://github.com/caiocesaroliveira).
 
 
 ## 3. Inicialização
@@ -35,7 +39,7 @@ Para o design da aplicação, decidi utilizar padrões simples mas moderno,utili
 Para execução do projeto, utilizei as seguintes dependência: 
 utilizei a biblioteca visual Matirial-UI, por uma questão de afinidade.  
 
-### 5.1. [Material-UI](https://material-ui.com/)
+#### 5.1. [Material-UI](https://material-ui.com/)
 Utilizei a biblioteca visual por uma questão de afinidade.  
 #### 5.2. [React Router Dom](https://reactrouter.com/)
 O React Router Dom é uma das bibliotecas mais utilizadas para configurar navegação. 
