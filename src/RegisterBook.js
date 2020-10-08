@@ -117,6 +117,7 @@ const RegisterBook = () => {
     const [coverURL, setCoverURL] = useState("");
     const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
+	const [apiNotFound, setApiNotFound] = useState(false);
 	
 
     const handleSubmitRegister = useCallback( (e) => {
@@ -135,8 +136,8 @@ const RegisterBook = () => {
             editora: editor,
             tag: tagsArray,
             img: coverURL,
-            anoPublicacao: year,
-            edicao: edition,
+            anoPublicacao: parseInt(year),
+            edicao: parseInt(edition),
             status: false,
 		})
 		
@@ -150,11 +151,17 @@ const RegisterBook = () => {
     const searchGoogleAPI = useCallback(async () => {
         
 		console.log("GoogleAPI")
+		let bookRes;
 		
-        const bookRes = await fetchBookGoogle(ISBN);
+		if(ISBN.length > 0){
+        	bookRes = await fetchBookGoogle(ISBN);
+		}else {
+			setApiNotFound(true)
+			return;
+		}
 
         if(bookRes.totalItems > 0){
-			
+			setApiNotFound(false)
 			const book = bookRes.items[0]
 			console.log(book)
 			setTitle(book.volumeInfo.title)
@@ -185,6 +192,8 @@ const RegisterBook = () => {
 			if(book.volumeInfo.publishedDate){
 				setYear(book.volumeInfo.publishedDate.substr(0,4))
 			}
+		} else {
+			setApiNotFound(true)
 		}
 
     }, [ISBN]);
@@ -203,8 +212,9 @@ const RegisterBook = () => {
 									label='ISBN'
 									style={{ margin: 8 }}
 									placeholder='ISBN'
-                                    fullWidth
-                                    value={ISBN}
+                                    error={apiNotFound}
+									value={ISBN}
+									fullWidth
                                     onChange={(val) => setISBN(val.target.value)}
 									margin='normal'
 									InputLabelProps={{
@@ -364,7 +374,7 @@ const RegisterBook = () => {
 							</Grid>
 							
 						</Grid>
-                        <Grid container item justify="flex-end" xs={12}>
+                        <Grid container item justify="center" xs={12}>
                             <Button className={useStyles.buttonSubmit} size="large" variant='contained' form='book-form' type='submit' color='primary'>
                                 Salvar
                             </Button>
