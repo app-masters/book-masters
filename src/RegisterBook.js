@@ -3,12 +3,16 @@ import {
 	Container,
 	createStyles,
 	CssBaseline,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
 	Grid,
 	makeStyles,
 	TextField,
 	Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 export const Styles = styled.div`
@@ -82,7 +86,10 @@ const useStyles = makeStyles((theme) =>
 		},
 		buttonSearch: {
 			height: '100%',
-		},
+        },
+        buttonSubmit: {
+            width: '100%'
+        }
 	})
 );
 
@@ -107,22 +114,78 @@ const RegisterBook = () => {
     const [coverURL, setCoverURL] = useState("");
     const [year, setYear] = useState("");
     const [edition, setEdition] = useState("");
+    const [googleBooksInfo, setGoogleBooksInfo] = useState("");
+    const [googleBooksResponse, setGoogleBooksResponse] = useState("");
+    
+    const [openDialog, setOpenDialog] = useState("");
 
+    const handleSubmitRegister = useCallback( (e) => {
+        e.preventDefault();
+
+        /**Tratar dados do formulário */
+        const authorsArray = authors.split(';');
+        const tagsArray = tags.split(';');
+
+        /**Adicioná-los ao objeto */
+
+    },[ISBN, title, description, authors, editor, tags, coverURL,year, edition]);
+
+
+
+    const searchGoogleAPI = () => {
+
+        setOpenDialog(true)
+        console.log(ISBN)
+        /** Fetch google API */
+        fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + ISBN, {
+			method: 'GET',
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+
+        if(googleBooksResponse.totalItems == 0 ){
+            setGoogleBooksInfo("Erro")
+        } else {
+            setGoogleBooksInfo("Erro")
+
+        }
+
+    };
+
+    const GoogleInfoDialog = (
+        <Dialog open={openDialog} onClose={() => setOpenDialog(false)} aria-labelledby='form-dialog-title'>
+            <DialogTitle id='form-dialog-title'>Informações obtidas</DialogTitle>
+
+            <DialogContent>
+                Teste Google
+            </DialogContent>
+
+            <DialogActions>
+                <Button onClick={() => setOpenDialog(false)} color='secondary'>
+                    Cancelar
+                </Button>
+                <Button onClick={() => setOpenDialog(false)}  color='primary'>
+                    Confirmar
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 
 	return (
 		<React.Fragment>
 			<Styles>
 				<Container className='cardGrid'>
 					<Typography variant='h3'>Registrar Novo Livro</Typography>
-					<form noValidate autoComplete='off'>
-						<Grid container spacing={3}>
+					<form id='book-form'  onSubmit={e => handleSubmitRegister(e)}  autoComplete='off'>
+						<Grid justify="center" alignItems="center" container spacing={3}>
 							<Grid item xs={12} sm={10}>
 								<TextField
 									id='form-isbn'
 									label='ISBN'
 									style={{ margin: 8 }}
 									placeholder='ISBN'
-									helperText='Você pode pesquisar o livro pelo ISBN'
                                     fullWidth
                                     value={ISBN}
                                     onChange={(val) => setISBN(val.target.value)}
@@ -134,16 +197,19 @@ const RegisterBook = () => {
 								/>
 							</Grid>
 
-							<Grid item xs={12} md={2}>
-								<Button variant='contained' color='primary' disableElevation>
+							<Grid item xs={12} sm={2}>
+								<Button variant='contained' color='primary' onClick={searchGoogleAPI} disableElevation>
 									Pesquisar
 								</Button>
 							</Grid>
 
+                            {GoogleInfoDialog}
+
 							<Grid item xs={12}>
 								<TextField
 									id='form-title'
-									label='Título'
+                                    label='Título'
+                                    required
 									style={{ margin: 8 }}
 									placeholder='Título'
                                     fullWidth
@@ -159,7 +225,8 @@ const RegisterBook = () => {
 
 							<Grid item xs={12}>
 								<TextField
-									id='form-author'
+                                    id='form-author'
+                                    required
 									label='Autor'
 									style={{ margin: 8 }}
 									placeholder='Autor'
@@ -241,7 +308,7 @@ const RegisterBook = () => {
 							}}
 							variant='outlined'
 						/>
-						<Grid container item xs={12} spacing={3}>
+						<Grid  justify="center" alignItems="center" container item xs={12}>
 							<Grid item xs={12} sm={4}>
 								<TextField
 									id='form-year'
@@ -294,8 +361,8 @@ const RegisterBook = () => {
 							</Grid>
 						</Grid>
                         <Grid item xs={12}>
-                            <Button  variant='contained' form='name-form' type='submit' color='primary'>
-                                Confirmar
+                            <Button className={useStyles.buttonSubmit} variant='contained' form='book-form' type='submit' color='primary'>
+                                Salvar
                             </Button>
                         </Grid>
 					</form>
