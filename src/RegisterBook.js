@@ -16,6 +16,7 @@ import {
 import { SearchRounded } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import fetchBookGoogle from './googleBooksAPI';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -152,18 +153,7 @@ const RegisterBook = () => {
         setOpenDialog(true)
         console.log("GoogleAPI")
 
-        /** Fetch google API */
-        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:' + ISBN, {
-			method: 'GET',
-        })
-        
-        if(!response.ok){
-            console.log("Erro ao consumir API")
-            return;
-        }
-
-        const responseData = response.json();
-        console.log(responseData)
+        const book = fetchBookGoogle(ISBN);
         
 
     }, [ISBN]);
