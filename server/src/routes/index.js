@@ -1,8 +1,8 @@
 import { Router } from "express"
-import UserRoute from "./user.routes"
+import BookRoute from "./book.routes"
 
 const routes = Router()
 
-routes.use("/", UserRoute)
+routes.use("/", BookRoute)
 
 export default routes
