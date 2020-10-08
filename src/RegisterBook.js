@@ -118,7 +118,6 @@ const RegisterBook = () => {
     const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
 	
-    const [openDialog, setOpenDialog] = useState(false);
 
     const handleSubmitRegister = useCallback( (e) => {
         e.preventDefault();
@@ -161,29 +160,30 @@ const RegisterBook = () => {
 			setTitle(book.volumeInfo.title)
 			setDescription(book.volumeInfo.description)
 			setAuthors(book.volumeInfo.authors)
-			setEditor(book.publisher)
-			if(book.imageLinks){
-				setCoverURL(book.imageLinks.medium)
+			setEditor(book.volumeInfo.publisher)
+
+			if(book.volumeInfo.imageLinks){
+				setCoverURL(book.volumeInfo.imageLinks.thumbnail)	
 			}
 			
-			
-			if(book.categories){
-				const cat = book.categories
+			if(book.volumeInfo.categories){
+				const cat = book.volumeInfo.categories
+				setTags(cat.toString().replace(",", ";"))
+				/*
 				setTags(cat.reduce((tag, val) => {
 					val += tag + ";";
 				},['']))
+				*/
 			}
 
 			if(book.volumeInfo.authors){
 				const auth = book.volumeInfo.authors
-
-				setAuthors(auth.reduce((tag, val) => {
-					val += tag + ";";
-				},['']))
+		
+				setAuthors(auth.toString().replace(",", ";"))
 			}
 			
-			if(book.publishedDate){
-				setYear(book.publishedDate.substr(0,4))
+			if(book.volumeInfo.publishedDate){
+				setYear(book.volumeInfo.publishedDate.substr(0,4))
 			}
 		}
 
@@ -195,7 +195,7 @@ const RegisterBook = () => {
 			<Styles>
 				<Container className='cardGrid'>
 					<Typography variant='h3'>Registrar Novo Livro</Typography>
-					<form id='book-form'  onSubmit={e => handleSubmitRegister(e)}  autoComplete='off'>
+					<form id='book-form'  onSubmit={e => handleSubmitRegister(e)}  autoComplete='on'>
 						<Grid justify="center" alignItems="center" container spacing={3}>
 							<Grid item xs={10}>
 								<TextField
