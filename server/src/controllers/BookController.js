@@ -1,31 +1,31 @@
 import Book from "../models/Book"
 
 export default {
-  async getAll() {
+  async getAll(req, res) {
     const response = await Book.find()
 
-    return response
+    return res.json(response);
   },
-  async getById(id) {
-    const response = await Book.findById(id)
+  async getById(req, res) {
+    const response = await Book.findById(req.params.id)
 
-    return response
+    return res.json(response)
   },
-  async create(body) {
-    const response = await Book.create(body)
+  async create(req, res) {
+    const response = await Book.create(req.body)
 
-    return response
+    return res.json(response)
   },
-  async update(id, body) {
-    const response = await Book.findOneAndUpdate({ _id: id }, body, {
+  async update(req, res) {
+    const response = await Book.findOneAndUpdate({ _id: req.params.id}, req.body, {
       new: true,
     })
 
-    return response
+    return res.json(response)
   },
-  async delete(id) {
-    const response = await Book.deleteOne({ _id: id })
+  async delete(req, res) {
+    await Book.deleteOne({ _id: req.params.id })
 
-    return response
+    return res.send()
   },
 }
