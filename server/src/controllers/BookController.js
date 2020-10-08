@@ -1,7 +1,7 @@
 import Book from "../models/Book"
 
 export default {
-  async get() {
+  async getAll() {
     const response = await Book.find()
 
     return response

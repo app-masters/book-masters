@@ -3,12 +3,11 @@ import BookController from "../controllers/BookController"
 
 const bookRouter = Router()
 
-// routes.use(authMiddleware)
 
-bookRouter.get("/", BookController.index)
-bookRouter.get("/:id", BookController.details)
-bookRouter.post("/", BookController.store)
+bookRouter.get("/", BookController.getAll)
+bookRouter.get("/:id", BookController.getById)
+bookRouter.post("/", BookController.create)
 bookRouter.put("/:id", BookController.update)
-bookRouter.delete("/:id", BookController.destroy)
+bookRouter.delete("/:id", BookController.delete)
 
 export default bookRouter
