@@ -13,7 +13,7 @@ const BookSchema = new Schema(
             type: String,
         },
         autor: {
-            type:[String],
+            type: [String],
             required: true
         },
         editora: {
@@ -21,8 +21,7 @@ const BookSchema = new Schema(
             required: true,
         },
         tag: {
-            type:[String],
-            required: true
+            type: [String]
         },
 
         img: {
@@ -39,11 +38,12 @@ const BookSchema = new Schema(
             type: Boolean,
         },
         emprestimo: {
-            user:{
-                name: String,
-                email: String
+            user: {
+                name: { type: String },
+                email: { type: String },
+                date: { type: Date },
             },
-            date: Date,
+
         }
     }
 )
