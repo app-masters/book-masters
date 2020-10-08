@@ -36,6 +36,8 @@ const BookSchema = new Schema(
         },
         status: {
             type: Boolean,
+            required: true,
+            default:false,
         },
         emprestimo: {
             user: {
