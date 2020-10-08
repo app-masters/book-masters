@@ -28,59 +28,14 @@ export const Styles = styled.div`
   }
 `;
 
-export default class BookCard extends Component {
+export default class BookCardDisponivel extends Component {
   render() {
     const disponibilidade = JSON.parse(
       localStorage.getItem(`@bookStatus/Book ID: ${this.props.book.id}`)
     );
 
-    console.log(disponibilidade);
+    //console.log(disponibilidade);
 
-    if (disponibilidade.status !== null) {
-      return (
-        <Styles>
-          <Card className="root">
-            <div>
-              <CardMedia
-                component="img"
-                className="cover"
-                image={this.props.book.img}
-                title="Image title"
-              />
-            </div>
-            <div className="details">
-              <CardContent className="content">
-                <Typography gutterBottom variant="h5" component="h2">
-                  {this.props.book.name}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {this.props.book.autor}
-                </Typography>
-              </CardContent>
-            </div>
-          </Card>
-          <div className="teste">
-            <Typography>Livro disponivel</Typography>
-            <Link
-              to={{
-                pathname: `/products/${this.props.book.id}`,
-                state: {
-                  details: {
-                    id: this.props.book.id,
-                    name: this.props.book.name,
-                    autor: this.props.book.autor,
-                    description: this.props.book.description,
-                    img: this.props.book.img,
-                  },
-                },
-              }}
-            >
-              <Button variant="outlined">Ver mais</Button>
-            </Link>
-          </div>
-        </Styles>
-      );
-    }
     return (
       <Styles>
         <Card className="root">
@@ -104,7 +59,7 @@ export default class BookCard extends Component {
           </div>
         </Card>
         <div className="teste">
-          <Typography>Livro alugado</Typography>
+          <Typography>Livro disponivel</Typography>
           <Link
             to={{
               pathname: `/products/${this.props.book.id}`,
@@ -125,12 +80,4 @@ export default class BookCard extends Component {
       </Styles>
     );
   }
-}
-
-// export default BookCard;
-
-{
-  /* <Box display="flex" justifyContent="center">
-  
-</Box> */
 }

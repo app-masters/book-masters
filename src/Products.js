@@ -111,6 +111,7 @@ export default class Product extends Component {
       nome: nome,
       status: true,
       dates: this.date,
+      id: this.props.id,
     });
     localStorage.setItem(`@bookStatus/Book ID: ${this.id}`, usuario);
     window.location.reload();

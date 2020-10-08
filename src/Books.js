@@ -9,6 +9,8 @@ import homoDeusImg from "./assets/img/homoDeus.png";
 import sapiensImg from "./assets/img/sapiens.png";
 import milNoventaOitentaQuatroImg from "./assets/img/milNoventaOitentaQuatro.png";
 import eraDasRevolucoesImg from "./assets/img/eraDasRevolucoes.png";
+import BookCardAlugado from "./Components/BookCardAlugado";
+import BookCardDisponivel from "./Components/BookCardDisponivel";
 
 class Books extends Component {
   static state = {
@@ -61,14 +63,51 @@ class Books extends Component {
           "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
         img: sapiensImg,
       },
+      {
+        id: 7,
+        name: "Sapiens 2",
+        autor: "Yuval Noah Harari",
+        description:
+          "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
+        img: sapiensImg,
+      },
+      {
+        id: 8,
+        name: "Sapiens 3",
+        autor: "Yuval Noah Harari",
+        description:
+          "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
+        img: sapiensImg,
+      },
+      {
+        id: 9,
+        name: "Sapiens 4",
+        autor: "Yuval Noah Harari",
+        description:
+          "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
+        img: sapiensImg,
+      },
+      {
+        id: 10,
+        name: "Sapiens 5",
+        autor: "Yuval Noah Harari",
+        description:
+          "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
+        img: sapiensImg,
+      },
     ],
   };
 
   render() {
     let booksCards = Books.state.livros.map((book) => {
-      return (
+      console.log("teste", book);
+      return book.status ? (
         <Grid item xs={12} sm={6} md={4}>
-          <BookCard book={book} />
+          <BookCardAlugado book={book} />
+        </Grid>
+      ) : (
+        <Grid item xs={12} sm={6} md={4}>
+          <BookCardDisponivel book={book} />
         </Grid>
       );
     });
@@ -76,7 +115,11 @@ class Books extends Component {
       <React.Fragment>
         <CssBaseline />
         <Container maxWidth="md">
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            style={{ marginTop: "24px", marginBottom: "24px" }}
+          >
             {booksCards}
           </Grid>
         </Container>
