@@ -10,11 +10,16 @@ import { Link } from "react-router-dom";
 export const Styles = styled.div`
   .root {
     display: flex;
-    height: 200px;
+    flex-direction: column;
+    min-height: 200px;
   }
   .cover {
     width: 151px;
     padding-top: 20px;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: row;
   }
   .details {
     display: flex;
@@ -23,67 +28,31 @@ export const Styles = styled.div`
   .content {
     flex: "1 0 auto";
   }
-  .teste {
+  .button-div {
     text-align: center;
+    padding: 10px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .btn-form {
+    border: 1px solid #0ab6ff;
+    color: #0ab6ff;
   }
 `;
 
-export default class BookCard extends Component {
+export default class BookCardDisponivel extends Component {
   render() {
     const disponibilidade = JSON.parse(
       localStorage.getItem(`@bookStatus/Book ID: ${this.props.book.id}`)
     );
 
-    console.log(disponibilidade);
+    //console.log(disponibilidade);
 
-    if (disponibilidade.status !== null) {
-      return (
-        <Styles>
-          <Card className="root">
-            <div>
-              <CardMedia
-                component="img"
-                className="cover"
-                image={this.props.book.img}
-                title="Image title"
-              />
-            </div>
-            <div className="details">
-              <CardContent className="content">
-                <Typography gutterBottom variant="h5" component="h2">
-                  {this.props.book.name}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {this.props.book.autor}
-                </Typography>
-              </CardContent>
-            </div>
-          </Card>
-          <div className="teste">
-            <Typography>Livro disponivel</Typography>
-            <Link
-              to={{
-                pathname: `/products/${this.props.book.id}`,
-                state: {
-                  details: {
-                    id: this.props.book.id,
-                    name: this.props.book.name,
-                    autor: this.props.book.autor,
-                    description: this.props.book.description,
-                    img: this.props.book.img,
-                  },
-                },
-              }}
-            >
-              <Button variant="outlined">Ver mais</Button>
-            </Link>
-          </div>
-        </Styles>
-      );
-    }
     return (
       <Styles>
         <Card className="root">
+        <div className="card-body">
           <div>
             <CardMedia
               component="img"
@@ -102,9 +71,10 @@ export default class BookCard extends Component {
               </Typography>
             </CardContent>
           </div>
-        </Card>
-        <div className="teste">
-          <Typography>Livro alugado</Typography>
+        
+        </div>
+        <div className="button-div">
+          <Typography>Livro disponível</Typography>
           <Link
             to={{
               pathname: `/products/${this.props.book.id}`,
@@ -119,18 +89,12 @@ export default class BookCard extends Component {
               },
             }}
           >
-            <Button variant="outlined">Ver mais</Button>
+            <Button className="btn-form" variant="outlined">Ver mais</Button>
           </Link>
+          
         </div>
+        </Card>
       </Styles>
     );
   }
-}
-
-// export default BookCard;
-
-{
-  /* <Box display="flex" justifyContent="center">
-  
-</Box> */
 }

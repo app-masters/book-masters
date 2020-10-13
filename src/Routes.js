@@ -5,7 +5,6 @@ import Product from "./Products";
 import RegisterBook from "./RegisterBook";
 import About from "./About";
 
-
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -13,7 +12,7 @@ const Routes = () => (
       <Route path="/products/:id" component={Product} />
       <Route path="/register" component={RegisterBook} />
       <Route path="/about" component={About} />
-
+      {/* <Route path="/register" component={Resgister} /> */}
     </Switch>
   </BrowserRouter>
 );

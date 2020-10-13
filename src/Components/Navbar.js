@@ -105,7 +105,13 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Button className={classes.btn} href="/">
-            Biblioteca Virtual App Masters
+            Book Masters
+          </Button>
+          <Button className={classes.btn} href="/about">
+            Sobre
+          </Button>
+          <Button className={classes.btn} href="/register">
+            Registro
           </Button>
         </Toolbar>
       </AppBar>
