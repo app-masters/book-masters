@@ -6,15 +6,22 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export const Styles = styled.div`
   .root {
     display: flex;
-    height: 200px;
+    flex-direction: column;
+    min-height: 200px;
+    opacity: 0.8;
   }
   .cover {
     width: 151px;
     padding-top: 20px;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: row;
   }
   .details {
     display: flex;
@@ -23,10 +30,36 @@ export const Styles = styled.div`
   .content {
     flex: "1 0 auto";
   }
-  .teste {
+  .button-div {
     text-align: center;
+    padding: 10px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .btn-form {
+    border: 1px solid #a84432;
+    color: #a84432;
   }
 `;
+
+const useStyles = makeStyles((theme) =>
+	createStyles({
+		root: {
+			flexGrow: 1,
+		},
+
+		details: {
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor:'black'
+		},
+		image: {
+			width: '100%',
+		},
+	})
+);
+
 
 export default class BookCardAlugado extends Component {
   render() {
@@ -39,23 +72,30 @@ export default class BookCardAlugado extends Component {
     return (
       <Styles>
         <Card className="root">
-          <div>
-            <CardMedia
-              component="img"
-              className="cover"
-              image={this.props.book.img}
-              title="Image title"
-            />
+          <div className="card-body">
+            <div>
+              <CardMedia
+                component="img"
+                className="cover"
+                image={this.props.book.img}
+                title="Image title"
+              />
+            </div>
+            <div className="details">
+              <CardContent className="content">
+                <Typography gutterBottom variant="h5" component="h2">
+                  {this.props.book.name}
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {this.props.book.autor}
+                </Typography>
+                
+              </CardContent>
+            </div>
           </div>
-          <div className="details">
-            <CardContent className="content">
-              <Typography gutterBottom variant="h5" component="h2">
-                {this.props.book.name}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {this.props.book.autor}
-              </Typography>
-              <Link
+          <div className="button-div">
+            <Typography>Livro alugado</Typography>
+            <Link
                 to={{
                   pathname: `/products/${this.props.book.id}`,
                   state: {
@@ -69,14 +109,11 @@ export default class BookCardAlugado extends Component {
                   },
                 }}
               >
-                <Button variant="outlined">Ver mais</Button>
+                <Button className="btn-form" variant="outlined">Ver mais</Button>
               </Link>
-            </CardContent>
-          </div>
-        </Card>
-        <div className="teste">
-          <Typography>Livro alugado</Typography>
         </div>
+        </Card>
+        
       </Styles>
     );
   }

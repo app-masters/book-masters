@@ -122,6 +122,7 @@ export default class Product extends Component {
         date: new Date(),
       }}
     };
+    
 
     this.enviar(usuario, this.id)
     window.location.reload();

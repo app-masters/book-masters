@@ -10,11 +10,16 @@ import { Link } from "react-router-dom";
 export const Styles = styled.div`
   .root {
     display: flex;
-    height: 200px;
+    flex-direction: column;
+    min-height: 200px;
   }
   .cover {
     width: 151px;
     padding-top: 20px;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: row;
   }
   .details {
     display: flex;
@@ -23,8 +28,16 @@ export const Styles = styled.div`
   .content {
     flex: "1 0 auto";
   }
-  .teste {
+  .button-div {
     text-align: center;
+    padding: 10px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .btn-form {
+    border: 1px solid #0ab6ff;
+    color: #0ab6ff;
   }
 `;
 
@@ -39,6 +52,7 @@ export default class BookCardDisponivel extends Component {
     return (
       <Styles>
         <Card className="root">
+        <div className="card-body">
           <div>
             <CardMedia
               component="img"
@@ -57,9 +71,10 @@ export default class BookCardDisponivel extends Component {
               </Typography>
             </CardContent>
           </div>
-        </Card>
-        <div className="teste">
-          <Typography>Livro disponivel</Typography>
+        
+        </div>
+        <div className="button-div">
+          <Typography>Livro disponível</Typography>
           <Link
             to={{
               pathname: `/products/${this.props.book.id}`,
@@ -74,9 +89,11 @@ export default class BookCardDisponivel extends Component {
               },
             }}
           >
-            <Button variant="outlined">Ver mais</Button>
+            <Button className="btn-form" variant="outlined">Ver mais</Button>
           </Link>
+          
         </div>
+        </Card>
       </Styles>
     );
   }
