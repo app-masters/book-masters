@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
+import React, { Component } from "react";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import styled from "styled-components";
+import Box from "@material-ui/core/Box";
+import { Link } from "react-router-dom";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
-import moment from 'moment';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import api from './services/api';
+import moment from "moment";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import * as MaterialLink from '@material-ui/core/Link';
+import api from "./services/api";
+import QrReader from 'react-qr-reader'
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -101,13 +103,16 @@ export const Styles = styled.div`
 	}
 `;
 
+
 export default class Product extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
       error: undefined,
-      userName: '',
+      clicked: false,
+      valid:false,
+      usuario:{},
 			notRegisteredDialog: false,
       borrowingCompleteDialog: false,
       user: null,
@@ -129,6 +134,7 @@ export default class Product extends Component {
     })
 
   }
+
 
 
 	async enviar(obj, id) {
@@ -161,9 +167,14 @@ export default class Product extends Component {
 		}
 	}
 
+
+
 	async handleSubmit(event) {
 		event.preventDefault();
-
+    this.setState(
+      {clicked:true}
+    )
+    
 		const email = event.target.elements.email.value;
 		console.log(email);
 		try {
@@ -187,7 +198,7 @@ export default class Product extends Component {
         
       this.setState({
         borrowingCompleteDialog: true,
-        userName: user.name,
+        usuario: userData,
       });
 
 		} catch (error) {
@@ -225,6 +236,51 @@ export default class Product extends Component {
 		});
 	};
 
+
+  handleScan = data => {
+    console.log(data);
+    if (data === "https://appmasters.io") {
+      this.valid()
+    }
+  }
+
+  valid(){
+    this.enviar(this.state.usuario, this.id)
+  }
+
+
+  handleLogout = () => {
+    localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
+    window.location.reload();
+  };
+
+  render() {
+    moment.locale("pt-BR");
+    function myFunction() {
+      var x = document.getElementById("myDIV");
+      if (x.style.display !== "none") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+
+    
+    if(this.state.clicked){
+      console.log("ALOU",this.id);
+      return(
+        <div>
+        <QrReader
+        delay={300}
+        onError={this.handleError}
+        onScan={this.handleScan}
+        style={{ width: '30%' }}
+      />
+      <Button>Voltar</Button>
+      </div>
+      )
+    }
+
 	render() {
 		moment.locale('pt-BR');
 		function myFunction() {
@@ -235,9 +291,6 @@ export default class Product extends Component {
 				x.style.display = 'block';
 			}
     }
-    
-		
-		
 
 		const notRegisteredDialog = (
 			<Dialog open={this.state.notRegisteredDialog} onClose={this.handleCloseDialog}>
