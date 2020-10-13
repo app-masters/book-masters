@@ -122,7 +122,12 @@ export default class Product extends Component {
     
 	}
 
+
   date = moment().format('DD[/]MM [às] h:mm');
+
+  async enviar(obj, id) {
+    await api.put(`/books/${id}`, obj);
+  }
 
 
   componentWillMount() {
@@ -134,8 +139,6 @@ export default class Product extends Component {
     })
 
   }
-
-
 
 	async enviar(obj, id) {
 		let idi = '5f7f73feba32bc3510031ac3';
@@ -245,7 +248,7 @@ export default class Product extends Component {
   }
 
   valid(){
-    this.enviar(this.state.usuario, this.id)
+    this.enviar(this.state.usuario, this.props.match.params.id)
   }
 
 
