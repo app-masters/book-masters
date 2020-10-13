@@ -11,6 +11,7 @@ class Books extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      errorMessage: '',
       isLoaded: false,
       livros: [],
     };
@@ -44,11 +45,19 @@ class Books extends Component {
       });
 
       this.setState({
+        errorMessage: '',
         isLoaded: true,
         livros: sortedBooks
       });
 
     } catch (error) {
+
+      this.setState({
+        errorMessage: error.message,
+        isLoaded: false,
+        livros: []
+      });
+
       console.log(error);
     }
       
@@ -57,7 +66,9 @@ class Books extends Component {
 
 
   render() {
-
+    if(this.state.errorMessage != ''){
+      return <h3>{this.state.errorMessage}</h3>
+    }
     if(!this.state.isLoaded){
       //console.log(this.state.isLoaded)
       return <LoadingSpinner/>
