@@ -332,7 +332,7 @@ export default class Product extends Component {
 			</Dialog>
 		);
 
-		  if (details.status) {
+	if (this.state.details.status === "true") {
       return (
         <Styles>
           <Container className="cardGrid">
@@ -346,19 +346,19 @@ export default class Product extends Component {
                 style={{ paddingTop: "10px" }}
                 component="img"
                 className="cardMedia"
-                image={details.img}
+                image={this.state.details.img}
                 title="Image title"
               />
               <CardContent className="cardContent">
                 <Typography gutterBottom variant="h5" component="h2">
-                  {details.name}
+                  {this.state.details.name}
                 </Typography>
-                <Typography>{details.autor}</Typography>
+                <Typography>{this.state.details.autor}</Typography>
                 <Typography className="descriptionTitle" variant="h2">
                   Descrição
                 </Typography>
                 <Typography className="description">
-                  {details.description}
+                  {this.state.details.description}
                 </Typography>
               </CardContent>
               <Box display="flex" justifyContent="center">
