@@ -18,6 +18,7 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import fetchBookGoogle from './googleBooksAPI';
 import api from './services/api';
+import SaveIcon from '@material-ui/icons/Save';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -90,9 +91,6 @@ const useStyles = makeStyles((theme) =>
 		},
 		buttonSearch: {
 			height: '100%',
-		},
-		buttonSubmit: {
-			width: '100%'
 		}
 	})
 );
@@ -129,18 +127,16 @@ const RegisterBook = () => {
 		e.preventDefault();
 
 		/**Tratar dados do formulário */
-		const authorsArray = authors.split(';');
-		const tagsArray = tags.split(';');
-
+		console.log(authors);
 		/**Adicioná-los ao objeto */
 		const serverBook = {
 			isbn: ISBN,
 			title,
 			description,
-			autor: authorsArray,
+			autor: authors,
 			editora: editor,
-			tag: tagsArray,
-			img: coverURL,
+			tag: tags,
+			img: coverURL? (coverURL):("https://avancar.gov.br/avancar-web/images/slideshow/not-found.png"),
 			anoPublicacao: year,
 			edicao: edition,
 			status: false,
@@ -167,9 +163,9 @@ const RegisterBook = () => {
 			setTitle(book.volumeInfo.title)
 			setDescription(book.volumeInfo.description)
 			setAuthors(book.volumeInfo.authors)
-			setEditor(book.publisher)
-			if (book.imageLinks) {
-				setCoverURL(book.imageLinks.medium)
+			setEditor(book.volumeInfo.publisher)
+			if (book.volumeInfo.imageLinks) {
+				setCoverURL(book.volumeInfo.imageLinks.thumbnail)
 			}
 
 
@@ -181,16 +177,11 @@ const RegisterBook = () => {
 			}
 
 			if (book.volumeInfo.authors) {
-				const auth = book.volumeInfo.authors
 
-				setAuthors(auth.reduce((tag, val) => {
-					val += tag + ";";
-				}, ['']))
+				setAuthors( book.volumeInfo.authors)
 			}
 
-			if (book.publishedDate) {
-				setYear(book.publishedDate.substr(0, 4))
-			}
+			setYear(book.volumeInfo.publishedDate)
 		}
 
 	}, [ISBN]);
@@ -199,9 +190,9 @@ const RegisterBook = () => {
 	return (
 		<React.Fragment>
 			<Styles>
-				<Container className='cardGrid'>
+				<Container className='cardGrid' maxWidth="md" style={{ paddingTop: 40}}>
 					<Typography variant='h3'>Registrar Novo Livro</Typography>
-					<form id='book-form' onSubmit={e => handleSubmitRegister(e)} autoComplete='off'>
+					<form id='book-form' onSubmit={e => handleSubmitRegister(e)} autoComplete='off' style={{ paddingTop: 40}}>
 						<Grid justify="center" alignItems="center" container spacing={3}>
 							<Grid item xs={10}>
 								<TextField
@@ -370,8 +361,8 @@ const RegisterBook = () => {
 							</Grid>
 
 						</Grid>
-						<Grid container item justify="flex-end" xs={12}>
-							<Button className={useStyles.buttonSubmit} size="large" variant='contained' form='book-form' type='submit' color='primary'>
+						<Grid container item justify="flex-end" xs={12} style={{ paddingTop: 40}}>
+							<Button startIcon={<SaveIcon />} size="large" form='book-form' type='submit' color='primary' >
 								Salvar
                             </Button>
 						</Grid>
