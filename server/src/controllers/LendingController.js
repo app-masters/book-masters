@@ -1,5 +1,5 @@
 import Lending from "../models/Lending";
-import Lending from "../models/Lending"
+import User from "../models/User"
 
 export default {
   async getAll(req, res) {
@@ -16,6 +16,28 @@ export default {
     const response = await Lending.create(req.body)
 
     return res.json(response)
+  },
+
+  async lending(req, res) {
+    const lending = await req.body;
+
+    const lendingJson = { 
+      id_book:lending.id_book, 
+      person: { 
+        email: lending.person.email, 
+        name:lending.person.name, 
+        phoneNumber:lending.person.phoneNumber
+      },
+    };
+    
+    const user = await User.find({ email: lendingJson.person.email});
+    
+    if(lendingJson.person.email === user[0]?.email){
+      return res.json("Okay");
+    }
+    //const response
+
+    return res.json("NotOkay");
   },
   async update(req, res) {
     const response = await Lending.findOneAndUpdate({ _id: req.params.id}, req.body, {
