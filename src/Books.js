@@ -76,7 +76,7 @@ class Books extends Component {
 
     let booksCards = this.state.livros.map((book) => {
       console.log("teste", book);
-      return book.status ? (
+      return (book.status === "true") ? (
         <Grid item xs={12} sm={6} md={4}>
           <BookCardAlugado book={book} />
         </Grid>
