@@ -43,7 +43,7 @@ export default function Home() {
               color="textPrimary"
               gutterBottom
             >
-              App Masters
+              Book Masters
             </Typography>
             <Typography
               className={classes.heroText}

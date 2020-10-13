@@ -16,6 +16,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import api from "./services/api";
 
 export const Styles = styled.div`
   .MuiContainer-root {
@@ -104,15 +105,26 @@ export default class Product extends Component {
 
   date = moment().format("DD[/]MM [às] h:mm");
 
+  async enviar(obj, id) {
+    let idi = '5f7f73feba32bc3510031ac3';
+    await api.put(`/books/${idi}`, obj);
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     const nome = event.target.elements.nome.value;
-    const usuario = JSON.stringify({
-      nome: nome,
-      status: true,
-      dates: this.date,
-    });
-    localStorage.setItem(`@bookStatus/Book ID: ${this.id}`, usuario);
+    const email = event.target.elements.email.value;
+    const usuario = {
+      emprestimo: {
+        user:{
+        name: nome,
+        email: email,
+        date: new Date(),
+      }}
+    };
+    
+
+    this.enviar(usuario, this.id)
     window.location.reload();
   };
 
@@ -250,6 +262,15 @@ export default class Product extends Component {
                 variant="outlined"
                 type="text"
                 name="nome"
+                required
+              />
+              <Typography>Insira seu email:</Typography>
+              <TextField
+                id="standard-secondary"
+                label="Seu email"
+                variant="outlined"
+                type="text"
+                name="email"
                 required
               />
               <Button className="btn-form" type="submit" variant="outlined">
