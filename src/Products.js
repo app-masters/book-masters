@@ -108,8 +108,7 @@ export default class Product extends Component {
   date = moment().format("DD[/]MM [às] h:mm");
 
   async enviar(obj, id) {
-    let idi = '5f7f73feba32bc3510031ac3';
-    await api.put(`/books/${idi}`, obj);
+    await api.put(`/books/${id}`, obj);
   }
 
   state = {
@@ -132,6 +131,7 @@ export default class Product extends Component {
     const nome = event.target.elements.nome.value;
     const email = event.target.elements.email.value;
     const usuario = {
+      status:true,
       emprestimo: {
         user:{
         name: nome,
@@ -148,7 +148,7 @@ export default class Product extends Component {
   };
 
   valid(){
-    this.enviar(this.state.usuario, this.id)
+    this.enviar(this.state.usuario, this.props.match.params.id)
   }
 
 
