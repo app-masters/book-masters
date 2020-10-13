@@ -30,8 +30,16 @@ export const Footer = () => (
           color="textSecondary"
           component="p"
         >
-          Para mais informações, acesse nosso
-          <Link href="https://appmasters.io/en/"> site!</Link>
+          Acesse o site da App Masters em 
+          <Link href="https://appmasters.io/en/"> appmasters.io/en/</Link>
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
+          <Link href="https://appmasters.io/en/"> Sobre</Link>
         </Typography>
       </Container>
     </footer>

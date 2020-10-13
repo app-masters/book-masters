@@ -85,6 +85,7 @@ export default class BookCardDisponivel extends Component {
                   autor: this.props.book.autor,
                   description: this.props.book.description,
                   img: this.props.book.img,
+                  status: this.props.book.status
                 },
               },
             }}

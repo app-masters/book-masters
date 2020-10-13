@@ -97,7 +97,7 @@ export default class BookCardAlugado extends Component {
             <Typography>Livro alugado</Typography>
             <Link
                 to={{
-                  pathname: `/products/${this.props.book._id}`,
+                  pathname: `/products/${this.props.book.id}`,
                   state: {
                     details: {
                       id: this.props.book.id,
@@ -105,6 +105,7 @@ export default class BookCardAlugado extends Component {
                       autor: this.props.book.autor,
                       description: this.props.book.description,
                       img: this.props.book.img,
+                      status: this.props.book.status
                     },
                   },
                 }}

@@ -126,7 +126,8 @@ export default class Product extends Component {
   date = moment().format('DD[/]MM [às] h:mm');
 
   async enviar(obj, id) {
-    await api.put(`/books/${id}`, obj);
+    let idi = '5f7f73feba32bc3510031ac3';
+    await api.put(`/books/${idi}`, obj);
   }
 
 
@@ -248,8 +249,12 @@ export default class Product extends Component {
   }
 
   valid(){
-    this.enviar(this.state.usuario, this.props.match.params.id)
+    this.enviar(this.state.usuario, this.id)
+    return(
+      <h1>VALID</h1>
+    )
   }
+
 
 
   handleLogout = () => {
@@ -282,17 +287,6 @@ export default class Product extends Component {
       <Button>Voltar</Button>
       </div>
       )
-    }
-
-	render() {
-		moment.locale('pt-BR');
-		function myFunction() {
-			var x = document.getElementById('myDIV');
-			if (x.style.display !== 'none') {
-				x.style.display = 'none';
-			} else {
-				x.style.display = 'block';
-			}
     }
 
 		const notRegisteredDialog = (
@@ -338,70 +332,71 @@ export default class Product extends Component {
 			</Dialog>
 		);
 
-		if (this.state.user !== null) {
-			return (
-				<Styles>
-          {notRegisteredDialog}
-          {borrowingCompleteDialog}
-					<Container className='cardGrid'>
-						<Button>
-							<Link to='/'>
-								<ArrowBackIosIcon />
-							</Link>
-						</Button>
-						<Card className='card'>
-							<CardMedia
-								style={{ paddingTop: '10px' }}
-								component='img'
-								className='cardMedia'
-								image={this.state.details.img}
-								title='Image title'
-							/>
-							<CardContent className='cardContent'>
-								<Typography gutterBottom variant='h5' component='h2'>
-									{this.state.details.name}
-								</Typography>
-								<Typography>{this.state.details.autor}</Typography>
-								<Typography className='descriptionTitle' variant='h2'>
-									Descrição
-								</Typography>
-								<Typography className='description'>{this.state.details.description}</Typography>
-							</CardContent>
-							<Box display='flex' justifyContent='center'>
-								<Typography className='descriptionTitle' variant='h2'>
-									Livro Alugado. Deseja devolvevr?
-								</Typography>
-								<Button className='btn-devolver' onClick={this.handleLogout} variant='outlined'>
-									Devolver
-								</Button>
-							</Box>
-						</Card>
-					</Container>
-					<Container className='cardGrid'>
-						<Card className='card'>
-							<Typography variant='h5'>Livro alugado por:</Typography>
-							<CardContent className='cardContent'>
-								<Table aria-label='simple table'>
-									<TableHead>
-										<TableRow>
-											<TableCell>Nome:</TableCell>
-											<TableCell>Data: </TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										<TableRow>
-											<TableCell>{this.state.user.nome}</TableCell>
-											<TableCell>{this.state.user.dates}</TableCell>
-										</TableRow>
-									</TableBody>
-								</Table>
-							</CardContent>
-						</Card>
-						
-					</Container>
-				</Styles>
-			);
-		}
+		  if (details.status) {
+      return (
+        <Styles>
+          <Container className="cardGrid">
+            <Button>
+              <Link to="/">
+                <ArrowBackIosIcon />
+              </Link>
+            </Button>
+            <Card className="card">
+              <CardMedia
+                style={{ paddingTop: "10px" }}
+                component="img"
+                className="cardMedia"
+                image={details.img}
+                title="Image title"
+              />
+              <CardContent className="cardContent">
+                <Typography gutterBottom variant="h5" component="h2">
+                  {details.name}
+                </Typography>
+                <Typography>{details.autor}</Typography>
+                <Typography className="descriptionTitle" variant="h2">
+                  Descrição
+                </Typography>
+                <Typography className="description">
+                  {details.description}
+                </Typography>
+              </CardContent>
+              <Box display="flex" justifyContent="center">
+                <Typography className="descriptionTitle" variant="h2">
+                  Livro Alugado. Deseja devolvevr?
+                </Typography>
+                <Button
+                  className="btn-devolver"
+                  onClick={this.handleLogout}
+                  variant="outlined"
+                >
+                  Devolver
+                </Button>
+              </Box>
+            </Card>
+          </Container>
+          <Container className="cardGrid">
+            <Card className="card">
+              <Typography variant="h5">Livro alugado por:</Typography>
+              <CardContent className="cardContent">
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Nome:</TableCell>
+                      <TableCell>Data: </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </Container>
+        </Styles>
+      );
+    }
 		return (
 			<Styles>
         {notRegisteredDialog}
