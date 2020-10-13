@@ -108,7 +108,8 @@ export default class Product extends Component {
   date = moment().format("DD[/]MM [às] h:mm");
 
   async enviar(obj, id) {
-    await api.put(`/books/${id}`, obj);
+    let idi = '5f7f73feba32bc3510031ac3';
+    await api.put(`/books/${idi}`, obj);
   }
 
   state = {
@@ -131,7 +132,6 @@ export default class Product extends Component {
     const nome = event.target.elements.nome.value;
     const email = event.target.elements.email.value;
     const usuario = {
-      status:true,
       emprestimo: {
         user:{
         name: nome,
@@ -148,8 +148,12 @@ export default class Product extends Component {
   };
 
   valid(){
-    this.enviar(this.state.usuario, this.props.match.params.id)
+    this.enviar(this.state.usuario, this.id)
+    return(
+      <h1>VALID</h1>
+    )
   }
+
 
 
   handleLogout = () => {
@@ -194,7 +198,7 @@ export default class Product extends Component {
 
     
 
-    if (user !== null) {
+    if (details.status) {
       return (
         <Styles>
           <Container className="cardGrid">
@@ -250,8 +254,6 @@ export default class Product extends Component {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell>{user.nome}</TableCell>
-                      <TableCell>{user.dates}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
