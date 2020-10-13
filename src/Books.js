@@ -65,6 +65,7 @@ class Books extends Component {
           description:
             "O autor repassa a história da humanidade, ou do homo sapiens, desde o surgimento da espécie durante a pré-história até o presente, mas em vez de apenas “inventariar” os fatos históricos ele os relaciona com questões do presente e os questiona de maneira surpreendente. Além disso, para cada fato ou crença que temos como certa hoje em dia, o autor apresenta as diversas interpretações existentes a partir de diferentes pontos de vista, inclusive as muito atuais, e vai além, sugerindo interpretações muitas vezes desconcertantes. Yuval Noah Harari é professor do departamento de história da Universidade Hebraica de Jerusalém. É especialista em história mundial, medieval e militar.",
           img: sapiensImg,
+          status:true
         },
         {
           id: 7,
@@ -129,6 +130,32 @@ class Books extends Component {
   }
 */
 
+  componentDidMount() {
+    const sortedBooks = this.state.livros.sort((bookA, bookB) => {
+      //if(bookA.name < bookB.name ){return -1;}
+      //if(bookA.name > bookB.name ){return 1;}
+      //return 0;
+      if(bookA.status === bookB.status){
+        if(bookA.name < bookB.name ){return -1;}
+        if(bookA.name > bookB.name ){return 1;}
+        return 0;
+      } else {
+        return bookA.status === bookB.status ? 0 : bookA.status? 1 : -1;
+      }
+      
+      //return bookA.name === bookB.name ? 0 : bookA.status? 1 : -1;
+      //return bookA.status === bookB.status ? 0 : bookA.status? 1 : -1;
+
+    });
+
+    this.setState({
+      livros: sortedBooks
+    });
+    
+  }
+
+
+
   render() {
 
     let booksCards = this.state.livros.map((book) => {
@@ -144,7 +171,7 @@ class Books extends Component {
       );
     });
 
-    
+
     return (
       <React.Fragment>
         <CssBaseline />
