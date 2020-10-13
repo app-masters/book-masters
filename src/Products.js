@@ -110,22 +110,57 @@ export default class Product extends Component {
     await api.put(`/books/${idi}`, obj);
   }
 
-  handleSubmit = (event) => {
+  async fetchUserAppMaster(email) {
+    try {
+      const response = await fetch(`https://programador.emjuizdefora.com/api/user/public?email=${email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+        
+      });
+      console.log(response)
+      if (response.status === 404) {
+
+        throw new Error('Usuário não encontrado');
+
+      } else if(response.ok){
+
+        const user = response.json()
+        console.log(user)
+        return user;
+
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+   async handleSubmit( event) {
     event.preventDefault();
-    const nome = event.target.elements.nome.value;
+
     const email = event.target.elements.email.value;
-    const usuario = {
+    console.log(email)
+
+    const user = await this.fetchUserAppMaster(email);
+    console.log(user)
+
+    const userData = {
       emprestimo: {
         user:{
-        name: nome,
-        email: email,
+        name: user.name,
+        email: user.email,
         date: new Date(),
       }}
     };
     
 
-    this.enviar(usuario, this.id)
-    window.location.reload();
+    this.enviar(userData, this.id)
+    //window.location.reload();
+    
   };
 
   handleLogout = () => {
@@ -252,18 +287,10 @@ export default class Product extends Component {
             <form
               id="myDIV"
               style={{ display: "none" }}
-              onSubmit={this.handleSubmit}
+              onSubmit={this.handleSubmit.bind(this)}
             >
               <Typography>Deseja alugar esse livro?</Typography>
-              <Typography>Insira seu nome:</Typography>
-              <TextField
-                id="standard-secondary"
-                label="Seu nome"
-                variant="outlined"
-                type="text"
-                name="nome"
-                required
-              />
+              
               <Typography>Insira seu email:</Typography>
               <TextField
                 id="standard-secondary"
