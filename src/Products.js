@@ -17,6 +17,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import api from "./services/api";
+import QrReader from 'react-qr-reader'
 
 export const Styles = styled.div`
   .MuiContainer-root {
@@ -100,6 +101,7 @@ export const Styles = styled.div`
   }
 `;
 
+
 export default class Product extends Component {
   id = 0;
 
@@ -110,8 +112,23 @@ export default class Product extends Component {
     await api.put(`/books/${idi}`, obj);
   }
 
+  state = {
+    clicked: false,
+    valid:false,
+    usuario:{}
+  }
+
+  handleScan = data => {
+    console.log(data);
+    if (data === "https://appmasters.io") {
+      this.valid()
+    }
+  }
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState(
+      {clicked:true}
+    )
     const nome = event.target.elements.nome.value;
     const email = event.target.elements.email.value;
     const usuario = {
@@ -121,12 +138,19 @@ export default class Product extends Component {
         email: email,
         date: new Date(),
       }}
-    };
+    };  
     
+    this.setState({
+      usuario:usuario
+    })
 
-    this.enviar(usuario, this.id)
-    window.location.reload();
+    
   };
+
+  valid(){
+    this.enviar(this.state.usuario, this.id)
+  }
+
 
   handleLogout = () => {
     localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
@@ -143,11 +167,32 @@ export default class Product extends Component {
         x.style.display = "block";
       }
     }
+
+    
     const { details } = this.props.location.state;
     this.id = details.id;
     var user = JSON.parse(
       localStorage.getItem(`@bookStatus/Book ID: ${details.id}`)
     );
+    
+
+    
+    if(this.state.clicked){
+      console.log("ALOU",this.id);
+      return(
+        <div>
+        <QrReader
+        delay={300}
+        onError={this.handleError}
+        onScan={this.handleScan}
+        style={{ width: '30%' }}
+      />
+      <Button>Voltar</Button>
+      </div>
+      )
+    }
+
+    
 
     if (user !== null) {
       return (
@@ -277,6 +322,9 @@ export default class Product extends Component {
                 Pegar
               </Button>
             </form>
+            <Button>
+
+            </Button>
           </Card>
         </Container>
       </Styles>
