@@ -64,7 +64,7 @@ export default class BookCardDisponivel extends Component {
           <div className="details">
             <CardContent className="content">
               <Typography gutterBottom variant="h5" component="h2">
-                {this.props.book.name}
+                {this.props.book.title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {this.props.book.autor}
@@ -81,7 +81,7 @@ export default class BookCardDisponivel extends Component {
               state: {
                 details: {
                   id: this.props.book.id,
-                  name: this.props.book.name,
+                  name: this.props.book.title,
                   autor: this.props.book.autor,
                   description: this.props.book.description,
                   img: this.props.book.img,
