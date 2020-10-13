@@ -17,6 +17,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import api from './services/api';
+import * as MaterialLink from '@material-ui/core/Link';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -101,19 +102,34 @@ export const Styles = styled.div`
 `;
 
 export default class Product extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
       error: undefined,
       userName: '',
 			notRegisteredDialog: false,
-			borrowingCompleteDialog: false,
-		};
+      borrowingCompleteDialog: false,
+      user: null,
+      details: null,
+      id: null
+    };
+    
 	}
 
-	id = 0;
+  date = moment().format('DD[/]MM [às] h:mm');
 
-	date = moment().format('DD[/]MM [às] h:mm');
+
+  componentWillMount() {
+    const {details} = this.props.location.state
+    this.setState({
+      user: JSON.parse(localStorage.getItem(`@bookStatus/Book ID: ${details.id}`)),
+      id: details.id,
+      details: details
+    })
+
+  }
+
 
 	async enviar(obj, id) {
 		let idi = '5f7f73feba32bc3510031ac3';
@@ -133,7 +149,8 @@ export default class Product extends Component {
 			if (response.status === 404) {
 				throw new Error(response.status, 'Usuário não encontrado');
 			} else if (response.ok) {
-				const user = response.json();
+        const user = response.json();
+        
 				console.log(user);
 				return user;
 			} else {
@@ -166,7 +183,8 @@ export default class Product extends Component {
 
 			/** USAR API PARA ENVIAR O LIVRO */
       this.enviar(userData, this.id);
-      
+      /** USAR API PARA ENVIAR O LIVRO */
+        
       this.setState({
         borrowingCompleteDialog: true,
         userName: user.name,
@@ -216,10 +234,10 @@ export default class Product extends Component {
 			} else {
 				x.style.display = 'block';
 			}
-		}
-		const { details } = this.props.location.state;
-		this.id = details.id;
-		var user = JSON.parse(localStorage.getItem(`@bookStatus/Book ID: ${details.id}`));
+    }
+    
+		
+		
 
 		const notRegisteredDialog = (
 			<Dialog open={this.state.notRegisteredDialog} onClose={this.handleCloseDialog}>
@@ -228,9 +246,13 @@ export default class Product extends Component {
 				<DialogContent>
 					<DialogContentText>
 						Para reservar um livro você precisa ter uma conta cadastrada em nossa plataforma.
+            Clique no link abaixo para conhecer a plataforma e criar sua conta.
 					</DialogContentText>
 					<DialogContentText>
-						<a>https://programador.emjuizdefora.com/</a>
+          <MaterialLink.default href="https://programador.emjuizdefora.com/" target="_blank" rel="noreferrer" variant="body2">
+            https://programador.emjuizdefora.com/
+          </MaterialLink.default>
+						
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
@@ -260,7 +282,7 @@ export default class Product extends Component {
 			</Dialog>
 		);
 
-		if (user !== null) {
+		if (this.state.user !== null) {
 			return (
 				<Styles>
           {notRegisteredDialog}
@@ -276,18 +298,18 @@ export default class Product extends Component {
 								style={{ paddingTop: '10px' }}
 								component='img'
 								className='cardMedia'
-								image={details.img}
+								image={this.state.details.img}
 								title='Image title'
 							/>
 							<CardContent className='cardContent'>
 								<Typography gutterBottom variant='h5' component='h2'>
-									{details.name}
+									{this.state.details.name}
 								</Typography>
-								<Typography>{details.autor}</Typography>
+								<Typography>{this.state.details.autor}</Typography>
 								<Typography className='descriptionTitle' variant='h2'>
 									Descrição
 								</Typography>
-								<Typography className='description'>{details.description}</Typography>
+								<Typography className='description'>{this.state.details.description}</Typography>
 							</CardContent>
 							<Box display='flex' justifyContent='center'>
 								<Typography className='descriptionTitle' variant='h2'>
@@ -312,8 +334,8 @@ export default class Product extends Component {
 									</TableHead>
 									<TableBody>
 										<TableRow>
-											<TableCell>{user.nome}</TableCell>
-											<TableCell>{user.dates}</TableCell>
+											<TableCell>{this.state.user.nome}</TableCell>
+											<TableCell>{this.state.user.dates}</TableCell>
 										</TableRow>
 									</TableBody>
 								</Table>
@@ -339,18 +361,18 @@ export default class Product extends Component {
 							style={{ paddingTop: '10px' }}
 							component='img'
 							className='cardMedia'
-							image={details.img}
+							image={this.state.details.img}
 							title='Image title'
 						/>
 						<CardContent className='cardContent'>
 							<Typography gutterBottom variant='h5' component='h2'>
-								{details.name}
+								{this.state.details.name}
 							</Typography>
-							<Typography>{details.autor}</Typography>
+							<Typography>{this.state.details.autor}</Typography>
 							<Typography className='descriptionTitle' variant='h2'>
 								Descrição
 							</Typography>
-							<Typography className='description'>{details.description}</Typography>
+							<Typography className='description'>{this.state.details.description}</Typography>
 						</CardContent>
 						<Box display='flex' justifyContent='center'>
 							<Button onClick={myFunction} variant='outlined'>
