@@ -35,18 +35,10 @@ const BookSchema = new Schema(
             type: Number,
         },
         status: {
-            type: Boolean,
+            type: String,
             required: true,
-            default:false,
+            default:'Disponivel',
         },
-        emprestimo: {
-            user: {
-                name: { type: String },
-                email: { type: String },
-                date: { type: Date },
-            },
-
-        }
     }
 )
 
