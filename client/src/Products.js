@@ -1,25 +1,35 @@
-
-import React, { Component } from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import styled from "styled-components";
-import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
-import moment from "moment";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import React, { Component } from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
+import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import {
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Snackbar,
+	TextField,
+} from '@material-ui/core';
+import moment from 'moment';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import { Alert } from '@material-ui/lab';
 import * as MaterialLink from '@material-ui/core/Link';
-import api from "./services/api";
-import QrReader from 'react-qr-reader'
+import api from './services/api';
+import QrReader from 'react-qr-reader';
+import ConfirmLending from './Components/ConfirmLending';
+import NotRegisteredDialog from './Components/NotRegisteredDialog';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -103,47 +113,51 @@ export const Styles = styled.div`
 	}
 `;
 
-
 export default class Product extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
-      error: undefined,
-      clicked: false,
-      valid:false,
-      usuario:{},
+			error: undefined,
+			clicked: false,
+			valid: false,
 			notRegisteredDialog: false,
-      borrowingCompleteDialog: false,
-      user: null,
-      details: null,
-      id: null
-    };
-    
+			borrowingCompleteDialog: false,
+			borrowingSuccessful: false,
+			borrowingError: false,
+			user: null,
+			details: null,
+			id: null,
+		};
 	}
 
-
-  date = moment().format('DD[/]MM [às] h:mm');
-
-  async enviar(obj, id) {
-    let idi = '5f7f73feba32bc3510031ac3';
-    await api.put(`/books/${idi}`, obj);
-  }
-
-
-  componentWillMount() {
-    const {details} = this.props.location.state
-    this.setState({
-      user: JSON.parse(localStorage.getItem(`@bookStatus/Book ID: ${details.id}`)),
-      id: details.id,
-      details: details
-    })
-
-  }
+	date = moment().format('DD[/]MM [às] h:mm');
 
 	async enviar(obj, id) {
 		let idi = '5f7f73feba32bc3510031ac3';
 		await api.put(`/books/${idi}`, obj);
+	}
+
+	async lendBook(apiData) {
+		try {
+			const response = await api.post(`/lendings/`, { body: apiData });
+			if (!response.ok) {
+				throw new Error('Não foi possível realizar o empréstimo');
+			} else {
+				console.log(response);
+			}
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
+	}
+
+	componentWillMount() {
+		const { details } = this.props.location.state;
+		this.setState({
+			user: JSON.parse(localStorage.getItem(`@bookStatus/Book ID: ${details.id}`)),
+			id: details.id,
+			details: details,
+		});
 	}
 
 	async fetchUserAppMaster(email) {
@@ -159,8 +173,8 @@ export default class Product extends Component {
 			if (response.status === 404) {
 				throw new Error(response.status, 'Usuário não encontrado');
 			} else if (response.ok) {
-        const user = response.json();
-        
+				const user = response.json();
+
 				console.log(user);
 				return user;
 			} else {
@@ -171,14 +185,9 @@ export default class Product extends Component {
 		}
 	}
 
-
-
 	async handleSubmit(event) {
 		event.preventDefault();
-    this.setState(
-      {clicked:true}
-    )
-    
+
 		const email = event.target.elements.email.value;
 		console.log(email);
 		try {
@@ -186,27 +195,16 @@ export default class Product extends Component {
 			console.log(user);
 
 			const userData = {
-				emprestimo: {
-					user: {
-						name: user.name,
-						email: user.email,
-						date: new Date(),
-					},
-				},
-      };
-      
+				name: user.name,
+				email: user.email,
+				phoneNumber: user.phoneNumber,
+			};
 
-			/** USAR API PARA ENVIAR O LIVRO */
-      this.enviar(userData, this.id);
-      /** USAR API PARA ENVIAR O LIVRO */
-        
-      this.setState({
-        borrowingCompleteDialog: true,
-        usuario: userData,
-      });
-
+			this.setState({
+				borrowingCompleteDialog: true,
+				usuario: userData,
+			});
 		} catch (error) {
-
 			if (error.message === '404') {
 				this.setState({
 					notRegisteredDialog: true,
@@ -219,8 +217,6 @@ export default class Product extends Component {
 
 			console.log(error.message);
 		}
-
-		//window.location.reload();
 	}
 
 	handleLogout = () => {
@@ -232,175 +228,214 @@ export default class Product extends Component {
 		this.setState({
 			notRegisteredDialog: false,
 		});
-  };
+	};
 
-  handleCloseDialogBorrowing = () => {
+	handleCloseDialogBorrowing = () => {
 		this.setState({
 			borrowingCompleteDialog: false,
 		});
 	};
 
+	handleConfirmBorrowing = () => {
+		const apiData = {
+			id_book: this.state.id,
+			person: this.state.usuario,
+		};
+		console.log(apiData);
+		/** USAR API PARA ENVIAR O LIVRO */
+		this.lendBook(apiData);
+		/** USAR API PARA ENVIAR O LIVRO */
+		/*this.setState({
+			borrowingCompleteDialog:false
+		});
+*/
 
-  handleScan = data => {
-    console.log(data);
-    if (data === "https://appmasters.io") {
-      this.valid()
-    }
-  }
+		this.setState({
+			clicked: true,
+		});
+	};
 
-  valid(){
-    this.enviar(this.state.usuario, this.id)
-    return(
-      <h1>VALID</h1>
-    )
-  }
+	handleReturnQRCode = () => {
+		this.setState({
+			clicked: false,
+		});
+	};
+
+	handleScan = (data) => {
+		console.log(data);
+		if (data === 'https://appmasters.io') {
+			this.valid();
+			this.setState({
+				clicked: false,
+				borrowingCompleteDialog: false,
+			});
+		}
+	};
+
+	valid() {
+		const apiData = {
+			id_book: this.state.id,
+			person: this.state.usuario,
+		};
+
+		try {
+			/** USAR API PARA ENVIAR O LIVRO */
+			this.lendBook(apiData);
+			/** USAR API PARA ENVIAR O LIVRO */
+		} catch (error) {
+			this.setState({
+				clicked: false,
+				borrowingCompleteDialog: false,
+				borrowingSuccessful: false,
+				borrowingError: true,
+			});
+
+			console.log(error);
+		}
+
+		this.setState({
+			clicked: false,
+			borrowingCompleteDialog: false,
+			borrowingSuccessful: true,
+		});
+		//this.enviar(this.state.usuario, this.id)
+	}
+
+	handleLogout = () => {
+		localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
+		window.location.reload();
+	};
+
+	handleCloseAlert = () => {
+		this.setState({
+			borrowingSuccessful: false,
+			borrowingError: false
+		});
+	};
+
+	render() {
+		moment.locale('pt-BR');
+		function myFunction() {
+			var x = document.getElementById('myDIV');
+			if (x.style.display !== 'none') {
+				x.style.display = 'none';
+			} else {
+				x.style.display = 'block';
+			}
+		}
+
+		if (this.state.clicked) {
+			console.log('ALOU', this.id);
+			return (
+				<div>
+					<QrReader
+						delay={300}
+						onError={this.handleError}
+						onScan={this.handleScan}
+						style={{ width: '30%' }}
+					/>
+					<Button onClick={this.handleReturnQRCode.bind(this)}>Voltar</Button>
+				</div>
+			);
+		}
 
 
+			
+	
+		if (this.state.details.status === 'true') {
+			return (
+				<Styles>
+					<Container className='cardGrid'>
+						<Button>
+							<Link to='/'>
+								<ArrowBackIosIcon />
+							</Link>
+						</Button>
+						<Card className='card'>
+							<CardMedia
+								style={{ paddingTop: '10px' }}
+								component='img'
+								className='cardMedia'
+								image={this.state.details.img}
+								title='Image title'
+							/>
+							<CardContent className='cardContent'>
+								<Typography gutterBottom variant='h5' component='h2'>
+									{this.state.details.name}
+								</Typography>
+								<Typography>{this.state.details.autor}</Typography>
+								<Typography className='descriptionTitle' variant='h2'>
+									Descrição
+								</Typography>
+								<Typography className='description'>{this.state.details.description}</Typography>
+							</CardContent>
+							<Box display='flex' justifyContent='center'>
+								<Typography className='descriptionTitle' variant='h2'>
+									Livro Alugado. Deseja devolvevr?
+								</Typography>
+								<Button className='btn-devolver' onClick={this.handleLogout} variant='outlined'>
+									Devolver
+								</Button>
+							</Box>
+						</Card>
+					</Container>
+					<Container className='cardGrid'>
+						<Card className='card'>
+							<Typography variant='h5'>Livro alugado por:</Typography>
+							<CardContent className='cardContent'>
+								<Table aria-label='simple table'>
+									<TableHead>
+										<TableRow>
+											<TableCell>Nome:</TableCell>
+											<TableCell>Data: </TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										<TableRow></TableRow>
+									</TableBody>
+								</Table>
+							</CardContent>
+						</Card>
+						<Snackbar
+							open={this.state.borrowingError}
+							autoHideDuration={6000}
+							onClose={this.handleCloseAlert.bind(this)}
+						>
+							<Alert onClose={this.handleCloseAlert.bind(this)} severity='error'>
+								Erro ao emprestar o livro. Tente novamente.
+							</Alert>
+						</Snackbar>
 
-  handleLogout = () => {
-    localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
-    window.location.reload();
-  };
-
-  render() {
-    moment.locale("pt-BR");
-    function myFunction() {
-      var x = document.getElementById("myDIV");
-      if (x.style.display !== "none") {
-        x.style.display = "none";
-      } else {
-        x.style.display = "block";
-      }
-    }
-
-    
-    if(this.state.clicked){
-      console.log("ALOU",this.id);
-      return(
-        <div>
-        <QrReader
-        delay={300}
-        onError={this.handleError}
-        onScan={this.handleScan}
-        style={{ width: '30%' }}
-      />
-      <Button>Voltar</Button>
-      </div>
-      )
-    }
-
-		const notRegisteredDialog = (
-			<Dialog open={this.state.notRegisteredDialog} onClose={this.handleCloseDialog}>
-				<DialogTitle id='form-dialog-title'>Você ainda não está cadastrado. </DialogTitle>
-
-				<DialogContent>
-					<DialogContentText>
-						Para reservar um livro você precisa ter uma conta cadastrada em nossa plataforma.
-            Clique no link abaixo para conhecer a plataforma e criar sua conta.
-					</DialogContentText>
-					<DialogContentText>
-          <MaterialLink.default href="https://programador.emjuizdefora.com/" target="_blank" rel="noreferrer" variant="body2">
-            https://programador.emjuizdefora.com/
-          </MaterialLink.default>
-						
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button color='primary' onClick={this.handleCloseDialog}>
-						Confirmar
-					</Button>
-				</DialogActions>
-			</Dialog>
-    );
-    
-    const borrowingCompleteDialog = (
-			<Dialog open={this.state.borrowingCompleteDialog} onClose={this.handleCloseDialogBorrowing}>
-				<DialogTitle id='form-dialog-title'>O livro está reservado!</DialogTitle>
-
-				<DialogContent>
-					<DialogContentText>
-						Olá {this.state.userName}. Obrigado por reservar o livro.
-            Você tem até 3 dias úteis para buscá-lo.
-					</DialogContentText>
-					
-				</DialogContent>
-				<DialogActions>
-					<Button color='primary' onClick={this.handleCloseDialogBorrowing}>
-						Confirmar
-					</Button>
-				</DialogActions>
-			</Dialog>
-		);
-
-	if (this.state.details.status === "true") {
-      return (
-        <Styles>
-          <Container className="cardGrid">
-            <Button>
-              <Link to="/">
-                <ArrowBackIosIcon />
-              </Link>
-            </Button>
-            <Card className="card">
-              <CardMedia
-                style={{ paddingTop: "10px" }}
-                component="img"
-                className="cardMedia"
-                image={this.state.details.img}
-                title="Image title"
-              />
-              <CardContent className="cardContent">
-                <Typography gutterBottom variant="h5" component="h2">
-                  {this.state.details.name}
-                </Typography>
-                <Typography>{this.state.details.autor}</Typography>
-                <Typography className="descriptionTitle" variant="h2">
-                  Descrição
-                </Typography>
-                <Typography className="description">
-                  {this.state.details.description}
-                </Typography>
-              </CardContent>
-              <Box display="flex" justifyContent="center">
-                <Typography className="descriptionTitle" variant="h2">
-                  Livro Alugado. Deseja devolvevr?
-                </Typography>
-                <Button
-                  className="btn-devolver"
-                  onClick={this.handleLogout}
-                  variant="outlined"
-                >
-                  Devolver
-                </Button>
-              </Box>
-            </Card>
-          </Container>
-          <Container className="cardGrid">
-            <Card className="card">
-              <Typography variant="h5">Livro alugado por:</Typography>
-              <CardContent className="cardContent">
-                <Table aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Nome:</TableCell>
-                      <TableCell>Data: </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </Container>
-        </Styles>
-      );
-    }
+						<Snackbar
+							open={this.state.borrowingSuccessful}
+							autoHideDuration={6000}
+							onClose={this.handleCloseAlert.bind(this)}
+						>
+							<Alert onClose={this.handleCloseAlert.bind(this)} severity='success'>
+								Livro emprestado com sucesso!
+							</Alert>
+						</Snackbar>
+					</Container>
+				</Styles>
+			);
+		}
 		return (
 			<Styles>
-        {notRegisteredDialog}
-        {borrowingCompleteDialog}
+				<NotRegisteredDialog
+					open={this.state.notRegisteredDialog}
+					onClose={this.handleCloseDialog}
+				/>
+
+				{this.state.usuario ? (
+					<ConfirmLending
+						open={this.state.borrowingCompleteDialog}
+						onClose={this.handleCloseDialogBorrowing}
+						onConfirm={this.handleConfirmBorrowing}
+						name={this.state.usuario.name}
+					/>
+				) : (
+					''
+				)}
 				<Container className='cardGrid'>
 					<Button>
 						<Link to='/'>
@@ -447,6 +482,15 @@ export default class Product extends Component {
 							</Button>
 						</form>
 					</Card>
+					<Snackbar
+						open={this.state.borrowingSuccessful}
+						autoHideDuration={6000}
+						onClose={this.handleCloseAlert.bind(this)}
+					>
+						<Alert onClose={this.handleCloseAlert.bind(this)} severity='success'>
+							Livro emprestado com sucesso!
+						</Alert>
+					</Snackbar>
 				</Container>
 			</Styles>
 		);
