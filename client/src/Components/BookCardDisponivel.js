@@ -80,7 +80,7 @@ export default class BookCardDisponivel extends Component {
               pathname: `/products/${this.props.book._id}`,
               state: {
                 details: {
-                  id: this.props.book.id,
+                  id: this.props.book._id,
                   name: this.props.book.title,
                   autor: this.props.book.autor,
                   description: this.props.book.description,
