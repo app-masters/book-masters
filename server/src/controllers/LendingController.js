@@ -1,6 +1,16 @@
 import Lending from "../models/Lending";
 import User from "../models/User"
 
+const verifyValidEmail = (email) =>{
+  const verification = /\w+\@\w+\.(com|\edu|\org)(\.br)?/;
+
+  if(verification.exec(email))
+    return email;
+  else
+    return null;
+  
+}
+
 export default {
   async getAll(req, res) {
     const response = await Lending.find()
@@ -20,11 +30,11 @@ export default {
 
   async lending(req, res) {
     const lending = await req.body;
-
+    const email = verifyValidEmail(lending.person.email);
     const lendingJson = { 
       id_book:lending.id_book, 
       person: { 
-        email: lending.person.email, 
+        email: email, 
         name:lending.person.name, 
         phoneNumber:lending.person.phoneNumber
       },
@@ -35,7 +45,6 @@ export default {
     if(lendingJson.person.email === user[0]?.email){
       return res.json("Okay");
     }
-    //const response
 
     return res.json("NotOkay");
   },

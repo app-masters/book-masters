@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "b1874732-501b-4875-a5a8-0108c8c876e5",
+		"name": "BooksMasterRoutes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Atualização de livros",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"autor\": [\r\n            \"Igor Baio\"\r\n        ],\r\n        \"tag\": [],\r\n        \"status\": \"Disponivel\",\r\n        \"_id\": \"5f7f3b2702abf2235c487ec4\",\r\n        \"title\": \"Teste Rotas Backend\",\r\n        \"editora\": \"bookmaster\",\r\n        \"__v\": 0\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3333/books/5f7f3b2702abf2235c487ec4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"books",
+						"5f7f3b2702abf2235c487ec4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lista de livros",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3333/books/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"books",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inclusão de livros",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"autor\": [\r\n            \"Igor Baio\"\r\n        ],\r\n        \"tag\": [],\r\n        \"status\": \"Disponivel\",\r\n        \r\n        \"title\": \"POST - Teste Rotas Backend\",\r\n        \"editora\": \"bookmaster\",\r\n        \"__v\": 0\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3333/books/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"books",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inclusão de empréstimos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idUser\": \"5f86eeeb3e89ec1c482b1b3c\",\r\n        \"idBook\":\"5f7f3b2702abf2235c487ec4\",\r\n        \"__v\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3333/lendings/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"lendings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empréstimo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idUser\": \"5f86eeeb3e89ec1c482b1b3c\",\r\n        \"person\": {\r\n            \"name\": \"Igor\",\r\n            \"email\":\"teste1111@gmail.com\"\r\n        },\r\n        \"idBook\":\"5f7f3b2702abf2235c487ec4\",\r\n        \"__v\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3333/lending/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"lending",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
