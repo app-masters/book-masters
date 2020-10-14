@@ -9,7 +9,15 @@ import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TextField } from '@material-ui/core';
+import {
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Snackbar,
+	TextField,
+} from '@material-ui/core';
 import moment from 'moment';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,6 +29,7 @@ import * as MaterialLink from '@material-ui/core/Link';
 import api from './services/api';
 import QrReader from 'react-qr-reader';
 import ConfirmLending from './Components/ConfirmLending';
+import NotRegisteredDialog from './Components/NotRegisteredDialog';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
@@ -114,6 +123,7 @@ export default class Product extends Component {
 			notRegisteredDialog: false,
 			borrowingCompleteDialog: false,
 			borrowingSuccessful: false,
+			borrowingError: false,
 			user: null,
 			details: null,
 			id: null,
@@ -263,7 +273,6 @@ export default class Product extends Component {
 	};
 
 	valid() {
-
 		const apiData = {
 			id_book: this.state.id,
 			person: this.state.usuario,
@@ -273,17 +282,17 @@ export default class Product extends Component {
 			/** USAR API PARA ENVIAR O LIVRO */
 			this.lendBook(apiData);
 			/** USAR API PARA ENVIAR O LIVRO */
-		} catch (error){
+		} catch (error) {
 			this.setState({
 				clicked: false,
 				borrowingCompleteDialog: false,
 				borrowingSuccessful: false,
-			})
+				borrowingError: true,
+			});
 
-			console.log(error)
+			console.log(error);
 		}
-		
-		
+
 		this.setState({
 			clicked: false,
 			borrowingCompleteDialog: false,
@@ -299,9 +308,10 @@ export default class Product extends Component {
 
 	handleCloseAlert = () => {
 		this.setState({
-			borrowingSuccessful:false
-		})
-	}
+			borrowingSuccessful: false,
+			borrowingError: false
+		});
+	};
 
 	render() {
 		moment.locale('pt-BR');
@@ -329,34 +339,9 @@ export default class Product extends Component {
 			);
 		}
 
-		const notRegisteredDialog = (
-			<Dialog open={this.state.notRegisteredDialog} onClose={this.handleCloseDialog}>
-				<DialogTitle id='form-dialog-title'>Você ainda não está cadastrado. </DialogTitle>
 
-				<DialogContent>
-					<DialogContentText>
-						Para reservar um livro você precisa ter uma conta cadastrada em nossa plataforma. Clique no link
-						abaixo para conhecer a plataforma e criar sua conta.
-					</DialogContentText>
-					<DialogContentText>
-						<MaterialLink.default
-							href='https://programador.emjuizdefora.com/'
-							target='_blank'
-							rel='noreferrer'
-							variant='body2'
-						>
-							https://programador.emjuizdefora.com/
-						</MaterialLink.default>
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button color='primary' onClick={this.handleCloseDialog}>
-						Confirmar
-					</Button>
-				</DialogActions>
-			</Dialog>
-		);
-
+			
+	
 		if (this.state.details.status === 'true') {
 			return (
 				<Styles>
@@ -411,19 +396,36 @@ export default class Product extends Component {
 								</Table>
 							</CardContent>
 						</Card>
-						<Snackbar open={this.state.borrowingSuccessful} autoHideDuration={6000} onClose={this.handleCloseAlert.bind(this)}>
-					<Alert onClose={this.handleCloseAlert.bind(this)} severity="success">
-						Livro emprestado com sucesso!
-					</Alert>
-				</Snackbar>
+						<Snackbar
+							open={this.state.borrowingError}
+							autoHideDuration={6000}
+							onClose={this.handleCloseAlert.bind(this)}
+						>
+							<Alert onClose={this.handleCloseAlert.bind(this)} severity='error'>
+								Erro ao emprestar o livro. Tente novamente.
+							</Alert>
+						</Snackbar>
+
+						<Snackbar
+							open={this.state.borrowingSuccessful}
+							autoHideDuration={6000}
+							onClose={this.handleCloseAlert.bind(this)}
+						>
+							<Alert onClose={this.handleCloseAlert.bind(this)} severity='success'>
+								Livro emprestado com sucesso!
+							</Alert>
+						</Snackbar>
 					</Container>
 				</Styles>
 			);
 		}
 		return (
 			<Styles>
-				
-				{notRegisteredDialog}
+				<NotRegisteredDialog
+					open={this.state.notRegisteredDialog}
+					onClose={this.handleCloseDialog}
+				/>
+
 				{this.state.usuario ? (
 					<ConfirmLending
 						open={this.state.borrowingCompleteDialog}
@@ -480,11 +482,15 @@ export default class Product extends Component {
 							</Button>
 						</form>
 					</Card>
-					<Snackbar open={this.state.borrowingSuccessful} autoHideDuration={6000} onClose={this.handleCloseAlert.bind(this)}>
-					<Alert onClose={this.handleCloseAlert.bind(this)} severity="success">
-						Livro emprestado com sucesso!
-					</Alert>
-				</Snackbar>
+					<Snackbar
+						open={this.state.borrowingSuccessful}
+						autoHideDuration={6000}
+						onClose={this.handleCloseAlert.bind(this)}
+					>
+						<Alert onClose={this.handleCloseAlert.bind(this)} severity='success'>
+							Livro emprestado com sucesso!
+						</Alert>
+					</Snackbar>
 				</Container>
 			</Styles>
 		);
