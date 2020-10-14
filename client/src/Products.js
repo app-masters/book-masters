@@ -132,21 +132,20 @@ export default class Product extends Component {
 
 	date = moment().format('DD[/]MM [às] h:mm');
 
-	async enviar(obj, id) {
-		let idi = '5f7f73feba32bc3510031ac3';
-		await api.put(`/books/${idi}`, obj);
-	}
+
 
 	async lendBook(apiData) {
 		try {
-			const response = await api.post(`/lendings/`, { body: apiData });
-			if (!response.ok) {
+			console.log(apiData)
+			const response = await api.post(`/lending/`, apiData);
+
+			//console.log(response)
+			
+			if (response.status != 200) {
 				throw new Error('Não foi possível realizar o empréstimo');
-			} else {
-				console.log(response);
-			}
+			} 
 		} catch (error) {
-			console.log(error);
+			//console.log(error);
 			throw error;
 		}
 	}
@@ -237,19 +236,6 @@ export default class Product extends Component {
 	};
 
 	handleConfirmBorrowing = () => {
-		const apiData = {
-			id_book: this.state.id,
-			person: this.state.usuario,
-		};
-		console.log(apiData);
-		/** USAR API PARA ENVIAR O LIVRO */
-		this.lendBook(apiData);
-		/** USAR API PARA ENVIAR O LIVRO */
-		/*this.setState({
-			borrowingCompleteDialog:false
-		});
-*/
-
 		this.setState({
 			clicked: true,
 		});
@@ -272,7 +258,7 @@ export default class Product extends Component {
 		}
 	};
 
-	valid() {
+	async valid() {
 		const apiData = {
 			id_book: this.state.id,
 			person: this.state.usuario,
@@ -280,9 +266,10 @@ export default class Product extends Component {
 
 		try {
 			/** USAR API PARA ENVIAR O LIVRO */
-			this.lendBook(apiData);
+			await this.lendBook(apiData);
 			/** USAR API PARA ENVIAR O LIVRO */
 		} catch (error) {
+
 			this.setState({
 				clicked: false,
 				borrowingCompleteDialog: false,
@@ -291,6 +278,8 @@ export default class Product extends Component {
 			});
 
 			console.log(error);
+			
+			return;
 		}
 
 		this.setState({
@@ -325,7 +314,7 @@ export default class Product extends Component {
 		}
 
 		if (this.state.clicked) {
-			console.log('ALOU', this.id);
+			//console.log('ALOU', this.id);
 			return (
 				<div>
 					<QrReader
@@ -482,6 +471,15 @@ export default class Product extends Component {
 							</Button>
 						</form>
 					</Card>
+					<Snackbar
+							open={this.state.borrowingError}
+							autoHideDuration={6000}
+							onClose={this.handleCloseAlert.bind(this)}
+						>
+							<Alert onClose={this.handleCloseAlert.bind(this)} severity='error'>
+								Erro ao emprestar o livro. Tente novamente.
+							</Alert>
+						</Snackbar>
 					<Snackbar
 						open={this.state.borrowingSuccessful}
 						autoHideDuration={6000}
