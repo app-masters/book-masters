@@ -75,6 +75,9 @@ Você também pode usar o `Yarn` ao invés do npm, trocando:
 * `npm i` por `yarn i`
 * `npm start` por `yarn start`
 
+## Coleção de rotas no Postman
+
+Para execução de testes de rotas basta ir no diretório \server\docs e importar no postman a coleção. Desta maneira é possível verificar o funcionamento do sistema para as funcionalidades de efetuar um empréstimo, lista de livros, incluir novo livro e atualizar um livro.
 
 ## Contribuidores
 

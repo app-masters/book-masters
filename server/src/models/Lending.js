@@ -21,7 +21,7 @@ const LendingSchema = new Schema(
         lendingDateInit: {
             type: Date
         },
-        lendingDateInit: {
+        lendingDateFinally: {
             type: Date
         },
         returnDate: {
