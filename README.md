@@ -1,49 +1,83 @@
-# Biblioteca Virtual
+# Book Masters
 
-**Por:** [Igor Westermann Lima ](https://github.com/IgorWestermann) < i.westma@gmail.com >. 
+**Este repositório em um fork de:** 
+[DesafioAppMasters](https://github.com/IgorWestermann/DesafioAppMasters)
 
-## 1. Sumário
 
-- [1. Sumário](#1-sumário)
-- [2. O Projeto](#2-funcionando)
-- [3. Inicialização](#3-funcionando)
-- [4. O Design](#3-0-design)
-- [5. Dependências](#5-dependências)
-
-## 2. Sobre o projeto
+## Sobre o projeto
 O projeto consiste na criação de um biblioteca virtual como desafio do processo de seleção de estágio da empresa [App Masters](https://appmasters.io/en/)
 
-### Backend Node
 
-Foi utilizada a [API](https://github.com/caiocesaroliveira/api-node-express-mongo) para Backend Node do repositório do [caiocesaroliveira](https://github.com/caiocesaroliveira).
+O pojeto inicial utilizou como base o frontend e o backend dos repositórios:
+* Frontend por Igor Westermann: 
+[DesafioAppMasters](https://github.com/IgorWestermann/DesafioAppMasters)
+
+* Backend por Caio César: 
+[api-node-express-mongo](https://github.com/caiocesaroliveira/api-node-express-mongo) 
 
 
-## 3. Inicialização
+## Banco de dados 
 
-Para inicializar o projeto primeiro, clone o repositório atraves do comando no terminal 
-`git clone https://github.com/IgorWestermann/DesafioAppMasters.git`
-`cd desafio-app-masters`
-E instale as dependencias.
-   - `npm i` para se estiver usando o NPM.
-   - `yarn i` para Yarn.
-Após instalar as dependências execute o projeto usando:
-   - `npm start` para se estiver usando o NPM.
-   - `yarn start` para Yarn.
+O banco de dados utilizado no projeto é o [MongoDB](https://www.mongodb.com/).
 
-## 4. O Design
+Para executar o servidor corretamente, é necessário configurá-lo localmente e informar as chaves contidas no arquivo `.env`
 
-Para o design da aplicação, decidi utilizar padrões simples mas moderno,utilizando algumas cores referentes a empresa [App Masters](https://appmasters.io/en/).
 
-## 5. Dependências 
+## Inicialização
 
-Para execução do projeto, utilizei as seguintes dependência: 
-utilizei a biblioteca visual Matirial-UI, por uma questão de afinidade.  
+O projeto consiste de duas partes em pastas separadas:
+* O servidor, que contém nossa API: `server`
+* O cliente, que é nosso frontend: `client`
 
-#### 5.1. [Material-UI](https://material-ui.com/)
-Utilizei a biblioteca visual por uma questão de afinidade.  
-#### 5.2. [React Router Dom](https://reactrouter.com/)
-O React Router Dom é uma das bibliotecas mais utilizadas para configurar navegação. 
-#### 5.3. [Styled Components](https://styled-components.com/)
-O Styled Components facilita muito na hora de criar e estilizar um componente, por isso foi escolhido.  
-#### 5.4. [Moment.js](https://momentjs.com/)
-Para receber a data utilizei essa biblioteca.
+Para configurar o projeto, clone o repositório atraves do comando no terminal:
+
+`git clone https://github.com/app-masters/book-masters.git`
+
+E caminhe para a pasta clonada:
+`cd book-masters`
+
+### Variáveis de ambiente
+
+Tanto na pasta `server` quanto na pasta `client`, devem existir arquivos chamados `.env` com variáveis de ambiente.
+
+Para o servidor:
+
+* Caminhe para a pasta `server`
+* Crie um arquivo `.env`
+* Copie o conteúdo de `.env.sample` para o arquivo criado
+* Informe os valores necessários (dados para conectar com seu banco localmente, etc)
+
+Da mesma forma, para o cliente:
+
+* Caminhe para a pasta `client`
+* Crie um arquivo `.env`
+* Copie o conteúdo de `.env.sample` para o arquivo criado
+* Informe os valores necessários (url para a API, etc)
+
+### Instalar dependências e iniciar
+
+Feito isso, caminhe para a pasta do servidor e instale as dependências e inicialize o projeto:
+```
+cd server
+npm i 
+npm start 
+```
+
+Da mesma forma, para o cliente:
+```
+cd client
+npm i 
+npm start 
+```
+
+Você também pode usar o `Yarn` ao invés do npm, trocando:
+
+* `npm i` por `yarn i`
+* `npm start` por `yarn start`
+
+
+## Contribuidores
+
+Vários participantes do processo seletivo contribuíram para o projeto, dando sugestões e programando o sistema.
+
+Você pode conferir quem participou navegando para a aba [contribuidores](https://github.com/app-masters/book-masters/graphs/contributors).
