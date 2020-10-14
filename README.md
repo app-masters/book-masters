@@ -16,6 +16,12 @@ O pojeto inicial utilizou como base o frontend e o backend dos repositórios:
 [api-node-express-mongo](https://github.com/caiocesaroliveira/api-node-express-mongo) 
 
 
+## Banco de dados 
+
+O banco de dados utilizado no projeto é o [MongoDB](https://www.mongodb.com/).
+
+Para executar o servidor corretamente, é necessário configurá-lo localmente e informar as chaves contidas no arquivo `.env`
+
 
 ## Inicialização
 
@@ -69,12 +75,6 @@ Você também pode usar o `Yarn` ao invés do npm, trocando:
 * `npm i` por `yarn i`
 * `npm start` por `yarn start`
 
-
-## Banco de dados 
-
-O banco de dados utilizado é o [MongoDB](https://www.mongodb.com/).
-
-Para executar o servidor corretamente, é necessário configurá-lo localmente e informar as chaves corretas no arquivo `.env`.
 
 ## Contribuidores
 
