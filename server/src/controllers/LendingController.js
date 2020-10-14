@@ -5,7 +5,7 @@ const verifyValidEmail = (email) =>{
   const verification = /\w+\@\w+\.(com|\edu|\org)(\.br)?/;
 
   if(verification.exec(email))
-    return email;
+    return email.trim().toLowerCase();
   else
     return null;
   
@@ -22,31 +22,39 @@ export default {
 
     return res.json(response)
   },
-  async create(req, res) {
-    const response = await Lending.create(req.body)
-
-    return res.json(response)
-  },
-
   async lending(req, res) {
     const lending = await req.body;
     const email = verifyValidEmail(lending.person.email);
-    const lendingJson = { 
-      id_book:lending.id_book, 
-      person: { 
-        email: email, 
-        name:lending.person.name, 
-        phoneNumber:lending.person.phoneNumber
-      },
-    };
+    if(!email)
+      return null;
+    const user = await User.find({ email});
     
-    const user = await User.find({ email: lendingJson.person.email});
-    
-    if(lendingJson.person.email === user[0]?.email){
-      return res.json("Okay");
+    let idUser ;
+    if(user.length>0){
+      console.log(user[0]._id)
+      idUser = user[0]._id;
+    }else{
+      const userJson = {
+        email: email,
+        name: lending.person.name,
+        phoneNumber: lending.person.phoneNumber
+      }
+       let newUser = await User.create(userJson);
+       let responseUser = res.json(newUser)
+       console.log(responseUser._id)
+       idUser = newUser._id;
     }
 
-    return res.json("NotOkay");
+    const lendingJson = { 
+      idBook:lending.id_book, 
+      idUser: idUser
+      
+    };
+    
+    const response = await Lending.create(lendingJson);
+    
+    return res.json(response);
+
   },
   async update(req, res) {
     const response = await Lending.findOneAndUpdate({ _id: req.params.id}, req.body, {

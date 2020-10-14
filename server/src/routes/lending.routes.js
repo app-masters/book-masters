@@ -6,7 +6,6 @@ const lendingRouter = Router()
 
 lendingRouter.get("/lendings/", LendingController.getAll)
 lendingRouter.get("/lendings/:id", LendingController.getById)
-lendingRouter.post("/lendings/", LendingController.create)
 lendingRouter.put("/lendings/:id", LendingController.update)
 lendingRouter.delete("/lendings/:id", LendingController.delete)
 lendingRouter.post("/lending/", LendingController.lending)
