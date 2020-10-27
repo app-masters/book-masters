@@ -16,7 +16,7 @@ import {
 import { SearchRounded } from '@material-ui/icons';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import fetchBookGoogle from './googleBooksAPI';
+import fetchBookGoogle from './services/googleBooksAPI';
 import api from './services/api';
 import SaveIcon from '@material-ui/icons/Save';
 

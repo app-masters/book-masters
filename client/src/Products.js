@@ -28,8 +28,8 @@ import { Alert } from '@material-ui/lab';
 import * as MaterialLink from '@material-ui/core/Link';
 import api from './services/api';
 import QrReader from 'react-qr-reader';
-import ConfirmLending from './Components/ConfirmLending';
-import NotRegisteredDialog from './Components/NotRegisteredDialog';
+import ConfirmLending from './components/ConfirmLending';
+import NotRegisteredDialog from './components/NotRegisteredDialog';
 
 export const Styles = styled.div`
 	.MuiContainer-root {
