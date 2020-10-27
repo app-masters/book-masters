@@ -9,20 +9,19 @@ import BookCard from "./components/BookCard";
 const Books = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const books = props.books;
-  console.log(props);
+  const {books} = props;
 
 
   
 
 
-  if(errorMessage != ''){
-    return <h3>{errorMessage}</h3>
-  }
-  if(!isLoaded){
-    //console.log(this.state.isLoaded)
-    return <LoadingSpinner/>
-  }
+  // if(errorMessage != ''){
+  //   return <h3>{errorMessage}</h3>
+  // }
+  // if(!isLoaded){
+  //   //console.log(this.state.isLoaded)
+  //   return <LoadingSpinner/>
+  // }
 
   let booksCards = books.map((book) => {
     //console.log("teste", book);

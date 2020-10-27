@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Books from "./Books";
 import Header from './components/Header'
 import api from "./services/api";
 
 export default function Home() {
 
-  const fetchbooks = async () => {
+  const [books, setBooks] = useState([]);
+
+  const getData = async () => {
     try {
       const response = await api.get('/books/');
       if (response.status !== 200) {
         throw Error(response.statusText);
       }
 
-      const json = await response.data;
+      const json = response.data;
 
-      return json.sort((bookA, bookB) => {
+      const fetchbooks = json.sort((bookA, bookB) => {
         if(bookA.status === bookB.status){
           if(bookA.title < bookB.title ){return -1;}
           if(bookA.title > bookB.title ){return 1;}
@@ -23,19 +25,23 @@ export default function Home() {
           return bookA.status === bookB.status ? 0 : bookA.status? 1 : -1;
         }
       });
+      console.log(fetchbooks);
+      setBooks(fetchbooks);
 
     } catch (error) {
-
+      
     }
   }
+  
+  useEffect( () => {
+    getData()
+  }, [])
 
 
   return (
     <React.Fragment>
         <Header/>
-        {fetchbooks().then( books => {
-          return <Books books={books}/>
-        })}
+        <Books books={books}/>
     </React.Fragment>
   );
 }
