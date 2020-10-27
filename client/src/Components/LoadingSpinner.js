@@ -1,24 +1,15 @@
-
 import React from "react";
 import ReactLoading from "react-loading";
-import styled from "styled-components";
-
-export const Styles = styled.div`
-    .root{
-        display:flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-`;
+import { spinner } from "../assets/css/makeStyles";
 
 const LoadingSpinner = () => {
+    const classes = spinner();
+
     return (
-        <Styles>
-            <div className='root'>
-                <ReactLoading type="spin" color="#0ab6ff" />
-            </div>
-        </Styles>
+        <div className={classes.spinner}>
+            <ReactLoading type="spin" color="#0ab6ff" />
+        </div>
+
     )
 };
 

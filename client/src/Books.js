@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
 import api from "./services/api";
-import LoadingSpinner from "./Components/LoadingSpinner";
-import BookCard from "./Components/BookCard";
+import LoadingSpinner from "./components/LoadingSpinner";
+import BookCard from "./components/BookCard";
 
 class Books extends Component {
   constructor(props) {
@@ -16,6 +15,7 @@ class Books extends Component {
       livros: [],
     };
   }
+
 
 
   async fetchBooks() {
@@ -87,12 +87,11 @@ class Books extends Component {
 
     return (
       <div className="root">
-        <CssBaseline />
         <Container maxWidth="md">
           <Grid
             container
             spacing={2}
-            style={{ marginTop: "24px", marginBottom: "24px" }}
+            style={{ marginTop: "24px", marginBottom: "24px", minHeight:"80vh" }}
           >
             {booksCards}
           </Grid>
