@@ -12,7 +12,6 @@ export const Styles = styled.div`
 
 `;
 
-
 const LoadingSpinner = () => {
     return (
         <Styles>
@@ -21,7 +20,6 @@ const LoadingSpinner = () => {
             </div>
         </Styles>
     )
-    
 };
 
 export default LoadingSpinner;

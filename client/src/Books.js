@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import BookCardAlugado from "./Components/BookCardAlugado";
-import BookCardDisponivel from "./Components/BookCardDisponivel";
+
 import api from "./services/api";
 import LoadingSpinner from "./Components/LoadingSpinner";
+import BookCard from "./Components/BookCard";
 
 class Books extends Component {
   constructor(props) {
@@ -75,21 +75,18 @@ class Books extends Component {
     }
 
     let booksCards = this.state.livros.map((book) => {
-      console.log("teste", book);
-      return (book.status === "true") ? (
-        <Grid item xs={12} sm={6} md={4}>
-          <BookCardAlugado book={book} />
+      //console.log("teste", book);
+      return (
+        <Grid item xs={12} sm={6} md={4} >
+            <BookCard book={book} />
         </Grid>
-      ) : (
-        <Grid item xs={12} sm={6} md={4}>
-          <BookCardDisponivel book={book} />
-        </Grid>
-      );
+      )
+      
     });
 
 
     return (
-      <React.Fragment>
+      <div className="root">
         <CssBaseline />
         <Container maxWidth="md">
           <Grid
@@ -100,7 +97,7 @@ class Books extends Component {
             {booksCards}
           </Grid>
         </Container>
-      </React.Fragment>
+      </div>
     );
   }
 }
