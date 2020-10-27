@@ -9,49 +9,11 @@ import BookCard from "./components/BookCard";
 const Books = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [books, setBooks] = useState([]);
+  const books = props.books;
+  console.log(props);
 
 
-  const fetchBooks = async () => {
-    return await api.get('/books/');
-
-  }
-
-  useEffect(async () => {
-    try {
-      const response = await fetchBooks();
-      //console.log(response)
-      if (response.status !== 200) {
-        throw Error(response.statusText);
-      }
-
-      const json = await response.data;
-      
-      const sortedBooks = json.sort((bookA, bookB) => {
-        if(bookA.status === bookB.status){
-          if(bookA.title < bookB.title ){return -1;}
-          if(bookA.title > bookB.title ){return 1;}
-          return 0;
-        } else {
-          return bookA.status === bookB.status ? 0 : bookA.status? 1 : -1;
-        }
-      });
-
-      setErrorMessage('');
-      setIsLoaded(true);
-      setBooks(sortedBooks);
-      
-
-    } catch (error) {
-
-      setErrorMessage(error.message);
-      setIsLoaded(false);
-      setBooks([]);
-
-      console.log(error);
-  }
-}, []) 
-
+  
 
 
   if(errorMessage != ''){
