@@ -1,19 +1,14 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-
-import api from "./services/api";
-import LoadingSpinner from "./components/LoadingSpinner";
 import BookCard from "./components/BookCard";
+import { booksContainer } from './assets/css/makeStyles'
 
 const Books = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const {books} = props;
-
-
-  
-
+  const classes = booksContainer();
 
   // if(errorMessage != ''){
   //   return <h3>{errorMessage}</h3>
@@ -24,28 +19,23 @@ const Books = (props) => {
   // }
 
   let booksCards = books.map((book) => {
-    //console.log("teste", book);
     return (
-      <Grid item xs={12} sm={6}  md={4} >
-          <BookCard book={book} />
-      </Grid>
+
+      <BookCard book={book} />
     )
-    
   });
 
 
   return (
-    <div className="root">
-      <Container maxWidth="lg">
-        <Grid
-          container
-          spacing={2}
-          style={{ marginTop: "24px", marginBottom: "24px", minHeight:"80vh" }}
-        >
-          {booksCards}
-        </Grid>
-      </Container>
-    </div>
+
+
+    <Container 
+      maxWidth="lg"
+      className={classes.container}
+    >
+        {booksCards}
+    </Container>
+
   );
  
 }
