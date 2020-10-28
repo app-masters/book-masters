@@ -26,7 +26,7 @@ const Books = (props) => {
   let booksCards = books.map((book) => {
     //console.log("teste", book);
     return (
-      <Grid item xs={12} sm={6} >
+      <Grid item xs={12} sm={6}  md={4} >
           <BookCard book={book} />
       </Grid>
     )
@@ -36,7 +36,7 @@ const Books = (props) => {
 
   return (
     <div className="root">
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Grid
           container
           spacing={2}

@@ -11,6 +11,10 @@ import jonathanThomazImg from "./assets/img/jonathan-thomaz.jpg";
 import brunoMarcosImg from "./assets/img/bruno-marcos.jpg";
 import laviniaBeghiniImg from "./assets/img/lavinia-beghini.jpg";
 import caioCesarImg from "./assets/img/caio-cesar.jpg";
+import igorWImg from "./assets/img/igor-w.jpg";
+import igorBaio from "./assets/img/igor-baio.jpg";
+
+import PersonCard from "./components/PersonCard";
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -19,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     heroContent: {
       backgroundColor: theme.palette.background.paper,
       paddingTop: 40,
-      height: "50vh",
+      marginBottom:'100px'
     },
     heroText: {
       fontFamily: "Poppins, sans-serif",
@@ -51,10 +55,50 @@ const useStyles = makeStyles((theme) => ({
     },
     secondBox: {
         backgroundColor: "#ffffff",
+        marginBottom: 20,
     }
   }));
   
 
+const pessoas = [
+    {
+        nome: "Jonathan Thomaz",
+        image: jonathanThomazImg,
+        github: "https://bit.ly/3nrod2a"
+    },
+    {
+        nome: "Bruno Pinheiro",
+        image: brunoMarcosImg,
+        github: "https://bit.ly/3iFg0E4"
+    },
+    {
+        nome: "Gabriel Silva",
+        image: gabrielSilvaImg,
+        linkedin: "https://bit.ly/2GAYt2E"
+    },
+    {
+        nome: "Lavínia Beghini",
+        image: laviniaBeghiniImg,
+        linkedin: "https://bit.ly/3lrFLJO"
+    },
+    {
+        nome: "Caio César",
+        image: caioCesarImg,
+        github: "https://bit.ly/3lqd8MV"
+    },
+    {
+        nome: "Igor Westermann",
+        image: igorWImg,
+        linkedin: "https://www.linkedin.com/in/igor-westermann-15394216a/"
+    },
+    {
+        nome: "Igor Baio",
+        image: igorBaio,
+        github: "https://github.com/IgorBaio"
+    },
+  ]
+  
+  
 export default function About() {
     const classes = useStyles();
 
@@ -89,120 +133,16 @@ export default function About() {
                     >
                         Desenvolvedores    
                     </Typography>
-                </Box>  
-            </Container>
-            <Container fluid>
-                <Box
-                    className={classes.secondBox}>
-                    <Grid container className={classes.spacing}>
-                        <Grid item xs={12} md={3}>
-                            <img width="200" height="200" src={gabrielSilvaImg}></img>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                className={classes.heroDev}
-                                display="flex"
-                                component="h3"
-                                align="justify"
-                            >
-                                Gabriel Silva
-                            </Typography>
-                            <Typography
-                                className={classes.link}
-                                display="flex"
-                                align="justify"
-                            >
-                                <a target="_blank" href="https://bit.ly/2GAYt2E">https://bit.ly/2GAYt2E</a>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.spacing}>
-                        <Grid item xs={12} md={3}>
-                            <img width="200" height="200" src={jonathanThomazImg}></img>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                className={classes.heroDev}
-                                display="flex"
-                                component="h3"
-                                align="justify"
-                            >
-                                Jonathan Thomaz
-                            </Typography>
-                            <Typography
-                                className={classes.link}
-                                display="flex"
-                                align="justify"
-                            >
-                                <a target="_blank" href="https://bit.ly/3nrod2a">https://bit.ly/3nrod2a</a>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.spacing}>
-                        <Grid item xs={12} md={3}>
-                            <img width="200" height="200" src={brunoMarcosImg}></img>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                className={classes.heroDev}
-                                display="flex"
-                                component="h3"
-                                align="justify"
-                            >
-                                Bruno Marcos
-                            </Typography>
-                            <Typography
-                                className={classes.link}
-                                display="flex"
-                                align="justify"
-                            >
-                                <a target="_blank" href="https://bit.ly/3iFg0E4">https://bit.ly/3iFg0E4</a>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.spacing}>
-                        <Grid item xs={12} md={3}>
-                            <img width="200" height="200" src={laviniaBeghiniImg}></img>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                className={classes.heroDev}
-                                display="flex"
-                                component="h3"
-                                align="justify"
-                            >
-                                Lavínia Beghini
-                            </Typography>
-                            <Typography
-                                className={classes.link}
-                                display="flex"
-                                align="justify"
-                            >
-                                <a target="_blank" href="https://bit.ly/3lrFLJO">https://bit.ly/3lrFLJO</a>
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container className={classes.spacing}>
-                        <Grid item xs={12} md={3}>
-                            <img width="200" height="200" src={caioCesarImg}></img>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Typography
-                                className={classes.heroDev}
-                                display="flex"
-                                component="h3"
-                                align="justify"
-                            >
-                                Caio César
-                            </Typography>
-                            <Typography
-                                className={classes.link}
-                                display="flex"
-                                align="justify"
-                            >
-                                <a target="_blank" href="https://bit.ly/3lqd8MV">https://bit.ly/3lqd8MV</a>
-                            </Typography>
-                        </Grid>
+
+                    
+                    <Grid className={classes.secondBox} container justify="center" spacing={2}>
+                        {pessoas.map(p => {
+                            return (
+                                <Grid item xs={12} md={6}  >
+                                    <PersonCard image={p.image} name={p.nome} github={p.github} linkedin={p.linkedin} />
+                                </Grid>
+                            )
+                        })}
                     </Grid>
                 </Box>     
             </Container>
