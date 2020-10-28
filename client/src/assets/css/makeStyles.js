@@ -1,4 +1,5 @@
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { green, red } from '@material-ui/core/colors';
 
 
 export const navbar = makeStyles((theme) => ({
@@ -81,3 +82,62 @@ export const body = makeStyles((theme) => ({
     height: "80vh",
   },
 }));
+
+export const booksContainer = makeStyles((theme) => ({
+  container:{
+    alignItems:"center", 
+    justifyContent:"center", 
+    display:"flex", 
+    flexWrap:"wrap"
+  },
+}));
+
+
+
+export const bookCard = makeStyles((theme) => ({
+		root: {
+      width: 345,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
+      margin: 20,
+		},
+		bookStatus: {
+			width: '100%',
+			display: 'flex',
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'center',
+			margin: 10,
+    },
+    status:{
+      margin: "0 20px",
+    },
+    green: {
+      color: '#fff',
+      backgroundColor: green[500],
+    },
+    red: {
+      color: '#fff',
+      backgroundColor: red[500],
+    },
+    cover : {
+      height: "200px",
+      width: "auto",
+    },
+    header: {
+      height:120,
+    },
+    footer: {
+      display:"flex",
+      justifyContent: "flex-start",
+      width:"100%",
+    },
+		btnForm: (theme) => ({
+			border: `1px solid ${theme.color}`,
+      color: theme.color,
+      alignSelf:"flex-start",
+		}),
+	})
+);
