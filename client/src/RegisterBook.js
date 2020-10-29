@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import fetchBookGoogle from './services/googleBooksAPI';
 import api from './services/api';
 import SaveIcon from '@material-ui/icons/Save';
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import {register} from "./assets/css/makeStyles"
 
@@ -24,6 +24,7 @@ import {register} from "./assets/css/makeStyles"
 const RegisterBook = () => {
 
 	const classes = register();
+	const history = useHistory();
 
 	const [ISBN, setISBN] = useState("");
 	const [title, setTitle] = useState("");
@@ -34,9 +35,14 @@ const RegisterBook = () => {
 	const [coverURL, setCoverURL] = useState("");
 	const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
+	const [redirect, setRedirect] = useState(false);
 
 	async function enviar(obj) {
-		await api.post('/books', obj);
+		try {
+			await api.post('/books', obj);
+		} catch (e) {
+			throw e;
+		}
 		
 	}
 
@@ -61,8 +67,13 @@ const RegisterBook = () => {
 		}
 
 		console.log(serverBook)
-		enviar(serverBook);
-
+		try {
+			enviar(serverBook);
+			//setRedirect(true);
+		} catch (error) {
+			console.log(error.message);
+		}
+		
 
 	}, [ISBN, title, description, authors, editor, tags, coverURL, year, edition]);
 
@@ -103,6 +114,10 @@ const RegisterBook = () => {
 		}
 
 	}, [ISBN]);
+
+	if (redirect) {
+		return <Redirect to='/'/>;
+	}
 
 
 	return (

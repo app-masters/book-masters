@@ -9,8 +9,8 @@ export const Footer = () => {
   const classes = footer();
 
   return(
-    <BottomNavigation className={classes.footer}>
-      <Container fluid>
+    <Container  className={classes.footer}>
+      <Container  >
         <Typography variant="h6" align="center" gutterBottom>
           App Masters
         </Typography>
@@ -25,6 +25,6 @@ export const Footer = () => {
         </Typography>
       
       </Container>
-    </BottomNavigation>
+    </Container>
   );
 }

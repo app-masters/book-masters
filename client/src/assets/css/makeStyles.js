@@ -35,8 +35,10 @@ export const navbar = makeStyles((theme) => ({
 export const footer = makeStyles((theme) => ({
     footer: {
         bottom: 0,
+        margin: 0,
         height: "auto",
         width: "100%",
+        maxWidth: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
