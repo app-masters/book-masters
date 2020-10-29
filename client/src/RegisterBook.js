@@ -69,7 +69,7 @@ const RegisterBook = () => {
 		console.log(serverBook)
 		try {
 			enviar(serverBook);
-			//setRedirect(true);
+			setRedirect(true);
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -109,8 +109,6 @@ const RegisterBook = () => {
 
 				setAuthors( book.volumeInfo.authors)
 			}
-
-			// setYear(book.volumeInfo.publishedDate)
 		}
 
 	}, [ISBN]);
