@@ -35,6 +35,9 @@ const RegisterBook = () => {
 	const [coverURL, setCoverURL] = useState("");
 	const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
+
+	const [ISBNError, setISBNError] = useState(false);
+
 	const [redirect, setRedirect] = useState(false);
 
 	async function enviar(obj) {
@@ -82,34 +85,28 @@ const RegisterBook = () => {
 	const searchGoogleAPI = useCallback(async () => {
 
 		console.log("GoogleAPI")
+		try {
 
-		const bookRes = await fetchBookGoogle(ISBN);
+			const bookRes = await fetchBookGoogle(ISBN);
+			if(bookRes){
+				setISBNError(false);
+				setTitle(bookRes.title)
+				setDescription(bookRes.description)
+				setAuthors(bookRes.authors)
+				setEditor(bookRes.editor)
+				setCoverURL(bookRes.coverURL)
+				setTags(bookRes.tags)
+				setYear(bookRes.year)
 
-		if (bookRes.totalItems > 0) {
-
-			const book = bookRes.items[0]
-			console.log(book)
-			setTitle(book.volumeInfo.title)
-			setDescription(book.volumeInfo.description)
-			setAuthors(book.volumeInfo.authors)
-			setEditor(book.volumeInfo.publisher)
-			if (book.volumeInfo.imageLinks) {
-				setCoverURL(book.volumeInfo.imageLinks.thumbnail)
+			} else {
+				setISBNError(true);
 			}
 
-
-			if (book.categories) {
-				const cat = book.categories
-				setTags(cat.reduce((tag, val) => {
-					val += tag + ";";
-				}, ['']))
-			}
-
-			if (book.volumeInfo.authors) {
-
-				setAuthors( book.volumeInfo.authors)
-			}
+		} catch (e) {
+			console.log(e.message)
+			setISBNError(true);
 		}
+
 
 	}, [ISBN]);
 
@@ -119,7 +116,7 @@ const RegisterBook = () => {
 
 
 	return (
-		<Container className={classes.container} maxWidth="md" fluid>
+		<Container className={classes.container} maxWidth="md">
 			
 			<Typography variant='h3' className={classes.title}>Registrar Novo Livro</Typography>
 			
@@ -133,6 +130,7 @@ const RegisterBook = () => {
 							label='ISBN'
 							style={{ margin: 8 }}
 							placeholder='ISBN'
+							error={ISBNError}
 							fullWidth
 							value={ISBN}
 							onChange={(val) => setISBN(val.target.value)}

@@ -10,7 +10,6 @@ function Navbar() {
 
   const classes = navbar();
 
-
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
