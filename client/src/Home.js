@@ -40,8 +40,14 @@ export default function Home() {
 
   return (
     <React.Fragment>
-        <Header/>
-        <Books books={books}/>
+        {books.length > 0 ? 
+          <React.Fragment>
+            <Header/>
+            <Books books={books}/> 
+          </React.Fragment>
+        : <Books loading/>
+        }
+        
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles} from "@material-ui/core/styles";
 import { green, red } from '@material-ui/core/colors';
 
 
@@ -141,3 +141,82 @@ export const bookCard = makeStyles((theme) => ({
 		}),
 	})
 );
+
+export const about = makeStyles((theme) => ({
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    paddingTop: 40,
+    marginBottom:'100px'
+  },
+  heroText: {
+    fontFamily: "Poppins, sans-serif",
+    color: "#000000",
+    fontSize: 50,
+    marginTop: 20,
+  },
+  description: {
+      fontFamily: "Poppins, sans-serif",
+      color: "#000000",
+      fontSize: 18,
+      marginTop: 5,
+      padding: 15,
+  },
+  heroDev: {
+      fontFamily: "Poppins, sans-serif",
+      color: "#000000",
+      fontSize: 30,
+      padding: 15,
+      marginTop: 5,
+  },
+  link: {
+      fontFamily: "Poppins, sans-serif",
+      fontSize: 15,
+      paddingLeft: 15,
+  },
+  spacing: {
+      marginBottom: 5,
+  },
+  secondBox: {
+      backgroundColor: "#ffffff",
+      marginBottom: 20,
+  },
+  container:{
+    marginTop:40,
+  }
+}));
+
+export const register = makeStyles((theme) => ({
+  container:{
+    padding:0,
+    marginTop:60,
+    textAlign:"center",
+  },
+  title:{
+    paddingTop: 40,
+  },
+}
+));
+
+export const personStyle = makeStyles((theme) => ({
+  content: {
+   display: 'flex',
+   flexDirection: 'row'
+  },
+  info: {
+      display: 'flex',
+      width: '100%',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      textAlign:'center',
+      paddingLeft: 10
+  },
+  image:{
+      borderRadius: '50%',
+      width: "150px",
+      height: "150px",
+  },
+}));

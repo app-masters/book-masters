@@ -19,11 +19,11 @@ function Navbar() {
           <Button className={classes.btn} href="/">
             Book Masters
           </Button>
-          <Button className={classes.btn} href="/about">
-            Sobre
-          </Button>
           <Button className={classes.btn} href="/register">
             Registro
+          </Button>
+          <Button className={classes.btn} href="/about">
+            Sobre
           </Button>
         </Toolbar>
       </AppBar>
