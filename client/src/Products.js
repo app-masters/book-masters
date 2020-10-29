@@ -297,6 +297,12 @@ export default class Product extends Component {
 		});
 	};
 
+	handleQRCodeError = () => {
+		this.setState({
+			borrowingError: true
+		});
+	};
+
 	render() {
 		moment.locale('pt-BR');
 		function myFunction() {
@@ -417,7 +423,7 @@ export default class Product extends Component {
 						onConfirm={this.handleConfirmBorrowing}
 						name={this.state.usuario.name}
 						handleReturnQRCode={this.handleReturnQRCode}
-						handleError={this.handleError}
+						handleError={this.handleQRCodeError}
 						handleScan={this.handleScan}
 					/>
 				) : (
