@@ -1,5 +1,8 @@
 const axios = require('axios').default;
 
+
+
+
 /**
  * 
  * @param {string} isbn: isbn do livro a ser procurado
@@ -8,10 +11,43 @@ const axios = require('axios').default;
  * 
  */
 const fetchBookGoogle = async (isbn) => {
-    return axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn)
+    try{
+
+        const response = await axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn);
+
+        if(response.status !== 200)  
+            throw new Error("Erro ao buscar livro.")
+
+        const bookData = await response.data
+        const bookResp = {};
+      
+        if (bookData.totalItems > 0) {
+            const {title, description, authors, publisher, imageLinks, categories, publishedDate} =  bookData.items[0].volumeInfo;
+
+            console.log(bookData.items[0])
+
+            bookResp.title = title ? title : "";
+            bookResp.description = description ? description : "";
+            bookResp.authors = authors ? authors.join(',') : "";
+            bookResp.tags = categories ? categories.join(',') : "";
+            bookResp.editor = publisher ? publisher : ""
+            bookResp.coverURL = imageLinks.thumbnail ? imageLinks.thumbnail : "";
+            bookResp.year = publishedDate ? new Date(publishedDate).getFullYear() : "" ;
+            //console.log(bookResp)
+		
+        }
+
+        
+        return bookResp
+    } catch (err) {
+        throw err
+    }
+    /*
+    return 
     .then(function (response) {
         return response.data
     })
+    */
 }
 
 export default fetchBookGoogle;
