@@ -2,7 +2,6 @@ import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Hidden from "@material-ui/core/Hidden";
 import Toolbar from "@material-ui/core/Toolbar";
-import { useTheme } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import { navbar } from "../assets/css/makeStyles"
 
