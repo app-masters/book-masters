@@ -199,3 +199,24 @@ export const register = makeStyles((theme) => ({
   },
 }
 ));
+
+export const personStyle = makeStyles((theme) => ({
+  content: {
+   display: 'flex',
+   flexDirection: 'row'
+  },
+  info: {
+      display: 'flex',
+      width: '100%',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      textAlign:'center',
+      paddingLeft: 10
+  },
+  image:{
+      borderRadius: '50%',
+      width: "150px",
+      height: "150px",
+  },
+}));

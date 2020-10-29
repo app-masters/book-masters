@@ -5,8 +5,7 @@ import { booksContainer } from './assets/css/makeStyles'
 import LoadingSpinner from './components/LoadingSpinner'
 
 const Books = (props) => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
+
   const {books} = props;
   const classes = booksContainer();
 
