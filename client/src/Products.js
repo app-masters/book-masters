@@ -290,11 +290,6 @@ export default class Product extends Component {
 		//this.enviar(this.state.usuario, this.id)
 	}
 
-	handleLogout = () => {
-		localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
-		window.location.reload();
-	};
-
 	handleCloseAlert = () => {
 		this.setState({
 			borrowingSuccessful: false,
@@ -312,7 +307,7 @@ export default class Product extends Component {
 				x.style.display = 'block';
 			}
 		}
-
+/*
 		if (this.state.clicked) {
 			//console.log('ALOU', this.id);
 			return (
@@ -328,7 +323,7 @@ export default class Product extends Component {
 			);
 		}
 
-
+*/
 			
 	
 		if (this.state.details.status === 'true') {
@@ -421,6 +416,9 @@ export default class Product extends Component {
 						onClose={this.handleCloseDialogBorrowing}
 						onConfirm={this.handleConfirmBorrowing}
 						name={this.state.usuario.name}
+						handleReturnQRCode={this.handleReturnQRCode}
+						handleError={this.handleError}
+						handleScan={this.handleScan}
 					/>
 				) : (
 					''
