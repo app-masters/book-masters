@@ -35,6 +35,7 @@ const RegisterBook = () => {
 	const [coverURL, setCoverURL] = useState("");
 	const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
+	const [redirect, setRedirect] = useState(false);
 
 	async function enviar(obj) {
 		try {
@@ -68,7 +69,7 @@ const RegisterBook = () => {
 		console.log(serverBook)
 		try {
 			enviar(serverBook);
-			history.push('/');
+			//setRedirect(true);
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -113,6 +114,10 @@ const RegisterBook = () => {
 		}
 
 	}, [ISBN]);
+
+	if (redirect) {
+		return <Redirect to='/'/>;
+	}
 
 
 	return (
