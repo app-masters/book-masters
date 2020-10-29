@@ -12,7 +12,7 @@ export default function Header() {
   return (
       <main>
         <Box className={classes.heroContent}>
-          <Container fluid>
+          <Container >
             <Typography
               className={classes.heroText}
               component="h1"

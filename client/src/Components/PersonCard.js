@@ -4,31 +4,11 @@ import React from 'react';
 import {FaLinkedin, FaGithub} from 'react-icons/fa'
 
 import { Card, CardContent, Link, makeStyles, Typography } from '@material-ui/core';
+import { personStyle } from "../assets/css/makeStyles"
 
-const useStyles = makeStyles((theme) => ({
-    content: {
-     display: 'flex',
-     flexDirection: 'row'
-    },
-    info: {
-        display: 'flex',
-        width: '100%',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        textAlign:'center',
-        paddingLeft: 10
-    },
-    image:{
-        borderRadius: '50%',
-        width: "150px",
-        height: "150px",
-    }
-  }));
-  
 
 const PersonCard = (props) => {
-    const classes = useStyles();
+    const classes = personStyle();
 
     return (
         <Card elevation={3}>

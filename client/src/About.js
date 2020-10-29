@@ -13,7 +13,7 @@ export default function About() {
     const classes = about();
 
     return (
-            <Container fluid className={classes.container}>
+            <Container className={classes.container}>
                 <Box
                     className={classes.heroContent}>
                     <Typography
