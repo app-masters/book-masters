@@ -1,16 +1,17 @@
+
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
-import Hidden from "@material-ui/core/Hidden";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Button } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 import { navbar } from "../assets/css/makeStyles"
 
-function Navbar() {
+
+const Navbar = () => {
 
   const classes = navbar();
-
+  
   return (
-    <div className={classes.root}>
+    <Container className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Button className={classes.btn} href="/">
@@ -24,9 +25,7 @@ function Navbar() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Hidden smUp implementation="css">
-      </Hidden>
-    </div>
+    </Container>
   );
 }
 

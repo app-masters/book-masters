@@ -1,4 +1,5 @@
-import { makeStyles} from "@material-ui/core/styles";
+
+import { makeStyles } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 
 
@@ -58,7 +59,6 @@ export const spinner = makeStyles((theme) => ({
         minHeight: "80vh",
     },
   }));
-
   
 export const header = makeStyles((theme) => ({
   icon: {
@@ -78,7 +78,6 @@ export const header = makeStyles((theme) => ({
   },
 }));
 
-
 export const body = makeStyles((theme) => ({
   body: {
     height: "80vh",
@@ -93,8 +92,6 @@ export const booksContainer = makeStyles((theme) => ({
     flexWrap:"wrap"
   },
 }));
-
-
 
 export const bookCard = makeStyles((theme) => ({
 		root: {
@@ -245,7 +242,8 @@ export const product = makeStyles((theme) => ({
   },
   container:{
     marginTop:40,
-  }, root: {
+  }, 
+  root: {
     display: 'flex',
   },
   details: {

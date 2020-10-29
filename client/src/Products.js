@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import {Snackbar, TextField} from '@material-ui/core';
+import {Paper, Snackbar, TextField} from '@material-ui/core';
 import moment from 'moment';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,10 +22,12 @@ import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
 import { product } from './assets/css/makeStyles';
 import { Grid } from '@material-ui/core';
+import AlertSnackbar from './components/AlertSnackbar';
 
 
 
 export const Styles = styled.div`
+	/*
 	.MuiContainer-root {
 		margin-top: 50px;
 	}
@@ -81,6 +83,11 @@ export const Styles = styled.div`
 			color: #0ab6ff;
 		}
 	}
+	*/
+	.container {
+		margin-top: 100px;
+
+	}
 	.descriptionTitle {
 		font-size: 18px;
 		margin: 10px 0;
@@ -100,15 +107,82 @@ export const Styles = styled.div`
 		padding: 11px 15px;
 		margin: 0px 5px 10px 5px;
 	}
+	.cardInfo {
+		margin-bottom: 10px;
+		justify-content: center;
+		align-items: center;
 
-	.MuiOutlinedInput-input {
-		/* imput */
-		padding: 15px 14px;
+		display: flex;
+		flex-direction: row;
 	}
+	.buttonOutlined {
+		border: 1px solid #0ab6ff;
+		color: #0ab6ff;
+		padding: 5px 15px;
+
+		&:hover {
+			background-color: #0ab6ff;
+			color: #fff;
+			a {
+				color: #fff;
+			}
+		}
+		a {
+			text-decoration: none;
+			color: #0ab6ff;
+		}
+	}
+	.returnButton {
+		padding: 15px;
+		margin-bottom: 10px;
+		a {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			text-decoration: none;
+		}
+	}
+	.bookCover {
+		width: 80%;
+		max-width: 250px;
+    	margin: 0 20px 0 20px;
+	}
+	.formLine {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
+		margin-bottom: 15px;
+		width: 80%;
+	}
+	.formText {
+		
+	}
+	.formInput{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		flex-grow:1;
+
+	}
+	.textField {
+		width: 100%;
+		margin-right: 10px;
+	}
+	/** Isso é só pra ficar com a bordinha azul embaixo*/
+	.MuiPaper-elevation1 {
+		box-shadow: inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
+			0px 0px 3px 0px rgba(0, 0, 0, 0.12);
+	}
+
 `;
 
+
 export const Product = (props) =>  {
-	console.log(props)
+	//console.log(props)
+
 	const [error, setError] = useState(undefined);
 	const [clicked, setClicked] = useState(false);
 	const [valid, setValid] = useState(false);
@@ -119,10 +193,12 @@ export const Product = (props) =>  {
 	const [user, setUser] = useState(null);
 	const [details, setDetails] = useState(props.location.state);
 	const [id, setId] = useState(props.location.state.id);
+	
+	const [showForm, setShowForm] = useState(false);
 
 	const date = moment().format('DD[/]MM [às] h:mm');
 
-	const lendbook = async(apiData) => {
+	const lendBook = async(apiData) => {
 		try {
 			console.log(apiData)
 			const response = await api.post(`/lending/`, apiData);
@@ -137,14 +213,6 @@ export const Product = (props) =>  {
 			throw error;
 		}
 	}
-
-	useEffect(() => {
-		console.log(props)
-		const { details } = props.location.state;
-		setId(details.id)
-		setDetails(details)
-		console.log(details)
-	}, [])
 
 	const fetchUserAppMaster = async (email) => {
 		try {
@@ -177,7 +245,7 @@ export const Product = (props) =>  {
 		const email = event.target.elements.email.value;
 		console.log(email);
 		try {
-			const user = await this.fetchUserAppMaster(email);
+			const user = await fetchUserAppMaster(email);
 			console.log(user);
 
 			const userData = {
@@ -193,18 +261,12 @@ export const Product = (props) =>  {
 				setNotRegisteredDialog(true)
 			}
 
-			this.setState({
-				error: error,
-			});
+			setError(error);
 
 			console.log(error.message);
 		}
 	}
 
-	const handleLogout = () => {
-		localStorage.removeItem(`@bookStatus/Book ID: ${this.id}`);
-		window.location.reload();
-	};
 
 	const handleCloseDialog = () => {
 		setNotRegisteredDialog(false)
@@ -233,13 +295,13 @@ export const Product = (props) =>  {
 
 	const isValid = async () =>{
 		const apiData = {
-			id_book: this.state.id,
-			person: this.state.usuario,
+			id_book: id,
+			person: user,
 		};
 
 		try {
 			/** USAR API PARA ENVIAR O LIVRO */
-			await this.lendBook(apiData);
+			await lendBook(apiData);
 			/** USAR API PARA ENVIAR O LIVRO */
 		} catch (error) {
 			setClicked(false)
@@ -268,16 +330,8 @@ export const Product = (props) =>  {
 
 	moment.locale('pt-BR');
 	
-	const hideshow = () => {
-		var x = document.getElementById('myDIV');
-		if (x.style.display !== 'none') {
-			x.style.display = 'none';
-		} else {
-			x.style.display = 'block';
-		}
-	}
-	
-	
+
+	/*
 	// if (this.state.details.status === 'true') {
 	// 	return (
 	// 		<Styles>
@@ -392,93 +446,121 @@ export const Product = (props) =>  {
 	// 		</Styles>
 	// 	);
 	// }
-
+	*/
+	
+	
+	/** TODO: alterar a forma que esse modal é aberto */
 	const checkUser = () => {
 		if(user){
 			return(
 				<ConfirmLending
-					open={this.state.borrowingCompleteDialog}
-					onClose={this.handleCloseDialogBorrowing}
-					onConfirm={this.handleConfirmBorrowing}
-					name={this.state.usuario.name}
-					handleReturnQRCode={this.handleReturnQRCode}
-					handleError={this.handleQRCodeError}
-					handleScan={this.handleScan}
+					open={borrowingCompleteDialog}
+					onClose={handleCloseDialogBorrowing}
+					onConfirm={handleConfirmBorrowing}
+					name={user.name}
+					handleReturnQRCode={handleReturnQRCode}
+					handleError={handleQRCodeError}
+					handleScan={handleScan}
 				/>
 			)
-		}
-	}
-	return (
-		<Styles>
+		} else {
+			return(
 			<NotRegisteredDialog
 				open={notRegisteredDialog}
 				onClose={handleCloseDialog}
 			/>
-			{checkUser()}
-			<Container className='cardGrid'>
-				<Button>
-					<Link to='/'>
-						<ArrowBackIosIcon />
-					</Link>
-				</Button>
-				<Card className='card'>
-					<CardMedia
-						style={{ paddingTop: '10px' }}
-						component='img'
-						className='cardMedia'
-						image={details.img}
-						title='Image title'
-					/>
-					<CardContent className='cardContent'>
-						<Typography gutterBottom variant='h5' component='h2'>
-							{details.name}
-						</Typography>
-						<Typography>{details.autor}</Typography>
-						<Typography className='descriptionTitle' variant='h2'>
-							Descrição
-						</Typography>
-						<Typography className='description'>{details.description}</Typography>
-					</CardContent>
-					<Box display='flex' justifyContent='center'>
-						<Button onClick={hideshow} variant='outlined'>
-							Alugar
-						</Button>
-					</Box>
-					<form id='myDIV' style={{ display: 'none' }} onSubmit={handleSubmit.bind(this)}>
-						<Typography>Deseja alugar esse livro?</Typography>
+			)
+		}
+	}
 
-						<Typography>Insira seu email:</Typography>
-						<TextField
-							id='standard-secondary'
-							label='Seu email'
-							variant='outlined'
-							type='text'
-							name='email'
-							required
-						/>
-						<Button className='btn-form' type='submit' variant='outlined'>
-							Pegar
+	return (
+		<Styles>
+			
+			<Container className='container'>
+				{checkUser()}
+				
+				<Paper className='cardInfo'>
+				<Grid container justify='flex-start' spacing={2} >
+					<Grid item xs={12} >
+						{/** TODO: componentizar esse botão? */}
+						<Button className='returnButton'>
+							<Link to='/'>
+								<ArrowBackIosIcon /> Voltar
+							</Link>
 						</Button>
-					</form>
-				</Card>
-				<Snackbar
-						open={borrowingError}
-						autoHideDuration={6000}
-						onClose={handleCloseAlert.bind()}
-					>
-						<Alert onClose={handleCloseAlert.bind()} severity='error'>
-							Erro ao emprestar o livro. Tente novamente.
-						</Alert>
-					</Snackbar>
-				<Snackbar
-					open={borrowingSuccessful}
-					autoHideDuration={6000}
+					</Grid>
+					<Grid item xs={12} sm={4}>
+						<img
+							className='bookCover'
+							src={details.img}
+							alt='BookCover'
+						/>
+					</Grid>
+					<Grid item xs={12} sm={8}>
+						<div className='cardContent'>
+							<Typography gutterBottom variant='h5' component='h2'>
+								{details.name}
+							</Typography>
+							<Typography>{details.autor}</Typography>
+							<Typography className='descriptionTitle' variant='h2'>
+								Descrição
+							</Typography>
+							<Typography className='description'>{details.description}</Typography>
+						</div>
+					</Grid>
+
+					<Grid item xs={12} >
+						<Box display='flex' justifyContent='center'>
+							<Button className='buttonOutlined' onClick={() => setShowForm(!showForm)} variant='outlined'>
+								Alugar
+							</Button>
+						</Box>
+					</Grid>
+					<Grid item xs={12}  >
+						{showForm && 
+							(<form id='myDIV'  onSubmit={handleSubmit.bind(this)} className='formLine'>
+								<div className='formText'>
+									<Typography>Deseja alugar esse livro?</Typography>
+									<Typography>Insira seu email:</Typography>
+								</div>
+								
+								<div className='formInput'>
+								<TextField
+									id='standard-secondary'
+									label='Seu email'
+									variant='outlined'
+									type='text'
+									name='email'
+									required
+									className='textField'
+								/>
+								<Button className='buttonOutlined' type='submit' variant='outlined'>
+									Pegar
+								</Button>
+								</div>
+							</form>)
+						}
+					</Grid>
+
+				</Grid>
+					
+
+					
+					
+					
+					
+				</Paper>
+
+				<AlertSnackbar
+					open={borrowingError | borrowingSuccessful}
 					onClose={handleCloseAlert.bind(this)}
-				>
-					<Alert onClose={handleCloseAlert.bind()} severity='success'>
-						Livro emprestado com sucesso!
-					</Alert>
-				</Snackbar>
+					severity={borrowingError ? 'error' : 'success'}
+					message={borrowingError ? 
+						'Erro ao emprestar o livro. Tente novamente.' : 
+						'Livro emprestado com sucesso!'
+						}	
+				/>
+
 			</Container>
 		</Styles>
 	);

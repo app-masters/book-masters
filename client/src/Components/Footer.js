@@ -1,10 +1,10 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import { Link, BottomNavigation } from "@material-ui/core";
+import { Link } from "@material-ui/core";
 import {footer} from "../assets/css/makeStyles"
 
-export const Footer = () => {
+const Footer = () => {
   
   const classes = footer();
 
@@ -28,3 +28,5 @@ export const Footer = () => {
     </Container>
   );
 }
+
+export default Footer;
