@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import BookCard from "./components/BookCard";
 import { booksContainer } from './assets/css/makeStyles'
+import LoadingSpinner from './components/LoadingSpinner'
 
 const Books = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -10,32 +10,24 @@ const Books = (props) => {
   const {books} = props;
   const classes = booksContainer();
 
-  // if(errorMessage != ''){
-  //   return <h3>{errorMessage}</h3>
-  // }
-  // if(!isLoaded){
-  //   //console.log(this.state.isLoaded)
-  //   return <LoadingSpinner/>
-  // }
+  if(props.loading){
+    return <LoadingSpinner/>
+  }
 
   let booksCards = books.map((book) => {
     return (
-
       <BookCard book={book} />
     )
   });
 
 
   return (
-
-
     <Container 
       maxWidth="lg"
       className={classes.container}
     >
         {booksCards}
     </Container>
-
   );
  
 }
