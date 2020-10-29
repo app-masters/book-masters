@@ -10,11 +10,6 @@ import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
 	Snackbar,
 	TextField,
 } from '@material-ui/core';
@@ -25,9 +20,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Alert } from '@material-ui/lab';
-import * as MaterialLink from '@material-ui/core/Link';
 import api from './services/api';
-import QrReader from 'react-qr-reader';
 import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
 
