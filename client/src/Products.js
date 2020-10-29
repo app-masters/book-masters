@@ -134,7 +134,7 @@ export default class Product extends Component {
 
 			//console.log(response)
 			
-			if (response.status != 200) {
+			if (response.status !== 200) {
 				throw new Error('Não foi possível realizar o empréstimo');
 			} 
 		} catch (error) {

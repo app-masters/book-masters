@@ -9,8 +9,6 @@ import { navbar } from "../assets/css/makeStyles"
 function Navbar() {
 
   const classes = navbar();
-  const theme = useTheme();
-
 
   return (
     <div className={classes.root}>
