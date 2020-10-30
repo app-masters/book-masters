@@ -107,7 +107,6 @@ const RegisterBook = () => {
 		}
 
 
-
 	}, [ISBN]);
 
 	if (redirect) {

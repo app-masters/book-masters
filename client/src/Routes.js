@@ -4,8 +4,8 @@ import Home from "./Home";
 import Product from "./Products";
 import RegisterBook from "./RegisterBook";
 import About from "./About";
+import  Footer  from "./components/Footer";
 import Navbar from "./components/Navbar";
-import Footer  from "./components/Footer";
 
 const Routes = () => (
   <BrowserRouter>
