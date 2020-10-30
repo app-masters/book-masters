@@ -14,14 +14,14 @@ import CloseIcon from '@material-ui/icons/Close'
 import Avatar from '@material-ui/core/Avatar';
 
 const BookCard = (props) => {
-	const status = props.book.status === 'true' ? true : false;
+	const statusAlugado = props.book.status !== 'Disponível' ? true : false;
 	
-	let text = !status ? 'Livro disponível' : 'Livro alugado';
-	let propsStyle = { color: !status ? '#0ab6ff' : '#a84432' };
+	let text = !statusAlugado ? 'Livro disponível' : 'Livro alugado';
+	let propsStyle = { color: !statusAlugado ? '#0ab6ff' : '#a84432' };
 	
 	const classes = bookCard(propsStyle);
 	
-	let avatar = status	? 
+	let avatar = statusAlugado	? 
 		<Avatar variant="rounded" className={classes.red}><CloseIcon /></Avatar> :
 		<Avatar variant="rounded" className={classes.green}><DoneIcon /></Avatar>
 

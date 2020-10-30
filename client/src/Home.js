@@ -22,7 +22,7 @@ export default function Home() {
           if(bookA.title > bookB.title ){return 1;}
           return 0;
         } else {
-          return bookA.status === bookB.status ? 0 : bookA.status? 1 : -1;
+          return bookA.status !== 'Disponível' ? 1 : -1;
         }
       });
       console.log(fetchbooks);

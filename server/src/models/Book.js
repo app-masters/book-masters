@@ -23,11 +23,9 @@ const BookSchema = new Schema(
         tag: {
             type: Array
         },
-
         img: {
             type: String,
         },
-
         anoPublicacao: {
             type: Number,
         },
@@ -37,7 +35,8 @@ const BookSchema = new Schema(
         status: {
             type: String,
             required: true,
-            default:'Disponivel',
+            enum : ['Disponível','Emprestado','Reservado'],
+            default: 'Disponível',
         },
     }
 )
