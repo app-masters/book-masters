@@ -23,162 +23,7 @@ import NotRegisteredDialog from './components/NotRegisteredDialog';
 import { product } from './assets/css/makeStyles';
 import { Grid } from '@material-ui/core';
 import AlertSnackbar from './components/AlertSnackbar';
-
-export const Styles = styled.div`
-	/*
-	.MuiContainer-root {
-		margin-top: 50px;
-	}
-	.MuiPaper-root {
-		width: 420px;
-		margin: auto;
-		margin-bottom: 10px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-	.MuiCardMedia-media {
-		width: 240px;
-	}
-	.MuiTypography-body1 {
-		text-align: center;
-	}
-	.MuiButtonBase-root {
-		margin-top: 50px;
-	}
-	.MuiTypography-h5 {
-		font-size: 1.5rem;
-		font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-		font-weight: 500;
-		line-height: 1.334;
-		letter-spacing: 0em;
-		text-align: center;
-	}
-	.MuiPaper-elevation1 {
-		box-shadow: inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
-			0px 0px 3px 0px rgba(0, 0, 0, 0.12);
-	}
-	.MuiCardContent-root {
-		padding: 14px 8px 8px 8px;
-		height: auto;
-	}
-	.MuiButton-outlined {
-		border: 1px solid #0ab6ff;
-		color: #0ab6ff;
-		padding: 5px 15px;
-		margin: 50px 5px 20px 5px;
-
-		&:hover {
-			background-color: #0ab6ff;
-			color: #fff;
-			.MuiButton-label a {
-				color: #fff;
-			}
-		}
-		.MuiButton-label a {
-			text-decoration: none;
-			color: #0ab6ff;
-		}
-	}
-	*/
-	.container {
-		margin-top: 100px;
-	}
-	.descriptionTitle {
-		font-size: 18px;
-		margin: 10px 0;
-		font-weight: 500;
-		font-family: Roboto, sans-serif;
-		color: #343a40;
-	}
-	.description {
-		font-weight: 300;
-		font-style: normal;
-		font-size: 15px;
-		color: #6c757d;
-	}
-	.btn-form {
-		border: 1px solid #0ab6ff;
-		color: #0ab6ff;
-		padding: 11px 15px;
-		margin: 0px 5px 10px 5px;
-	}
-	.cardInfo {
-		margin-bottom: 20px;
-
-		padding-bottom: 20px;
-		padding-top: 10px;
-		justify-content: center;
-		align-items: center;
-
-		display: flex;
-		flex-direction: row;
-	}
-	.buttonOutlined {
-		border: 1px solid #0ab6ff;
-		color: #0ab6ff;
-		padding: 5px 15px;
-
-		&:hover {
-			background-color: #0ab6ff;
-			color: #fff;
-			a {
-				color: #fff;
-			}
-		}
-		a {
-			text-decoration: none;
-			color: #0ab6ff;
-		}
-	}
-	.returnButton {
-		padding: 15px;
-		margin-bottom: 10px;
-		a {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			text-decoration: none;
-		}
-	}
-	.bookCover {
-		width: 80%;
-		max-width: 250px;
-		margin: 0 20px 0 20px;
-	}
-	.bookInfo {
-		text-align: justify;
-		margin: 0 10px 0 20px;
-	}
-	.formLine {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		width: 80%;
-		margin: auto;
-		margin-bottom: 15px;
-	}
-	.formText {
-	}
-	.formInput {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		flex-grow: 1;
-	}
-	.textField {
-		width: 100%;
-		margin-right: 10px;
-	}
-	/** Isso é só pra ficar com a bordinha azul embaixo*/
-	.MuiPaper-elevation1 {
-		box-shadow: inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
-			0px 0px 3px 0px rgba(0, 0, 0, 0.12);
-	}
-`;
+import { Link as RouterLink } from 'react-router-dom';
 
 export const Product = (props) => {
 	//console.log(props)
@@ -197,6 +42,8 @@ export const Product = (props) => {
 	const [showForm, setShowForm] = useState(false);
 
 	const date = moment().format('DD[/]MM [às] h:mm');
+
+	const classes = product()
 
 	const lendBook = async (apiData) => {
 		try {
@@ -465,38 +312,42 @@ export const Product = (props) => {
 	};
 
 	return (
-		<Styles>
-			<Container className='container'>
+			<Container className={classes.container}>
 				{checkUser()}
 				{/** TODO: componentizar esse botão? */}
-				<Button className='returnButton'>
-					<Link to='/'>
-						<ArrowBackIosIcon /> Voltar
-					</Link>
+				<Button 
+				component={RouterLink} 
+				to="/" size="large" 
+				className={classes.btn}
+				color="primary"
+				size="large"
+				className={classes.button}
+				startIcon={<ArrowBackIosIcon />}>
+				 Voltar
 				</Button>
-				<Paper className='cardInfo'>
+				<Paper className={classes.cardInfo}>
 					<Grid container justify="flex-start" alignItems="flex-start" >
 						
 						<Grid container xs={12} sm={4} justify="center" alignItems="center" >
-							<img className='bookCover' src={details.img} alt='BookCover' />
+							<img className={classes.bookCover} src={details.img} alt='BookCover' />
 						</Grid>
 						<Grid item xs={12} sm={8}>
-							<div className='bookInfo'>
+							<div className={classes.bookInfo}>
 								<Typography gutterBottom variant='h5' component='h2'>
 									{details.name}
 								</Typography>
 								<Typography>{details.autor}</Typography>
-								<Typography className='descriptionTitle' variant='h2'>
+								<Typography className={classes.descriptionTitle} variant='h2'>
 									Descrição
 								</Typography>
-								<Typography className='description'>{details.description}</Typography>
+								<Typography className={classes.description}>{details.description}</Typography>
 							</div>
 						</Grid>
 
 						<Grid item xs={12}>
 							<Box display='flex' justifyContent='center'>
 								<Button
-									className='buttonOutlined'
+									className={classes.buttonOutlined}
 									onClick={() => setShowForm(!showForm)}
 									variant='outlined'
 								>
@@ -506,13 +357,13 @@ export const Product = (props) => {
 						</Grid>
 						<Grid item xs={12}>
 							{showForm && (
-								<form id='myDIV' onSubmit={handleSubmit.bind(this)} className='formLine'>
-									<div className='formText'>
+								<form id='myDIV' onSubmit={handleSubmit.bind(this)} className={classes.formLine}>
+									<div className={classes.formText}>
 										<Typography>Deseja alugar esse livro?</Typography>
 										<Typography>Insira seu email:</Typography>
 									</div>
 
-									<div className='formInput'>
+									<div className={classes.formInput}>
 										<TextField
 											id='standard-secondary'
 											label='Seu email'
@@ -520,9 +371,9 @@ export const Product = (props) => {
 											type='text'
 											name='email'
 											required
-											className='textField'
+											className='classes.textField'
 										/>
-										<Button className='buttonOutlined' type='submit' variant='outlined'>
+										<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
 											Pegar
 										</Button>
 									</div>
@@ -541,7 +392,6 @@ export const Product = (props) => {
 					}
 				/>
 			</Container>
-		</Styles>
 	);
 };
 

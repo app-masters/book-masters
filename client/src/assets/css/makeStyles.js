@@ -241,7 +241,8 @@ export const product = makeStyles((theme) => ({
 		margin: "0px 5px 10px 5px",
   },
   container:{
-    marginTop:40,
+    marginTop:"100px",
+    
   }, 
   root: {
     display: 'flex',
@@ -266,4 +267,58 @@ export const product = makeStyles((theme) => ({
     height: 38,
     width: 38,
   },
+
+  cardInfo: {
+    marginBottom:"20px",
+    paddingBottom: "20px",
+    paddingTop: "10px",
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+  },
+
+  buttonOutlined: {
+    border: "1px solid #0ab6ff",
+    color: "#0ab6ff",
+    padding: "5px 15px",
+  },
+  returnButton: {
+    padding: "15px",
+    marginBottom: "10px",
+  },
+  bookCover: {
+    width: "80%",
+    maxWidth: "250px",
+    margin: "0 20px 0 20px",
+  },
+  bookInfo: {
+    textAlign: "justify",
+    margin: "0 10px 0 20px",
+  },
+  formLine: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    width: "80%",
+    margin: "auto",
+    marginBottom: "15px",
+  },
+  formInput: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
+  },
+  textField: {
+    width: "100%",
+    marginRight: "10px",
+  },
+  /** Isso é só pra ficar com a bordinha azul embaixo*/
+  MuiPaperElevation1 :{
+    boxShadow: "inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)",
+  },
+  
 }));
