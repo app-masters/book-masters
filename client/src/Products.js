@@ -24,9 +24,11 @@ import { product } from './assets/css/makeStyles';
 import { Grid } from '@material-ui/core';
 import AlertSnackbar from './components/AlertSnackbar';
 import { Link as RouterLink } from 'react-router-dom';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import DetailedBookCard from './components/DetailedBookCard';
 
 export const Product = (props) => {
-	//console.log(props)
 
 	const [error, setError] = useState(undefined);
 	const [clicked, setClicked] = useState(false);
@@ -312,77 +314,73 @@ export const Product = (props) => {
 	};
 
 	return (
-			<Container className={classes.container}>
+			<Grid container className={classes.container} spacing={5}>
 				{checkUser()}
-				{/** TODO: componentizar esse botão? */}
-				<Button 
-				component={RouterLink} 
-				to="/" size="large" 
-				className={classes.btn}
-				color="primary"
-				size="large"
-				className={classes.button}
-				startIcon={<ArrowBackIosIcon />}>
-				 Voltar
-				</Button>
-				<Paper className={classes.cardInfo}>
-					<Grid container justify="flex-start" alignItems="flex-start" >
-						
-						<Grid container xs={12} sm={4} justify="center" alignItems="center" >
-							<img className={classes.bookCover} src={details.img} alt='BookCover' />
-						</Grid>
-						<Grid item xs={12} sm={8}>
-							<div className={classes.bookInfo}>
-								<Typography gutterBottom variant='h5' component='h2'>
-									{details.name}
-								</Typography>
-								<Typography>{details.autor}</Typography>
-								<Typography className={classes.descriptionTitle} variant='h2'>
-									Descrição
-								</Typography>
-								<Typography className={classes.description}>{details.description}</Typography>
-							</div>
-						</Grid>
-
-						<Grid item xs={12}>
-							<Box display='flex' justifyContent='center'>
-								<Button
-									className={classes.buttonOutlined}
-									onClick={() => setShowForm(!showForm)}
-									variant='outlined'
-								>
-									Alugar
-								</Button>
-							</Box>
-						</Grid>
-						<Grid item xs={12}>
-							{showForm && (
-								<form id='myDIV' onSubmit={handleSubmit.bind(this)} className={classes.formLine}>
-									<div className={classes.formText}>
-										<Typography>Deseja alugar esse livro?</Typography>
-										<Typography>Insira seu email:</Typography>
-									</div>
-
-									<div className={classes.formInput}>
-										<TextField
-											id='standard-secondary'
-											label='Seu email'
-											variant='outlined'
-											type='text'
-											name='email'
-											required
-											className='classes.textField'
-										/>
-										<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
-											Pegar
-										</Button>
-									</div>
-								</form>
-							)}
-						</Grid>
-					</Grid>
-				</Paper>
-
+				<Grid item xs={12}>
+					<Button 
+						component={RouterLink} 
+						to="/" size="large" 
+						className={classes.btn}
+						color="primary"
+						size="large"
+						className={classes.button}
+						startIcon={<ArrowBackIosIcon />}>
+					Voltar
+					</Button>
+				</Grid>
+				<Grid item xs={10}>
+					<DetailedBookCard 
+						img={details.img} 
+						title={details.name} 
+						autor={details.autor} 
+						description={details.description}
+						tags={details.tag}
+					/>
+				</Grid>
+				<Grid item xs={12} alignItems="center" justify="center" style={{display:"flex"}}>
+					<Button
+						className={classes.buttonOutlined}
+						onClick={() => setShowForm(!showForm)}
+						variant='outlined'
+					>
+						Alugar
+					</Button>
+				</Grid>
+				<Grid item xs={8}>
+					{showForm && (
+						<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
+							<Grid container spacing={3} direction="column" alignItems="center" >
+								<Grid item >
+									<Typography variant="h5">Deseja alugar esse livro?</Typography>
+								</Grid>
+								<Grid item xs={12} style={{width:"70%"}}>
+									<TextField
+										id='standard-secondary'
+										label='E-mail'
+										variant='outlined'
+										type='text'
+										name='email'
+										required
+										className={classes.textField}
+										placeholder='Insira seu email'
+										InputProps={{
+											startAdornment: (
+											<InputAdornment position="start">
+												<MailOutlineIcon />
+											</InputAdornment>
+											),
+										}}
+									/>
+								</Grid>	
+								<Grid item>
+									<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
+										Pegar
+									</Button>
+								</Grid>
+							</Grid>
+						</form>
+					)}
+				</Grid>
 				<AlertSnackbar
 					open={borrowingError | borrowingSuccessful}
 					onClose={handleCloseAlert.bind(this)}
@@ -391,7 +389,7 @@ export const Product = (props) => {
 						borrowingError ? 'Erro ao emprestar o livro. Tente novamente.' : 'Livro emprestado com sucesso!'
 					}
 				/>
-			</Container>
+			</Grid>
 	);
 };
 

@@ -54,6 +54,7 @@ const BookCard = (props) => {
 									description: props.book.description,
 									img: props.book.img,
 									status: props.book.status,
+									tag: props.book.tag,
 							}
 						}}
 						size="large">
