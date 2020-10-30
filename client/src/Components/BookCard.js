@@ -48,15 +48,13 @@ const BookCard = (props) => {
 				<Button component={RouterLink} to={{
 							pathname: `/products/${props.book._id}`,
 							state: {
-								details: {
 									id: props.book._id,
 									name: props.book.title,
 									autor: props.book.autor,
 									description: props.book.description,
 									img: props.book.img,
 									status: props.book.status,
-								},
-							},
+							}
 						}}
 						size="large">
          			Ver mais
