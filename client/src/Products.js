@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -17,11 +17,10 @@ import DetailedBookCard from './components/DetailedBookCard';
 import LendingCard from './components/LendingCard'
 
 export const Product = (props) => {
-	console.log(props)
+	//console.log(props)
 
 	const [error, setError] = useState(undefined);
 	const [clicked, setClicked] = useState(false);
-	const [valid, setValid] = useState(false);
 	const [notRegisteredDialog, setNotRegisteredDialog] = useState(false);
 	const [borrowingCompleteDialog, setBorrowingCompleteDialog] = useState(false);
 	const [borrowingSuccessful, setBorrowingSuccessfulDialog] = useState(false);
@@ -34,15 +33,11 @@ export const Product = (props) => {
 
 	const [showForm, setShowForm] = useState(false);
 
-	const date = moment().format('DD[/]MM [às] h:mm');
+	
 
 	const classes = product()
 
-	useEffect( () => {
-		getLendings()
-	}, [])
-
-	const getLendings = async () => {
+	const getLendings = useCallback(async () => {
 		try {
 			const response = await api.get('/lendings/book/' + id);
 			if (response.status !== 200) {
@@ -50,12 +45,18 @@ export const Product = (props) => {
 			}
 			const json = response.data;
 			console.log(json)
-			setLendings(json.lendings)
+			setLendings(json)
 		}catch(error){
-
+			console.log(error)
 		}
-	}
+	}, [id])
 
+	useEffect( () => {
+	
+		getLendings()
+	}, [id, getLendings])
+
+	
 	const lendBook = async (apiData) => {
 		try {
 			console.log(apiData);
@@ -66,7 +67,13 @@ export const Product = (props) => {
 			if (response.status !== 200) {
 				throw new Error('Não foi possível realizar o empréstimo');
 			}
+			getLendings();
+			setBorrowingSuccessfulDialog(true);
+			setBorrowingError(false);
+
 		} catch (error) {
+			setBorrowingSuccessfulDialog(false);
+			setBorrowingError(true);
 			//console.log(error);
 			throw error;
 		}
@@ -82,7 +89,14 @@ export const Product = (props) => {
 			if (response.status !== 200) {
 				throw new Error('Não foi possível realizar a reserva');
 			}
+
+			getLendings();
+
+			setBorrowingSuccessfulDialog(true);
+			setBorrowingError(false);
 		} catch (error) {
+			setBorrowingSuccessfulDialog(false);
+			setBorrowingError(true);
 			//console.log(error);
 			throw error;
 		}
@@ -98,7 +112,12 @@ export const Product = (props) => {
 			if (response.status !== 200) {
 				throw new Error('Não foi possível realizar a devolução');
 			}
+
+			setBorrowingSuccessfulDialog(true);
+			setBorrowingError(false);
 		} catch (error) {
+			setBorrowingSuccessfulDialog(false);
+			setBorrowingError(true);
 			//console.log(error);
 			throw error;
 		}
@@ -147,7 +166,6 @@ export const Product = (props) => {
 			setBorrowingCompleteDialog(true);
 			setUser(userData);
 			if(formOpt === "reservar"){
-
 				reserveBook(
 					{
 					id_book: id,
@@ -319,7 +337,7 @@ export const Product = (props) => {
 	}
 
 	return (
-		<Grid container className={classes.container} lg="auto" spacing={3}>
+		<Grid container className={classes.container} spacing={3}>
 			{checkUser()}
 			<Grid item xs={12}>
 				<Button 
@@ -341,7 +359,8 @@ export const Product = (props) => {
 					tags={details.tag}
 				/>
 			</Grid>
-			<Grid item xs={12} lg={8} md={8} alignItems="space-around" justify="space-around" style={{display:"flex"}}>
+			<Grid item xs={12} lg={8} md={8}
+					style={{display:"flex", alignContent:"space-around", justifyContent:"space-around"}}>
 				<Button
 					className={classes.buttonOutlined}
 					onClick={() => setForm("reservar")}
@@ -360,11 +379,11 @@ export const Product = (props) => {
 				<LendingCard lendings={lendings}/>
 			</Grid>
 			<AlertSnackbar
-				open={borrowingError | borrowingSuccessful}
+				open={borrowingError || borrowingSuccessful}
 				onClose={handleCloseAlert.bind(this)}
 				severity={borrowingError ? 'error' : 'success'}
 				message={
-					borrowingError ? 'Erro ao emprestar o livro. Tente novamente.' : 'Livro emprestado com sucesso!'
+					borrowingError ? 'Não foi possível completar sua requisição.' : 'Sucesso!'
 				}
 			/>
 		</Grid>

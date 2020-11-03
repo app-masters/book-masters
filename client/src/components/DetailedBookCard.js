@@ -14,10 +14,10 @@ const DetailedBookCard = (props) => {
 
         <Paper className={classes.root}>
             <Grid container justify="flex-start" alignItems="flex-start">
-                    <Grid item xs={12} sm={4} justify="center" alignItems="center">
+                    <Grid item xs={12} sm={4}>
                         <img src={props.img} alt='BookCover' className={classes.cover}/>
                     </Grid>
-                    <Grid container xs={12} sm={8} >
+                    <Grid item xs={12} sm={8} >
                         <Grid item xs={12}>
                             <Typography component="h3" variant="h5"> {props.title} </Typography>
                         </Grid>
@@ -34,7 +34,7 @@ const DetailedBookCard = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             {props.tags.map((tag) => (
-                                (<Chip label={tag} style={{marginTop:"20px"}} />)
+                                (<Chip key={tag} label={tag} style={{marginTop:"20px"}} />)
                             ))}
                         </Grid>
                     </Grid>

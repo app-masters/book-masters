@@ -34,8 +34,8 @@ const LendingCard = (props) => {
                     <List>
                         { lendings.map((l) => {
                             if(l.status === "Reservado"){
-                                return (<ListItem>
-                                    <ListItemText primary={l.idUser} secondary={l.reservationDateInit} />
+                                return (<ListItem key={l.idUser}>
+                                    <ListItemText  primary={l.idUser} secondary={l.reservationDateInit} />
                                 </ListItem>)
                             }else{
                               return  ""

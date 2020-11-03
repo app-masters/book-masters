@@ -280,7 +280,7 @@ const RegisterBook = () => {
 							variant='outlined'
 						/>
 					</Grid>
-					<Grid container item justify="flex-end" xs={12} style={{ paddingTop: 40, paddingBottom:50,}}>
+					<Grid container  justify="flex-end"  style={{ paddingTop: 40, paddingBottom:50,}}>
 						<Button
 							variant="contained"
 							color="primary"

@@ -34,7 +34,7 @@ export default {
 
 		const lendings = await Lending.find({ idBook, status: { $ne: 'Devolvido' } });
 
-		console.log(lendings.map((l) => l.idUser));
+		//console.log(lendings.map((l) => l.idUser));
 		const users = await User.find({ _id: { $in: lendings.map((l) => l.idUser) } });
 
 		return res.json({ lendings, users });
