@@ -15,7 +15,7 @@ const Books = (props) => {
 
   let booksCards = books.map((book) => {
     return (
-      <BookCard book={book} />
+      <BookCard key={book._id} book={book} />
     )
   });
 

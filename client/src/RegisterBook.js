@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import fetchBookGoogle from './services/googleBooksAPI';
 import api from './services/api';
 import SaveIcon from '@material-ui/icons/Save';
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import {register} from "./assets/css/makeStyles"
 
@@ -24,7 +24,6 @@ import {register} from "./assets/css/makeStyles"
 const RegisterBook = () => {
 
 	const classes = register();
-	const history = useHistory();
 
 	const [ISBN, setISBN] = useState("");
 	const [title, setTitle] = useState("");
@@ -66,7 +65,7 @@ const RegisterBook = () => {
 			img: coverURL? (coverURL):("https://avancar.gov.br/avancar-web/images/slideshow/not-found.png"),
 			anoPublicacao: year,
 			edicao: edition,
-			status: false,
+			status: 'Disponível',
 		}
 
 		console.log(serverBook)

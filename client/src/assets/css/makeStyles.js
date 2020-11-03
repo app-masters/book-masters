@@ -1,4 +1,5 @@
-import { makeStyles} from "@material-ui/core/styles";
+
+import { makeStyles } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 
 
@@ -37,7 +38,7 @@ export const footer = makeStyles((theme) => ({
         bottom: 0,
         margin: 0,
         height: "auto",
-        width: "100%",
+        width: "100vw",
         maxWidth: "100%",
         display: "flex",
         justifyContent: "center",
@@ -58,7 +59,6 @@ export const spinner = makeStyles((theme) => ({
         minHeight: "80vh",
     },
   }));
-
   
 export const header = makeStyles((theme) => ({
   icon: {
@@ -78,7 +78,6 @@ export const header = makeStyles((theme) => ({
   },
 }));
 
-
 export const body = makeStyles((theme) => ({
   body: {
     height: "80vh",
@@ -93,8 +92,6 @@ export const booksContainer = makeStyles((theme) => ({
     flexWrap:"wrap"
   },
 }));
-
-
 
 export const bookCard = makeStyles((theme) => ({
 		root: {
@@ -220,5 +217,79 @@ export const personStyle = makeStyles((theme) => ({
       borderRadius: '50%',
       width: "150px",
       height: "150px",
+  },
+}));
+
+export const product = makeStyles((theme) => ({
+  container:{
+    alignItems:"center", 
+    justifyContent:"center", 
+    minHeight:'75vh',
+    width:'98vw',
+    margin:"70px auto auto auto",
+  },
+  buttonOutlined: {
+    border: "1px solid #0ab6ff",
+    color: "#0ab6ff",
+    padding: "5px 15px",
+  },
+  formInput: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
+  },
+  textField: {
+    width: "100%",
+    marginRight: "10px",
+  },
+  button:{
+    color: "#0ab6ff",
+  }
+}));
+
+export const detailedBookCard = makeStyles((theme) => ({
+  root: {
+    boxShadow: "inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)",
+    padding: "20px",
+    minHeight:"500px",
+    width:"auto",
+    
+  },
+  container:{
+    maxHeight: 20,
+    maxWidth: "100vw",
+  },
+  cover: {
+    margin: 20,
+    width: "80%",
+		maxWidth: "250px",
+  },
+  details: {
+    overflow: 'auto',
+    heigth: 200,
+  },
+  descriptionTitle: {
+		fontSize: "18px",
+		margin: "10px 0",
+		fontWeight: "500",
+		fontFamily: "Roboto, sans-serif",
+    color: "#343a40",
+  },
+  description: {
+		fontWeight: "300",
+		fontStyle: "normal",
+		fontSize: "15px",
+		color: "#6c757d",
+	},
+}));
+
+export const lendingCard = makeStyles((theme) => ({
+  root: {
+    boxShadow: "inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)",
+    padding: "20px",
+    width:"auto",
   },
 }));

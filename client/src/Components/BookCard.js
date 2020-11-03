@@ -14,18 +14,16 @@ import CloseIcon from '@material-ui/icons/Close'
 import Avatar from '@material-ui/core/Avatar';
 
 const BookCard = (props) => {
-	const status = props.book.status === 'true' ? true : false;
+	const statusAlugado = props.book.status !== 'Disponível' ? true : false;
 	
-	let text = !status ? 'Livro disponível' : 'Livro alugado';
-	let propsStyle = { color: !status ? '#0ab6ff' : '#a84432' };
+	let text = !statusAlugado ? 'Livro disponível' : 'Livro alugado';
+	let propsStyle = { color: !statusAlugado ? '#0ab6ff' : '#a84432' };
 	
 	const classes = bookCard(propsStyle);
 	
-	let avatar = status	? 
+	let avatar = statusAlugado	? 
 		<Avatar variant="rounded" className={classes.red}><CloseIcon /></Avatar> :
 		<Avatar variant="rounded" className={classes.green}><DoneIcon /></Avatar>
-
-
 
 	return (
 			<Card className={classes.root} variant="outlined">
@@ -47,16 +45,7 @@ const BookCard = (props) => {
 				<CardActions className={classes.footer}>
 				<Button component={RouterLink} to={{
 							pathname: `/products/${props.book._id}`,
-							state: {
-								details: {
-									id: props.book._id,
-									name: props.book.title,
-									autor: props.book.autor,
-									description: props.book.description,
-									img: props.book.img,
-									status: props.book.status,
-								},
-							},
+							state: props.book
 						}}
 						size="large">
          			Ver mais

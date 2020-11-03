@@ -10,7 +10,8 @@ const LendingSchema = new Schema(
             type: String
         },
         status: {
-            type: String
+            type: String,
+            enum : ['Reservado','Emprestado','Devolvido'],
         },
         reservationDateInit: {
             type: Date
