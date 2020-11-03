@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Paper, Snackbar, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import moment from 'moment';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { Alert } from '@material-ui/lab';
 import api from './services/api';
 import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
@@ -245,123 +232,6 @@ export const Product = (props) => {
 
 	moment.locale('pt-BR');
 
-	/*
-	// if (this.state.details.status === 'true') {
-	// 	return (
-	// 		<Styles>
-	// 			<Container className={product().container} maxWidth="md">
-	// 				<Grid item xs={12} justify="flex-start" container>
-	// 					<Button>
-	// 						<Link to='/'>
-	// 							<ArrowBackIosIcon />
-	// 						</Link>
-	// 					</Button>
-	// 				</Grid>
-
-	// 				<Card className={product().root}>
-	// 					<div className={product().details}>
-	// 						<CardContent className={product().content}>
-	// 						<Typography component="h5" variant="h5">
-	// 							Live From Space
-	// 						</Typography>
-	// 						<Typography variant="subtitle1" color="textSecondary">
-	// 							Mac Miller
-	// 						</Typography>
-	// 						</CardContent>
-	// 						<div className={product().controls}>
-	// 						<IconButton aria-label="previous">
-	// 							{theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-	// 						</IconButton>
-	// 						<IconButton aria-label="play/pause">
-	// 							<PlayArrowIcon className={product().playIcon} />
-	// 						</IconButton>
-	// 						<IconButton aria-label="next">
-	// 							{theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-	// 						</IconButton>
-	// 						</div>
-	// 					</div>
-	// 					<CardMedia
-	// 						className={product().cover}
-	// 						image="/static/images/cards/live-from-space.jpg"
-	// 						title="Live from space album cover"
-	// 					/>
-	// 				</Card>
-
-
-
-
-
-					
-	// 				<Card className='card'>
-	// 					<CardMedia
-	// 						style={{ paddingTop: '10px' }}
-	// 						component='img'
-	// 						className='cardMedia'
-	// 						image={this.state.details.img}
-	// 						title='Image title'
-	// 					/>
-	// 					<CardContent className='cardContent'>
-	// 						<Typography gutterBottom variant='h5' component='h2'>
-	// 							{this.state.details.name}
-	// 						</Typography>
-	// 						<Typography>{this.state.details.autor}</Typography>
-	// 						<Typography className='descriptionTitle' variant='h2'>
-	// 							Descrição
-	// 						</Typography>
-	// 						<Typography className='description'>{this.state.details.description}</Typography>
-	// 					</CardContent>
-	// 					<Box display='flex' justifyContent='center'>
-	// 						<Typography className='descriptionTitle' variant='h2'>
-	// 							Livro Alugado. Deseja devolvevr?
-	// 						</Typography>
-	// 						<Button className='btn-devolver' onClick={this.handleLogout} variant='outlined'>
-	// 							Devolver
-	// 						</Button>
-	// 					</Box>
-	// 				</Card>
-	// 			</Container>
-	// 			<Container className='cardGrid'>
-	// 				<Card className='card'>
-	// 					<Typography variant='h5'>Livro alugado por:</Typography>
-	// 					<CardContent className='cardContent'>
-	// 						<Table aria-label='simple table'>
-	// 							<TableHead>
-	// 								<TableRow>
-	// 									<TableCell>Nome:</TableCell>
-	// 									<TableCell>Data: </TableCell>
-	// 								</TableRow>
-	// 							</TableHead>
-	// 							<TableBody>
-	// 								<TableRow></TableRow>
-	// 							</TableBody>
-	// 						</Table>
-	// 					</CardContent>
-	// 				</Card>
-	// 				<Snackbar
-	// 					open={this.state.borrowingError}
-	// 					autoHideDuration={6000}
-	// 					onClose={this.handleCloseAlert.bind(this)}
-	// 				>
-	// 					<Alert onClose={this.handleCloseAlert.bind(this)} severity='error'>
-	// 						Erro ao emprestar o livro. Tente novamente.
-	// 					</Alert>
-	// 				</Snackbar>
-
-	// 				<Snackbar
-	// 					open={this.state.borrowingSuccessful}
-	// 					autoHideDuration={6000}
-	// 					onClose={this.handleCloseAlert.bind(this)}
-	// 				>
-	// 					<Alert onClose={this.handleCloseAlert.bind(this)} severity='success'>
-	// 						Livro emprestado com sucesso!
-	// 					</Alert>
-	// 				</Snackbar>
-	// 			</Container>
-	// 		</Styles>
-	// 	);
-	// }
-	*/
-
 	/** TODO: alterar a forma que esse modal é aberto */
 
 	const form = (option) => {
@@ -454,9 +324,9 @@ export const Product = (props) => {
 			<Grid item xs={12}>
 				<Button 
 					component={RouterLink} 
-					to="/" size="large" 
+					to="/" 
+					size="large" 
 					color="primary"
-					size="large"
 					className={classes.button}
 					startIcon={<ArrowBackIosIcon />}>
 				Voltar

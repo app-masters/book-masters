@@ -1,8 +1,5 @@
 import React from 'react';
-
-
 import {FaLinkedin, FaGithub} from 'react-icons/fa'
-
 import { Card, CardContent, Link, Typography } from '@material-ui/core';
 import { personStyle } from "../assets/css/makeStyles"
 
