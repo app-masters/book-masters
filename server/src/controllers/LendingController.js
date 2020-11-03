@@ -1,71 +1,137 @@
-import Lending from "../models/Lending";
-import User from "../models/User"
+import Book from '../models/Book';
+import Lending from '../models/Lending';
+import User from '../models/User';
+import addDaysToDate from '../utils/addDaysToDate';
+import preprocessEmail from '../utils/preprocessEmail';
 
-const verifyValidEmail = (email) =>{
-  const verification = /\w+\@\w+\.(com|\edu|\org)(\.br)?/;
 
-  if(verification.exec(email))
-    return email.trim().toLowerCase();
-  else
-    return null;
-  
+
+const findOrCreateUser = async (name, email, phone) => {
+
+  const user = await User.find({ email });
+  if (user.length > 0) {
+    //console.log(user[0]._id);
+    return user[0]._id;
+  } else {
+    const userJson = {
+      email: email,
+      name: name,
+      phoneNumber: phone,
+    };
+
+    let newUser = await User.create(userJson);
+    //let responseUser = res.json(newUser);
+    //console.log(responseUser._id);
+    return newUser._id;
+  }
+
 }
 
 export default {
-  async getAll(req, res) {
-    const response = await Lending.find()
+	async getAll(req, res) {
+		const response = await Lending.find();
+		return res.json(response);
+	},
 
-    return res.json(response);
-  },
-  async getById(req, res) {
-    const response = await Lending.findById(req.params.id)
+  async getAllBookLending(req, res) {
 
-    return res.json(response)
+    const idBook = req.params.id ;
+    const lendings = await Lending.find({idBook, status: {$ne: 'Devolvido'}});
+
+		return res.json(lendings);
   },
-  async lending(req, res) {
+  
+  
+	async getById(req, res) {
+		const response = await Lending.findById(req.params.id);
+		return res.json(response);
+	},
+
+	async lending(req, res) {
     const lending = await req.body;
-    const email = verifyValidEmail(lending.person.email);
-    if(!email)
-      return null;
-    const user = await User.find({ email});
     
-    let idUser ;
-    if(user.length>0){
-      console.log(user[0]._id)
-      idUser = user[0]._id;
-    }else{
-      const userJson = {
-        email: email,
-        name: lending.person.name,
-        phoneNumber: lending.person.phoneNumber
-      }
-       let newUser = await User.create(userJson);
-       let responseUser = res.json(newUser)
-       console.log(responseUser._id)
-       idUser = newUser._id;
-    }
+    const {name, email, phoneNumber} = lending.person
 
-    const lendingJson = { 
-      idBook:lending.id_book, 
-      idUser: idUser
-      
-    };
+    /* Check if book is really available for lending */
+    const existingLending = await Lending.find({idBook: lending.id_book, status: {$ne: 'Devolvido'}}, (err, results )=> {
+      if(err)  return res.status(500).send('Erro de servidor')
+    })
     
-    const response = await Lending.create(lendingJson);
-    
-    return res.json(response);
+    if(existingLending.length != 0) return res.status(406).send('Livro já emprestado')
 
+    const procEmail = preprocessEmail(email);
+    if (!procEmail) 
+      return res.status(406).send('Email inválido')
+
+
+    /* Find or Create User */
+    const idUser = await findOrCreateUser(name, procEmail, phoneNumber)
+
+    /* TODO: data do cliente ou no servidor */
+    const date = new Date();
+		const lendingJson = {
+			idBook: lending.id_book,
+      idUser: idUser,
+      status: "Emprestado",
+      lendingDateInit: date,
+      lendingDateFinally: addDaysToDate(date, 28)
+		};
+
+    const book = await Book.findOneAndUpdate({_id: lending.id_book }, {status: 'Emprestado'});
+
+		const response = await Lending.create(lendingJson);
+
+		return res.json(response).send();
   },
-  async update(req, res) {
-    const response = await Lending.findOneAndUpdate({ _id: req.params.id}, req.body, {
-      new: true,
+
+  async reserve(req, res) {
+    const lending = await req.body;
+    
+    const {name, email, phoneNumber} = lending.person
+
+
+    const procEmail = preprocessEmail(email);
+    if (!procEmail) 
+      return res.status(406).send('Email inválido')
+
+    /* Find or Create User */
+    const idUser = await findOrCreateUser(name, procEmail, phoneNumber)
+
+    /* Check if book is really available for reservation */
+    const existingLending = await Lending.find({idBook: lending.id_book, idUser: idUser, status: "Reservado"}, (err, results )=> {
+      if(err)  return res.status(500).send('Erro de servidor')
     })
 
-    return res.json(response)
-  },
-  async delete(req, res) {
-    await Lending.deleteOne({ _id: req.params.id })
+    if(existingLending.length != 0) return res.status(406).send('Livro já foi reservado')
 
-    return res.send()
+    /* TODO: definir as datas de acordo com os dados já existentes no banco */
+    /* pode vir do front? */
+    const date = new Date();
+		const reserveJson = {
+			idBook: lending.id_book,
+      idUser: idUser,
+      status: "Reservado",
+      reservationDateInit: date,
+      reservationDateFinally: addDaysToDate(date, 3)
+		};
+
+    
+    const book = await Book.findOneAndUpdate({_id: lending.id_book, status: {$ne : 'Emprestado'} }, {status: 'Reservado'});
+
+		const response = await Lending.create(reserveJson);
+
+		return res.json(response).send();
   },
-}
+
+	async update(req, res) {
+		const response = await Lending.findOneAndUpdate({ _id: req.params.id }, req.body, {
+			new: true,
+		});
+		return res.json(response);
+	},
+
+	async delete(req, res) {
+		await Lending.deleteOne({ _id: req.params.id });
+		return res.send();
+	},
+};
