@@ -62,7 +62,8 @@ export const Product = (props) => {
 			  throw Error(response.statusText);
 			}
 			const json = response.data;
-			setLendings(json)
+			console.log(json)
+			setLendings(json.lendings)
 		}catch(error){
 
 		}

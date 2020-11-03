@@ -150,7 +150,7 @@ export default {
 	},
 
 	async returnBook(req, res) {
-    const lending = await req.body;
+    	const lending = await req.body;
 		try {
 
 			const { name, email, phoneNumber } = lending.person;
