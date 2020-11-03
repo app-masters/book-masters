@@ -43,6 +43,7 @@ export const Product = (props) => {
 	const [details, setDetails] = useState(props.location.state);
 	const [id, setId] = useState(props.location.state._id);
 	const [lendings, setLendings] = useState([])
+	const [formOpt, setFormOpt] = useState("")
 
 	const [showForm, setShowForm] = useState(false);
 
@@ -70,12 +71,44 @@ export const Product = (props) => {
 	const lendBook = async (apiData) => {
 		try {
 			console.log(apiData);
-			const response = await api.post(`/lending/`, apiData);
+			const response = await api.post(`/lendings/`, apiData);
 
 			//console.log(response)
 
 			if (response.status !== 200) {
 				throw new Error('Não foi possível realizar o empréstimo');
+			}
+		} catch (error) {
+			//console.log(error);
+			throw error;
+		}
+	};
+
+	const reserveBook = async (apiData) => {
+		try {
+			console.log(apiData);
+			const response = await api.post(`/lendings/reserve`, apiData);
+
+			//console.log(response)
+
+			if (response.status !== 200) {
+				throw new Error('Não foi possível realizar a reserva');
+			}
+		} catch (error) {
+			//console.log(error);
+			throw error;
+		}
+	};
+
+	const returnBook = async (apiData) => {
+		try {
+			console.log(apiData);
+			const response = await api.post(`/lendings/return`, apiData);
+
+			//console.log(response)
+
+			if (response.status !== 200) {
+				throw new Error('Não foi possível realizar a devolução');
 			}
 		} catch (error) {
 			//console.log(error);
@@ -125,6 +158,14 @@ export const Product = (props) => {
 			};
 			setBorrowingCompleteDialog(true);
 			setUser(userData);
+			if(formOpt === "reservar"){
+
+				reserveBook(
+					{
+					id_book: id,
+					person: user,
+				})
+			}
 		} catch (error) {
 			if (error.message === '404') {
 				setNotRegisteredDialog(true);
@@ -169,7 +210,12 @@ export const Product = (props) => {
 
 		try {
 			/** USAR API PARA ENVIAR O LIVRO */
-			await lendBook(apiData);
+			if(formOpt === "pegar"){
+				await lendBook(apiData);
+			}else if (formOpt === "devolver"){
+				await returnBook(apiData);
+			}
+			
 			/** USAR API PARA ENVIAR O LIVRO */
 		} catch (error) {
 			setClicked(false);
@@ -316,8 +362,50 @@ export const Product = (props) => {
 	*/
 
 	/** TODO: alterar a forma que esse modal é aberto */
+
+	const form = (option) => {
+		return (
+			<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
+				<Grid container spacing={3} direction="column" alignItems="center" >
+					<Grid item >
+						<Typography variant="h5">Deseja {formOpt} esse livro?</Typography>
+					</Grid>
+					<Grid item xs={12} style={{width:"70%"}}>
+						<TextField
+							id='standard-secondary'
+							label='E-mail'
+							variant='outlined'
+							type='text'
+							name='email'
+							required
+							className={classes.textField}
+							placeholder='Insira seu email'
+							InputProps={{
+								startAdornment: (
+								<InputAdornment position="start">
+									<MailOutlineIcon />
+								</InputAdornment>
+								),
+							}}
+						/>
+					</Grid>	
+					<Grid item>
+						<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
+							{formOpt}
+						</Button>
+					</Grid>
+				</Grid>
+			</form>
+		)		
+	}
+
+	const setForm = (opt) => {
+		setShowForm(!showForm)
+		setFormOpt(opt)
+	}
+
 	const checkUser = () => {
-		if (user) {
+		if (user && formOpt !== "reservar") {
 			return (
 				<ConfirmLending
 					open={borrowingCompleteDialog}
@@ -327,6 +415,7 @@ export const Product = (props) => {
 					handleReturnQRCode={handleReturnQRCode}
 					handleError={handleQRCodeError}
 					handleScan={handleScan}
+					formOpt={formOpt}
 				/>
 			);
 		} else {
@@ -334,92 +423,80 @@ export const Product = (props) => {
 		}
 	};
 
+	const userActions = () => {
+		if(details.status === "Reservado"){
+			return(
+				<Button
+					className={classes.buttonOutlined}
+					onClick={() => setForm("pegar")}
+					variant='outlined'
+				>
+					Pegar
+				</Button>
+			)
+		}else if (details.status === "Emprestado"){
+			return(
+				<Button
+					className={classes.buttonOutlined}
+					onClick={() => setForm("devolver")}
+					variant='outlined'
+				>
+					Devolver
+				</Button>
+			)
+		}
+	}
+
 	return (
-			<Grid container className={classes.container} lg="auto" spacing={3}>
-				{checkUser()}
-				<Grid item xs={12}>
-					<Button 
-						component={RouterLink} 
-						to="/" size="large" 
-						color="primary"
-						size="large"
-						className={classes.button}
-						startIcon={<ArrowBackIosIcon />}>
-					Voltar
-					</Button>
-				</Grid>
-				<Grid item xs={12} lg={12} md={12}>
-					<DetailedBookCard 
-						img={details.img} 
-						title={details.title} 
-						autor={details.autor} 
-						description={details.description}
-						tags={details.tag}
-					/>
-				</Grid>
-				<Grid item xs={12} lg={8} md={8} alignItems="space-around" justify="space-around" style={{display:"flex"}}>
-					<Button
-						className={classes.buttonOutlined}
-						onClick={() => setShowForm(!showForm)}
-						variant='outlined'
-					>
-						Reservar
-					</Button>
-					<Button
-						className={classes.buttonOutlined}
-						onClick={() => setShowForm(!showForm)}
-						variant='outlined'
-					>
-						Pegar
-					</Button>
-				</Grid>
-				<Grid item xs={8} lg={8} md={8}>
-					{showForm && (
-						<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
-							<Grid container spacing={3} direction="column" alignItems="center" >
-								<Grid item >
-									<Typography variant="h5">Deseja reservar esse livro?</Typography>
-								</Grid>
-								<Grid item xs={12} style={{width:"70%"}}>
-									<TextField
-										id='standard-secondary'
-										label='E-mail'
-										variant='outlined'
-										type='text'
-										name='email'
-										required
-										className={classes.textField}
-										placeholder='Insira seu email'
-										InputProps={{
-											startAdornment: (
-											<InputAdornment position="start">
-												<MailOutlineIcon />
-											</InputAdornment>
-											),
-										}}
-									/>
-								</Grid>	
-								<Grid item>
-									<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
-										Pegar
-									</Button>
-								</Grid>
-							</Grid>
-						</form>
-					)}
-				</Grid>
-				<Grid item xs={12} lg={4} md={4}>
-					<LendingCard lendings={lendings}/>
-				</Grid>
-				<AlertSnackbar
-					open={borrowingError | borrowingSuccessful}
-					onClose={handleCloseAlert.bind(this)}
-					severity={borrowingError ? 'error' : 'success'}
-					message={
-						borrowingError ? 'Erro ao emprestar o livro. Tente novamente.' : 'Livro emprestado com sucesso!'
-					}
+		<Grid container className={classes.container} lg="auto" spacing={3}>
+			{checkUser()}
+			<Grid item xs={12}>
+				<Button 
+					component={RouterLink} 
+					to="/" size="large" 
+					color="primary"
+					size="large"
+					className={classes.button}
+					startIcon={<ArrowBackIosIcon />}>
+				Voltar
+				</Button>
+			</Grid>
+			<Grid item xs={12} lg={12} md={12}>
+				<DetailedBookCard 
+					img={details.img} 
+					title={details.title} 
+					autor={details.autor} 
+					description={details.description}
+					tags={details.tag}
 				/>
 			</Grid>
+			<Grid item xs={12} lg={8} md={8} alignItems="space-around" justify="space-around" style={{display:"flex"}}>
+				<Button
+					className={classes.buttonOutlined}
+					onClick={() => setForm("reservar")}
+					variant='outlined'
+				>
+					Reservar
+				</Button>
+				{userActions()}
+			</Grid>
+			<Grid item xs={8} lg={8} md={8}>
+				{showForm && (
+					form()
+				)}
+			</Grid>
+			<Grid item xs={12} lg={4} md={4}>
+				<LendingCard lendings={lendings}/>
+			</Grid>
+			<AlertSnackbar
+				open={borrowingError | borrowingSuccessful}
+				onClose={handleCloseAlert.bind(this)}
+				severity={borrowingError ? 'error' : 'success'}
+				message={
+					borrowingError ? 'Erro ao emprestar o livro. Tente novamente.' : 'Livro emprestado com sucesso!'
+				}
+			/>
+		</Grid>
 	);
 };
 

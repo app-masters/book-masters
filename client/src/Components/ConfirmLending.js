@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles } from '@material-ui/core';
 import QrReader from 'react-qr-reader';
@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
 const ConfirmLending = (props) => {
 	const classes = useStyles();
 
+	const action = () => {
+		if(props.formOpt === "pegar"){
+			return("o empréstimo")
+		}else if(props.formOpt === "devolver"){
+			return("a devolução")
+		}
+	}
+
 	return (
 		<Dialog open={props.open} onClose={props.onClose}>
 			<DialogTitle id='form-dialog-title'>Ler QRCode</DialogTitle>
@@ -25,7 +33,7 @@ const ConfirmLending = (props) => {
 			<DialogContent className={classes.content}>
 				<DialogContentText >
 					Olá {props.name}. Obrigado por utilizar nossa plataforma. 
-					Leia o QRCode para confirmar o empréstimo.
+					Leia o QRCode para confirmar {action()}.
 				</DialogContentText>
 				
 				<QrReader
