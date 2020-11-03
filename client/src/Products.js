@@ -41,13 +41,31 @@ export const Product = (props) => {
 	const [borrowingError, setBorrowingError] = useState(false);
 	const [user, setUser] = useState(null);
 	const [details, setDetails] = useState(props.location.state);
-	const [id, setId] = useState(props.location.state.id);
+	const [id, setId] = useState(props.location.state._id);
+	const [lendings, setLendings] = useState([])
 
 	const [showForm, setShowForm] = useState(false);
 
 	const date = moment().format('DD[/]MM [às] h:mm');
 
 	const classes = product()
+
+	useEffect( () => {
+		getLendings()
+	}, [])
+
+	const getLendings = async () => {
+		try {
+			const response = await api.get('/lendings/book/' + id);
+			if (response.status !== 200) {
+			  throw Error(response.statusText);
+			}
+			const json = response.data;
+			setLendings(json)
+		}catch(error){
+
+		}
+	}
 
 	const lendBook = async (apiData) => {
 		try {
@@ -89,6 +107,7 @@ export const Product = (props) => {
 			throw error;
 		}
 	};
+
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -338,13 +357,20 @@ export const Product = (props) => {
 						tags={details.tag}
 					/>
 				</Grid>
-				<Grid item xs={12} lg={8} md={8} alignItems="center" justify="center" style={{display:"flex"}}>
+				<Grid item xs={12} lg={8} md={8} alignItems="space-around" justify="space-around" style={{display:"flex"}}>
 					<Button
 						className={classes.buttonOutlined}
 						onClick={() => setShowForm(!showForm)}
 						variant='outlined'
 					>
-						Alugar
+						Reservar
+					</Button>
+					<Button
+						className={classes.buttonOutlined}
+						onClick={() => setShowForm(!showForm)}
+						variant='outlined'
+					>
+						Pegar
 					</Button>
 				</Grid>
 				<Grid item xs={8} lg={8} md={8}>
@@ -352,7 +378,7 @@ export const Product = (props) => {
 						<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
 							<Grid container spacing={3} direction="column" alignItems="center" >
 								<Grid item >
-									<Typography variant="h5">Deseja alugar esse livro?</Typography>
+									<Typography variant="h5">Deseja reservar esse livro?</Typography>
 								</Grid>
 								<Grid item xs={12} style={{width:"70%"}}>
 									<TextField
@@ -383,7 +409,7 @@ export const Product = (props) => {
 					)}
 				</Grid>
 				<Grid item xs={12} lg={4} md={4}>
-					<LendingCard/>
+					<LendingCard lendings={lendings}/>
 				</Grid>
 				<AlertSnackbar
 					open={borrowingError | borrowingSuccessful}

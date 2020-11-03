@@ -285,3 +285,11 @@ export const detailedBookCard = makeStyles((theme) => ({
 		color: "#6c757d",
 	},
 }));
+
+export const lendingCard = makeStyles((theme) => ({
+  root: {
+    boxShadow: "inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)",
+    padding: "20px",
+    width:"auto",
+  },
+}));
