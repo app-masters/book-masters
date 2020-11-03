@@ -21,14 +21,16 @@ import api from './services/api';
 import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
 import { product } from './assets/css/makeStyles';
-import { Grid } from '@material-ui/core';
+import { Grid} from '@material-ui/core';
 import AlertSnackbar from './components/AlertSnackbar';
 import { Link as RouterLink } from 'react-router-dom';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DetailedBookCard from './components/DetailedBookCard';
+import LendingCard from './components/LendingCard'
 
 export const Product = (props) => {
+	console.log(props)
 
 	const [error, setError] = useState(undefined);
 	const [clicked, setClicked] = useState(false);
@@ -314,13 +316,12 @@ export const Product = (props) => {
 	};
 
 	return (
-			<Grid container className={classes.container} spacing={5}>
+			<Grid container className={classes.container} lg="auto" spacing={3}>
 				{checkUser()}
 				<Grid item xs={12}>
 					<Button 
 						component={RouterLink} 
 						to="/" size="large" 
-						className={classes.btn}
 						color="primary"
 						size="large"
 						className={classes.button}
@@ -328,16 +329,16 @@ export const Product = (props) => {
 					Voltar
 					</Button>
 				</Grid>
-				<Grid item xs={10}>
+				<Grid item xs={12} lg={12} md={12}>
 					<DetailedBookCard 
 						img={details.img} 
-						title={details.name} 
+						title={details.title} 
 						autor={details.autor} 
 						description={details.description}
 						tags={details.tag}
 					/>
 				</Grid>
-				<Grid item xs={12} alignItems="center" justify="center" style={{display:"flex"}}>
+				<Grid item xs={12} lg={8} md={8} alignItems="center" justify="center" style={{display:"flex"}}>
 					<Button
 						className={classes.buttonOutlined}
 						onClick={() => setShowForm(!showForm)}
@@ -346,7 +347,7 @@ export const Product = (props) => {
 						Alugar
 					</Button>
 				</Grid>
-				<Grid item xs={8}>
+				<Grid item xs={8} lg={8} md={8}>
 					{showForm && (
 						<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
 							<Grid container spacing={3} direction="column" alignItems="center" >
@@ -380,6 +381,9 @@ export const Product = (props) => {
 							</Grid>
 						</form>
 					)}
+				</Grid>
+				<Grid item xs={12} lg={4} md={4}>
+					<LendingCard/>
 				</Grid>
 				<AlertSnackbar
 					open={borrowingError | borrowingSuccessful}

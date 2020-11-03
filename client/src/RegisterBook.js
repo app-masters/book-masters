@@ -65,7 +65,7 @@ const RegisterBook = () => {
 			img: coverURL? (coverURL):("https://avancar.gov.br/avancar-web/images/slideshow/not-found.png"),
 			anoPublicacao: year,
 			edicao: edition,
-			status: false,
+			status: 'Disponível',
 		}
 
 		console.log(serverBook)

@@ -13,6 +13,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close'
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
+import { Grid } from '@material-ui/core';
+import { Paper, Container, Box } from '@material-ui/core';
 
 const DetailedBookCard = (props) => {
 	
@@ -21,31 +23,34 @@ const DetailedBookCard = (props) => {
 
 	return (
 
-        <Card className={classes.root}>
-            <CardMedia
-                    component="img"
-                    className={classes.cover}
-                    image={props.img}
-                    title={props.name}
-                />
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                        {props.title}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        {props.autor}
-                    </Typography>
-                    <Typography className={classes.descriptionTitle} variant='h2'>
-                            Descrição
-                        </Typography>
-                    <Typography className={classes.description}>{props.description}</Typography>
-                    {props.tags.map((tag) => (
-                        (<Chip label={tag} style={{marginTop:"20px"}} />)
-                    ))}
-                </CardContent>
-            </div>
-        </Card>
+        <Paper className={classes.root}>
+            <Grid container justify="flex-start" alignItems="flex-start">
+                    <Grid item xs={12} sm={4} justify="center" alignItems="center">
+                        <img src={props.img} alt='BookCover' className={classes.cover}/>
+                    </Grid>
+                    <Grid container xs={12} sm={8} >
+                        <Grid item xs={12}>
+                            <Typography component="h3" variant="h5"> {props.title} </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography>{props.autor}</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                        <Typography variant='h6'>Descrição</Typography>
+                        </Grid>
+                        <Grid item xs={12} className={classes.details} >
+                            <Box component="div" overflow="auto" style={{maxHeight:"300px"}}>
+                                {props.description}
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                            {props.tags.map((tag) => (
+                                (<Chip label={tag} style={{marginTop:"20px"}} />)
+                            ))}
+                        </Grid>
+                    </Grid>
+                </Grid>
+        </Paper>
     );
 };
 

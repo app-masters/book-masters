@@ -38,7 +38,7 @@ export const footer = makeStyles((theme) => ({
         bottom: 0,
         margin: 0,
         height: "auto",
-        width: "100%",
+        width: "100vw",
         maxWidth: "100%",
         display: "flex",
         justifyContent: "center",
@@ -222,12 +222,11 @@ export const personStyle = makeStyles((theme) => ({
 
 export const product = makeStyles((theme) => ({
   container:{
-    marginTop:"70px",
     alignItems:"center", 
     justifyContent:"center", 
-    display:"flex", 
-    flexWrap:"wrap",
     minHeight:'75vh',
+    width:'98vw',
+    margin:"70px auto auto auto",
   },
   buttonOutlined: {
     border: "1px solid #0ab6ff",
@@ -246,22 +245,31 @@ export const product = makeStyles((theme) => ({
     width: "100%",
     marginRight: "10px",
   },
+  button:{
+    color: "#0ab6ff",
+  }
 }));
 
 export const detailedBookCard = makeStyles((theme) => ({
   root: {
-    display: 'flex',
     boxShadow: "inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)",
+    padding: "20px",
+    minHeight:"500px",
+    width:"auto",
+    
+  },
+  container:{
+    maxHeight: 20,
+    maxWidth: "100vw",
   },
   cover: {
     margin: 20,
-    height: '100%',
+    width: "80%",
+		maxWidth: "250px",
   },
   details: {
-    display: 'flex 1 0 auto',
-    flexDirection: 'column',
-    width:"75%",
-    minWidth:"70%",
+    overflow: 'auto',
+    heigth: 200,
   },
   descriptionTitle: {
 		fontSize: "18px",
