@@ -13,6 +13,7 @@ import api from './services/api';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DetailedBookCard from './components/DetailedBookCard';
 import LendingCard from './components/LendingCard'
+import fetchUserAppMasters from './services/appMastersAPI';
 
 export const Product = (props) => {
 	//console.log(props)
@@ -121,31 +122,6 @@ export const Product = (props) => {
 		}
 	};
 
-	const fetchUserAppMaster = async (email) => {
-		try {
-			const response = await fetch(`https://programador.emjuizdefora.com/api/user/public?email=${email}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-			});
-			console.log(response);
-			if (response.status === 404) {
-				throw new Error(response.status, 'Usuário não encontrado');
-			} else if (response.ok) {
-				const user = response.json();
-
-				console.log(user);
-				return user;
-			} else {
-				throw new Error(response.status, 'Erro ao consultar a API');
-			}
-		} catch (error) {
-			throw error;
-		}
-	};
-
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -153,7 +129,7 @@ export const Product = (props) => {
 		const email = event.target.elements.email.value;
 		console.log(email);
 		try {
-			const user = await fetchUserAppMaster(email);
+			const user = await fetchUserAppMasters(email);
 			console.log(user);
 
 			const userData = {
