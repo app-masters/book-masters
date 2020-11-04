@@ -1,22 +1,11 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import QrReader from 'react-qr-reader';
-
-const useStyles = makeStyles((theme) => ({
-    qrCode:{
-		width: '40%'
-	},
-	content:{
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center'
-	}
-  })); 
+import {confirmLending} from '../assets/css/makeStyles'
 
 const ConfirmLending = (props) => {
-	const classes = useStyles();
+	const classes = confirmLending();
 
 	const action = () => {
 		if(props.formOpt === "pegar"){
