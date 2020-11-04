@@ -40,6 +40,7 @@ const DetailedBookCard = (props) => {
                         <Grid item xs={12}>
                             {book.tag.map((t) => (
                                 (<Chip key={t} label={t} style={{marginTop:"20px"}} />)
+
                             ))}
                         </Grid>
                     </Grid>

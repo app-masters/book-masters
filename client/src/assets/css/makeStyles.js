@@ -225,6 +225,7 @@ export const product = makeStyles((theme) => ({
     justifyContent:"center", 
     minHeight:'75vh',
     width:'98vw',
+    maxWidth: '1500px',
     margin:"70px auto auto auto",
   },
   buttonOutlined: {
