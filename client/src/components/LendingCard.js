@@ -1,48 +1,56 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, {useState, useEffect} from 'react';
 import { lendingCard } from '../assets/css/makeStyles'
-// import api from '../services/api';
-import { Paper, Box, List, ListItemText, ListItem } from '@material-ui/core';
+import api from '../services/api';
+import { Paper, Box, List, ListItemText, ListItem, Typography } from '@material-ui/core';
 
 const LendingCard = (props) => {
     const {lendings} = props
+    console.log(lendings)
     const classes = lendingCard();
+    const [users, setUsers] = useState([]);
 
-    // const getUsers = async (id) => {
-    //     try {
-	// 		const response = await api.get('/users/' + id);
-	// 		if (response.status !== 200) {
-	// 		  throw Error(response.statusText);
-	// 		}
-	// 		const json = response.data;
-	// 		return (json)
-	// 	}catch(error){
+    useEffect( () => {
+		getUsers()
+	}, [])
 
-	// 	}
-    // }
+    const getUsers = async () => {
+        try {
+			const response = await api.get('/users');
+			if (response.status !== 200) {
+			  throw Error(response.statusText);
+			}
+			const json = response.data;
+			setUsers(json)
+		}catch(error){
 
-    // const userName = (id) => {getUsers(id)
-    //     .then(response => {
-    //         return(response.name)
-    //     })}
+		}
+    }
+    
+    const getUserName = (id) => {
+        for (let index = 0; index < users.length; index++) {
+            if(id === users[index]._id){
+                return(users[index].name)
+            }
+            
+        }
+    }
 
     if(lendings.length > 0){
         return (
             <Paper className={classes.root}>
                 <Typography variant="h5">Reservas</Typography>
-                <Box component="div" overflow="auto" maxHeight={400}>
+                <Box component="div" overflow="auto" maxHeight={200}>
                     <List>
                         { lendings.map((l) => {
                             if(l.status === "Reservado"){
                                 return (<ListItem>
-                                    <ListItemText primary={l.idUser} secondary={l.reservationDateInit} />
+                                    <ListItemText key={l.idUser} primary={getUserName(l.idUser)} secondary={l.reservationDateInit} />
                                 </ListItem>)
                             }else{
                               return  ""
                             }
                             
                             })
-                            
                         }
                     </List>                
                 </Box>  

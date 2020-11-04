@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { TextField } from '@material-ui/core';
-import moment from 'moment';
-import api from './services/api';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
 import { product } from './assets/css/makeStyles';
-import { Grid} from '@material-ui/core';
 import AlertSnackbar from './components/AlertSnackbar';
 import { Link as RouterLink } from 'react-router-dom';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import moment from 'moment';
+import api from './services/api';
+
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DetailedBookCard from './components/DetailedBookCard';
 import LendingCard from './components/LendingCard'
@@ -236,6 +234,8 @@ export const Product = (props) => {
 
 	const form = (option) => {
 		return (
+			<>
+			<Grid item xs={8} lg={8} md={8}>
 			<form id='actionForm' onSubmit={handleSubmit.bind(this)} style={{marginBottom:"40px"}}>
 				<Grid container spacing={3} direction="column" alignItems="center" >
 					<Grid item >
@@ -267,6 +267,11 @@ export const Product = (props) => {
 					</Grid>
 				</Grid>
 			</form>
+			</Grid>
+			<Grid item xs={12} lg={4} md={4}>
+				<LendingCard lendings={lendings}/>
+			</Grid>
+			</>
 		)		
 	}
 
@@ -319,7 +324,7 @@ export const Product = (props) => {
 	}
 
 	return (
-		<Grid container className={classes.container} lg="auto" spacing={3}>
+		<Grid container className={classes.container} spacing={3}>
 			{checkUser()}
 			<Grid item xs={12}>
 				<Button 
@@ -334,14 +339,10 @@ export const Product = (props) => {
 			</Grid>
 			<Grid item xs={12} lg={12} md={12}>
 				<DetailedBookCard 
-					img={details.img} 
-					title={details.title} 
-					autor={details.autor} 
-					description={details.description}
-					tags={details.tag}
+					book={details} 
 				/>
 			</Grid>
-			<Grid item xs={12} lg={8} md={8} alignItems="space-around" justify="space-around" style={{display:"flex"}}>
+			<Grid container justify="space-around" style={{display:"flex"}}>
 				<Button
 					className={classes.buttonOutlined}
 					onClick={() => setForm("reservar")}
@@ -351,14 +352,10 @@ export const Product = (props) => {
 				</Button>
 				{userActions()}
 			</Grid>
-			<Grid item xs={8} lg={8} md={8}>
-				{showForm && (
-					form()
-				)}
-			</Grid>
-			<Grid item xs={12} lg={4} md={4}>
-				<LendingCard lendings={lendings}/>
-			</Grid>
+			{showForm && (
+				form()
+			)}
+
 			<AlertSnackbar
 				open={borrowingError | borrowingSuccessful}
 				onClose={handleCloseAlert.bind(this)}

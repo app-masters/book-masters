@@ -121,6 +121,10 @@ export const bookCard = makeStyles((theme) => ({
       color: '#fff',
       backgroundColor: red[500],
     },
+    yellow:{
+      color: '#fff',
+      backgroundColor: "#FD9A24",
+    },
     cover : {
       height: "200px",
       width: "auto",
@@ -133,11 +137,6 @@ export const bookCard = makeStyles((theme) => ({
       justifyContent: "flex-start",
       width:"100%",
     },
-		btnForm: (theme) => ({
-			border: `1px solid ${theme.color}`,
-      color: theme.color,
-      alignSelf:"flex-start",
-		}),
 	})
 );
 
@@ -231,7 +230,8 @@ export const product = makeStyles((theme) => ({
   buttonOutlined: {
     border: "1px solid #0ab6ff",
     color: "#0ab6ff",
-    padding: "5px 15px",
+    padding: "10px 20px",
+    marginBottom: "20px",
   },
   formInput: {
     width: "100%",
@@ -293,3 +293,15 @@ export const lendingCard = makeStyles((theme) => ({
     width:"auto",
   },
 }));
+
+export const confirmLending = makeStyles((theme) => ({
+  qrCode:{
+  width: '40%'
+},
+content:{
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center'
+}
+})); 
