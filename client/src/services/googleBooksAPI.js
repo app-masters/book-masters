@@ -29,7 +29,7 @@ const fetchBookGoogle = async (isbn) => {
             bookResp.title = title ? title : "";
             bookResp.description = description ? description : "";
             bookResp.authors = authors ? authors.join(',') : "";
-            bookResp.tags = categories ? categories.join(',') : "";
+            bookResp.tags = categories ? categories : "";
             bookResp.editor = publisher ? publisher : ""
             bookResp.coverURL = imageLinks.thumbnail ? imageLinks.thumbnail : "";
             bookResp.year = publishedDate ? new Date(publishedDate).getFullYear() : "" ;
