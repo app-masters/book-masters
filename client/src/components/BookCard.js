@@ -5,7 +5,7 @@ import { bookCard } from '../assets/css/makeStyles'
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close'
 import PauseIcon from '@material-ui/icons/Pause';
-import {Avatar, CardActions, CardHeader, Typography, Button, CardMedia, CardContent, Card} from '@material-ui/core';
+import {Avatar, CardActions, CardHeader, Typography, Button, CardMedia, CardContent, Card, CardActionArea} from '@material-ui/core';
 
 const BookCard = (props) => {
 
@@ -38,18 +38,23 @@ const BookCard = (props) => {
 
 	return (
 		<Card className={classes.root} variant="outlined">
-			<CardHeader
-				title={props.book.title}
-				subheader={props.book.autor}
-				className={classes.header}
-			/>
-			<CardMedia
-				component='img'
-				className={classes.cover}
-				image={props.book.img ? props.book.img : book}
-				title='Image title'
-			/>
-			{status()}
+			<CardActionArea className={classes.rootAction} component={RouterLink} to={{
+						pathname: `/products/${props.book._id}`,
+						state: props.book
+					}}>
+				<CardHeader
+					title={props.book.title}
+					subheader={props.book.autor}
+					className={classes.header}
+				/>
+				<CardMedia
+					component='img'
+					className={classes.cover}
+					image={props.book.img ? props.book.img : book}
+					title='Image title'
+				/>
+				{status()}
+			</CardActionArea>
 			<CardActions className={classes.footer}>
 			<Button component={RouterLink} to={{
 						pathname: `/products/${props.book._id}`,

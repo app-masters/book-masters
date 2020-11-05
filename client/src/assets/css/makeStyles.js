@@ -101,6 +101,12 @@ export const bookCard = makeStyles((theme) => ({
       alignItems: "center",
       flexDirection: "column",
       margin: 20,
+    },
+    rootAction: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
 		},
 		bookStatus: {
 			width: '100%',
@@ -192,6 +198,17 @@ export const register = makeStyles((theme) => ({
     marginTop:60,
     textAlign:"center",
   },
+  buttonOutlined: {
+    border: "1px solid #0ab6ff",
+    color: "#0ab6ff",
+    padding: "10px 20px",
+    marginBottom: "20px",
+    '&:hover': {
+      color: "#ffffff",
+      backgroundColor: "#0ab6ff",
+    },
+  },
+  
   title:{
     paddingTop: 40,
   },
@@ -233,6 +250,10 @@ export const product = makeStyles((theme) => ({
     color: "#0ab6ff",
     padding: "10px 20px",
     marginBottom: "20px",
+    '&:hover': {
+      color: "#ffffff",
+      backgroundColor: "#0ab6ff",
+    },
   },
   formInput: {
     width: "100%",
