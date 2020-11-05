@@ -6,6 +6,7 @@ import fetchBookGoogle from './services/googleBooksAPI';
 import { Redirect } from "react-router-dom";
 import api from './services/api';
 import {register} from "./assets/css/makeStyles"
+import ChipInput from 'material-ui-chip-input';
 
 /*
 	ISBN: string ok
@@ -29,7 +30,7 @@ const RegisterBook = () => {
 	const [description, setDescription] = useState("");
 	const [authors, setAuthors] = useState("");
 	const [editor, setEditor] = useState("");
-	const [tags, setTags] = useState("");
+	const [tags, setTags] = useState([]);
 	const [coverURL, setCoverURL] = useState("");
 	const [year, setYear] = useState("");
 	const [edition, setEdition] = useState("");
@@ -79,7 +80,7 @@ const RegisterBook = () => {
 	}, [ISBN, title, description, authors, editor, tags, coverURL, year, edition]);
 
 
-
+	console.log(tags)
 	const searchGoogleAPI = useCallback(async () => {
 
 		console.log("GoogleAPI")
@@ -107,6 +108,17 @@ const RegisterBook = () => {
 
 
 	}, [ISBN]);
+
+	const handleAddChip = (chip) => {
+		const newTags = [...tags, chip]
+		setTags(newTags)
+	}
+
+	const handleDeleteChip = (chip, index) => {
+		const removedTags = [...tags];
+		removedTags.splice(index, 1);
+		setTags(removedTags)
+	}
 
 	if (redirect) {
 		return <Redirect to='/'/>;
@@ -213,7 +225,26 @@ const RegisterBook = () => {
 						/>
 					</Grid>
 					<Grid item xs={12} >
-						<TextField
+					
+					<ChipInput
+						id='form-tags'
+						label='Tags'
+						style={{ margin: 8 }}
+						placeholder='Tags'
+						fullWidth
+						InputLabelProps={{
+							shrink: true,
+						}}
+						helperText='Informe as tags separadas por vírgula.'
+						variant='outlined'
+						newChipKeyCodes={[188, 9]}
+						value={tags}
+						onAdd={(chip) => handleAddChip(chip)}
+						onDelete={(chip, index) => handleDeleteChip(chip, index)}
+						
+						/>
+						
+						{/*<TextField
 							id='form-tags'
 							label='Tags'
 							style={{ margin: 8 }}
@@ -226,7 +257,7 @@ const RegisterBook = () => {
 								shrink: true,
 							}}
 							variant='outlined'
-						/>
+						/>*/}
 					</Grid>
 					<Grid item xs={12} >
 						<TextField

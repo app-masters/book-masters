@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback} from 'react';
-import { Grid, Typography, TextField, Button } from '@material-ui/core';
+import { Grid, Typography, TextField, Button, FormHelperText } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ConfirmLending from './components/ConfirmLending';
@@ -14,12 +14,16 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import DetailedBookCard from './components/DetailedBookCard';
 import LendingCard from './components/LendingCard'
 import fetchUserAppMasters from './services/appMastersAPI';
+import preprocessEmail from './utils/preprocessEmail';
 
 export const Product = (props) => {
 	//console.log(props)
 
 	const [error, setError] = useState(undefined);
 	const [clicked, setClicked] = useState(false);
+	const [emailError, setEmailError] = useState(false);
+	const [email, setEmail] = useState("");
+
 	const [notRegisteredDialog, setNotRegisteredDialog] = useState(false);
 	const [borrowingCompleteDialog, setBorrowingCompleteDialog] = useState(false);
 	const [borrowingSuccessful, setBorrowingSuccessfulDialog] = useState(false);
@@ -31,8 +35,6 @@ export const Product = (props) => {
 	const [formOpt, setFormOpt] = useState("")
 
 	const [showForm, setShowForm] = useState(false);
-
-	
 
 	const classes = product()
 
@@ -126,9 +128,16 @@ export const Product = (props) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		const email = event.target.elements.email.value;
+		if(preprocessEmail(event.target.value)){
+			setEmailError(false);
+		} else {
+			setEmailError(true);
+			return;
+		}
+		//const email = event.target.elements.email.value;
 		console.log(email);
 		try {
+			
 			const user = await fetchUserAppMasters(email);
 			console.log(user);
 
@@ -222,6 +231,12 @@ export const Product = (props) => {
 		setBorrowingError(true);
 	};
 
+	const handleEmailInput = (val) => {
+		
+		
+		setEmail(val.target.value.trim().toLowerCase());
+	};
+
 	moment.locale('pt-BR');
 
 	/** TODO: alterar a forma que esse modal é aberto */
@@ -242,6 +257,9 @@ export const Product = (props) => {
 							variant='outlined'
 							type='text'
 							name='email'
+							value={email}
+							error={emailError}
+							onChange={(e) => handleEmailInput(e)}
 							required
 							className={classes.textField}
 							placeholder='Insira seu email'
@@ -253,6 +271,7 @@ export const Product = (props) => {
 								),
 							}}
 						/>
+						{emailError && <FormHelperText error id="component-error-text">Email inválido.</FormHelperText>}
 					</Grid>	
 					<Grid item>
 						<Button className={classes.buttonOutlined} type='submit' variant='outlined'>
