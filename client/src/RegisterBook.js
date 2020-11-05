@@ -312,10 +312,9 @@ const RegisterBook = () => {
 					</Grid>
 					<Grid container  justify="flex-end"  style={{ paddingTop: 40, paddingBottom:50,}}>
 						<Button
-							variant="contained"
-							color="primary"
+							className={classes.buttonOutlined}
+							variant="outlined"
 							size="large"
-							className={classes.button}
 							startIcon={<SaveIcon />}
 							form='book-form' 
 							type='submit'
