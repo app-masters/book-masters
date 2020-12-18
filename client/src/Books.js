@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import BookCard from "./components/BookCard";
-import { booksContainer } from './assets/css/makeStyles'
+import { booksContainer } from './css/makeStyles'
 import LoadingSpinner from './components/LoadingSpinner'
 
 const Books = (props) => {

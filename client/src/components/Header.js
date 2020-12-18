@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Container, Typography} from "@material-ui/core";
 
-import {header} from '../assets/css/makeStyles'
+import {header} from '../css/makeStyles'
 
 
 export default function Header() {

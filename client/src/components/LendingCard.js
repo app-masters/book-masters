@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { lendingCard } from '../assets/css/makeStyles'
+import { lendingCard } from '../css/makeStyles'
 import api from '../services/api';
 import { Paper, Box, List, ListItemText, ListItem, Typography } from '@material-ui/core';
 

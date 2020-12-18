@@ -1,6 +1,6 @@
 import React from "react";
 import ReactLoading from "react-loading";
-import { spinner } from "../assets/css/makeStyles";
+import { spinner } from "../css/makeStyles";
 
 const LoadingSpinner = () => {
     const classes = spinner();

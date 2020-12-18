@@ -4,7 +4,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ConfirmLending from './components/ConfirmLending';
 import NotRegisteredDialog from './components/NotRegisteredDialog';
-import { product } from './assets/css/makeStyles';
+import { product } from './css/makeStyles';
 import AlertSnackbar from './components/AlertSnackbar';
 import { Link as RouterLink } from 'react-router-dom';
 import moment from 'moment';

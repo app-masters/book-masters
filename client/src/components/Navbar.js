@@ -1,7 +1,7 @@
 import React from "react";
 import {AppBar, Toolbar, Button, Container} from "@material-ui/core";
 import { Link as RouterLink } from 'react-router-dom';
-import { navbar } from "../assets/css/makeStyles"
+import { navbar } from "../css/makeStyles"
 
 
 const Navbar = () => {

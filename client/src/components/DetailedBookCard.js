@@ -1,5 +1,5 @@
 import React from 'react';
-import { detailedBookCard } from '../assets/css/makeStyles'
+import { detailedBookCard } from '../css/makeStyles'
 import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
 
 const DetailedBookCard = (props) => {

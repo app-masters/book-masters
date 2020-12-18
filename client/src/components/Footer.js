@@ -1,7 +1,7 @@
 import React from "react";
 import {Typography, Container} from "@material-ui/core";
 import { Link } from "@material-ui/core";
-import {footer} from "../assets/css/makeStyles"
+import {footer} from "../css/makeStyles"
 
 const Footer = () => {
   

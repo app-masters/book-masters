@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import QrReader from 'react-qr-reader';
-import {confirmLending} from '../assets/css/makeStyles'
+import {confirmLending} from '../css/makeStyles'
 
 const ConfirmLending = (props) => {
 	const classes = confirmLending();

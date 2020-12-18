@@ -1,7 +1,7 @@
 import React from "react";
 import {Grid, Typography, Container, Box} from "@material-ui/core"
 import PersonCard from "./components/PersonCard";
-import {about} from "./assets/css/makeStyles"
+import {about} from "./css/makeStyles"
 import {people} from "./assets/info/people"
 
   

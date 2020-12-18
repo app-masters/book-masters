@@ -31,7 +31,7 @@ export const navbar = makeStyles((theme) => ({
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-  }));
+  }), {index: 1});
 
 export const footer = makeStyles((theme) => ({
     footer: {
@@ -49,7 +49,7 @@ export const footer = makeStyles((theme) => ({
         color:"white",
         backgroundImage: "url(./breadcrumb.webp)" ,
     },
-  }));
+  }), {index: 1});
 
 export const spinner = makeStyles((theme) => ({
     spinner: {
@@ -58,7 +58,7 @@ export const spinner = makeStyles((theme) => ({
         justifyContent: "center",
         minHeight: "80vh",
     },
-  }));
+  }), {index: 1});
   
 export const header = makeStyles((theme) => ({
   icon: {
@@ -76,13 +76,13 @@ export const header = makeStyles((theme) => ({
     fontFamily: "Poppins, sans-serif",
     color: "#ffffff",
   },
-}));
+}), {index: 1});
 
 export const body = makeStyles((theme) => ({
   body: {
     height: "80vh",
   },
-}));
+}), {index: 1});
 
 export const booksContainer = makeStyles((theme) => ({
   container:{
@@ -91,7 +91,7 @@ export const booksContainer = makeStyles((theme) => ({
     display:"flex", 
     flexWrap:"wrap"
   },
-}));
+}), {index: 1});
 
 export const bookCard = makeStyles((theme) => ({
 		root: {
@@ -143,7 +143,7 @@ export const bookCard = makeStyles((theme) => ({
       justifyContent: "flex-start",
       width:"100%",
     },
-	})
+	}), {index: 1}
 );
 
 export const about = makeStyles((theme) => ({
@@ -190,7 +190,7 @@ export const about = makeStyles((theme) => ({
   container:{
     marginTop:40,
   }
-}));
+}), {index: 1});
 
 export const register = makeStyles((theme) => ({
   container:{
@@ -213,7 +213,7 @@ export const register = makeStyles((theme) => ({
     paddingTop: 40,
   },
 }
-));
+), {index: 1});
 
 export const personStyle = makeStyles((theme) => ({
   content: {
@@ -234,7 +234,7 @@ export const personStyle = makeStyles((theme) => ({
       width: "150px",
       height: "150px",
   },
-}));
+}), {index: 1});
 
 export const product = makeStyles((theme) => ({
   container:{
@@ -270,7 +270,7 @@ export const product = makeStyles((theme) => ({
   button:{
     color: "#0ab6ff",
   }
-}));
+}), {index: 1});
 
 export const detailedBookCard = makeStyles((theme) => ({
   root: {
@@ -306,7 +306,7 @@ export const detailedBookCard = makeStyles((theme) => ({
 		fontSize: "15px",
 		color: "#6c757d",
 	},
-}));
+}), {index: 1});
 
 export const lendingCard = makeStyles((theme) => ({
   root: {
@@ -314,7 +314,7 @@ export const lendingCard = makeStyles((theme) => ({
     padding: "20px",
     width:"auto",
   },
-}));
+}), {index: 1});
 
 export const confirmLending = makeStyles((theme) => ({
   qrCode:{
@@ -326,4 +326,4 @@ content:{
   justifyContent: 'center',
   alignItems: 'center'
 }
-})); 
+}), {index: 1}); 

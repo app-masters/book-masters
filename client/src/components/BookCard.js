@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import book from '../assets/img/book.png';
-import { bookCard } from '../assets/css/makeStyles'
+import { bookCard } from '../css/makeStyles'
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close'
 import PauseIcon from '@material-ui/icons/Pause';

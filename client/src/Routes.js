@@ -6,9 +6,11 @@ import RegisterBook from "./RegisterBook";
 import About from "./About";
 import  Footer  from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { CssBaseline } from "@material-ui/core";
 
 const Routes = () => (
   <BrowserRouter>
+    <CssBaseline />
     <Navbar />
     <Switch>
       <Route exact path="/" component={Home} />
