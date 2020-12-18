@@ -1,5 +1,5 @@
 import { Router } from "express"
-import LendingController from "../controllers/LendingController.js"
+import LendingController from "../controllers/LendingController.js" 
 
 const lendingRouter = Router()
 
