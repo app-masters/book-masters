@@ -1,6 +1,6 @@
 import User from "../models/User.js"
 
-export default {
+const userController = {
   async getAll(req, res) {
     const response = await User.find()
 
@@ -33,3 +33,5 @@ export default {
     return res.send()
   },
 }
+
+export default userController;

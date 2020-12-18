@@ -23,7 +23,7 @@ const findOrCreateUser = async (name, email, phone) => {
 	}
 };
 
-export default {
+const lendingController = {
 	async getAll(req, res) {
 		const response = await Lending.find();
 		return res.json(response);
@@ -211,3 +211,5 @@ export default {
 		return res.send();
 	},
 };
+
+export default lendingController;
