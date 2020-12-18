@@ -17,5 +17,8 @@
   "devDependencies": {
     "nodemon": "^2.0.6",
     "sucrase": "^3.15.0"
+  },
+  "engines": {
+    "node": "14.15"
   }
 }

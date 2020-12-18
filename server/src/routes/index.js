@@ -1,7 +1,7 @@
 import { Router } from "express"
-import BookRoute from "./book.routes.js"
-import lendingRouter from './lending.routes.js';
-import userRouter from "./user.routes.js";
+import BookRoute from "./book.routes"
+import lendingRouter from './lending.routes';
+import userRouter from "./user.routes";
 
 const routes = Router()
 
