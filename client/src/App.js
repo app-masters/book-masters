@@ -1,16 +1,14 @@
-import React, { Component } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Routes from "./Routes";
+import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Routes from './routes';
 
-class App extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <CssBaseline />
-        <Routes />
-      </React.Fragment>
-    );
-  }
-}
+const App = () => {
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <Routes />
+    </React.Fragment>
+  );
+};
 
 export default App;
