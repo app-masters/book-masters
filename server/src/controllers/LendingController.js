@@ -1,8 +1,8 @@
-import Book from '../models/Book';
-import Lending from '../models/Lending';
-import User from '../models/User';
-import addDaysToDate from '../utils/addDaysToDate';
-import preprocessEmail from '../utils/preprocessEmail';
+import Book from '../models/Book.js';
+import Lending from '../models/Lending.js';
+import User from '../models/User.js';
+import addDaysToDate from '../utils/addDaysToDate.js';
+import preprocessEmail from '../utils/preprocessEmail.js';
 
 const findOrCreateUser = async (name, email, phone) => {
 	const user = await User.find({ email });
@@ -23,7 +23,7 @@ const findOrCreateUser = async (name, email, phone) => {
 	}
 };
 
-export default {
+const lendingController = {
 	async getAll(req, res) {
 		const response = await Lending.find();
 		return res.json(response);
@@ -211,3 +211,5 @@ export default {
 		return res.send();
 	},
 };
+
+export default lendingController;

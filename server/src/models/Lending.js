@@ -1,34 +1,40 @@
-import { Schema, model } from "mongoose"
+import pkg from 'mongoose';
+const { Schema, model }  = pkg;
+
+const schemaOptions = {
+    timestamps: { 
+        createdAt: 'createdAt', 
+        updatedAt: 'updatedAt', 
+    },
+};
 
 const LendingSchema = new Schema(
     {
         idUser: {
-            type: String,
-            required: true
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
         },
         idBook: {
-            type: String
+            type: Schema.Types.ObjectId,
+            ref: "Book",
+            required: true,
         },
         status: {
             type: String,
             enum : ['Reservado','Emprestado','Devolvido'],
         },
-        reservationDateInit: {
-            type: Date
-        },
-        reservationDateFinally: {
-            type: Date
-        },
-        lendingDateInit: {
-            type: Date
-        },
-        lendingDateFinally: {
-            type: Date
-        },
-        returnDate: {
-            type: Date
-        },
-    }
+        returnedAt: Schema.Types.Date,
+
+        lendingStartedAt: Schema.Types.Date,
+
+        lendingEndAt: Schema.Types.Date,
+
+        reservationStartedAt: Schema.Types.Date,
+
+        reservationEndAt: Schema.Types.Date,
+
+    }, schemaOptions
 )
 
 export default new model("Lending", LendingSchema, "lendings")

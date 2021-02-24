@@ -1,6 +1,6 @@
-import Book from "../models/Book"
+import Book from "../models/Book.js"
 
-export default {
+const bookController = {
   
   async getAll(req, res) {
     const response = await Book.find()
@@ -35,3 +35,5 @@ export default {
   },
 
 }
+
+export default bookController;
