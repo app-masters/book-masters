@@ -1,8 +1,20 @@
 import pkg from 'mongoose';
 const { Schema, model }  = pkg;
 
+const schemaOptions = {
+    timestamps: { 
+        createdAt: 'createdAt', 
+        updatedAt: 'updatedAt', 
+    },
+};
+
 const BookSchema = new Schema(
     {
+        idUser: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
         isbn: {
             type: String,
         },
@@ -13,24 +25,24 @@ const BookSchema = new Schema(
         description: {
             type: String,
         },
-        autor: {
+        author: {
             type: Array,
             required: true
         },
-        editora: {
+        publishingCompany: {
             type: String,
             required: true,
         },
         tag: {
             type: Array
         },
-        img: {
+        imageUrl: {
             type: String,
         },
-        anoPublicacao: {
+        publicationYear: {
             type: Number,
         },
-        edicao: {
+        edition: {
             type: Number,
         },
         status: {
@@ -39,7 +51,7 @@ const BookSchema = new Schema(
             enum : ['Disponível','Emprestado','Reservado'],
             default: 'Disponível',
         },
-    }
+    }, schemaOptions
 )
 
 export default new model("Book", BookSchema, "books")
