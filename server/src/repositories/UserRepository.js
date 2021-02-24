@@ -1,31 +1,31 @@
-import User from "../models/User"
+import User from '../models/User';
 
 export default {
   async get() {
-    const response = await User.find()
+    const response = await User.find();
 
-    return response
+    return response;
   },
   async getById(id) {
-    const response = await User.findById(id)
+    const response = await User.findById(id);
 
-    return response
+    return response;
   },
   async create(body) {
-    const response = await User.create(body)
+    const response = await User.create(body);
 
-    return response
+    return response;
   },
   async update(id, body) {
     const response = await User.findOneAndUpdate({ _id: id }, body, {
-      new: true,
-    })
+      new: true
+    });
 
-    return response
+    return response;
   },
   async delete(id) {
-    const response = await User.deleteOne({ _id: id })
+    const response = await User.deleteOne({ _id: id });
 
-    return response
-  },
-}
+    return response;
+  }
+};
