@@ -32,7 +32,7 @@ NotifyAvailabilitySchema.statics.validate = (obj) => {
   const validator = new Validator(obj, rules, errorMessage());
   validator.setAttributeNames({
     idUser: 'Id do usuário',
-    idUser: 'Id do livro'
+    idBook: 'Id do livro'
   });
   return validator;
 };
