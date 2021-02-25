@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import express from 'express';
 import LendingController from '../controllers/LendingController.js';
 
-const lendingRouter = Router();
+const lendingRouter = express.Router();
 
 lendingRouter.get('/lendings/', LendingController.getAll);
 lendingRouter.get('/lendings/book/:id', LendingController.getAllBookLending);

@@ -1,5 +1,6 @@
 import pkg from 'mongoose';
 const { Schema, model } = pkg;
+import Validator from 'validatorjs';
 
 const schemaOptions = {
   timestamps: {
@@ -54,5 +55,28 @@ const BookSchema = new Schema(
   },
   schemaOptions
 );
+
+BookSchema.statics.validate = (obj) => {
+  const errorMessage = {
+    required: 'O campo :attribute é obrigatório.',
+    in: "As opções válidas para o campo :attribute são: 'Disponível', 'Emprestado', 'Reservado'"
+  };
+  const rules = {
+    idUser: 'required',
+    title: 'required',
+    publishingCompany: 'required',
+    author: 'required',
+    status: ['required', { in: ['Disponível', 'Emprestado', 'Reservado'] }]
+  };
+
+  const validator = new Validator(obj, rules, errorMessage);
+  validator.setAttributeNames({
+    title: 'título',
+    idUser: 'Id do usuário',
+    publishingCompany: 'editora',
+    author: 'autor'
+  });
+  return validator;
+};
 
 export default new model('Book', BookSchema, 'books');
