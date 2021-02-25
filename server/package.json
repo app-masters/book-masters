@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "check-prettier": "prettier-check \"**/*.js\"",
     "check-lint": "eslint \"**/*.js\" --max-warnings 0 ",
-    "checks": "yarn run check-lint && yarn run check-prettier"
+    "checks": "yarn run check-lint && yarn run check-prettier",
+    "seed": "node ./src/database/seeds/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
