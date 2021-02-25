@@ -51,7 +51,7 @@ export const Product = (props) => {
       const json = response.data;
       setLendings(json.lendings);
     } catch (error) {
-      console.error('Error getting lendings', error);
+      console.log('Error getting lendings', error);
     }
   }, [id]);
 
@@ -69,7 +69,7 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
-      console.error('Error lending book', error);
+      console.log('Error lending book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
     }
@@ -85,7 +85,7 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
-      console.error('Error reserving book', error);
+      console.log('Error reserving book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
       throw error;
@@ -101,7 +101,7 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
-      console.error('Error returning book', error);
+      console.log('Error returning book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
       throw error;
@@ -136,7 +136,7 @@ export const Product = (props) => {
         setNotRegisteredDialog(true);
       }
       setError(error);
-      console.error('Error submitting form', error);
+      console.log('Error submitting form', error);
     }
   };
 
@@ -177,7 +177,7 @@ export const Product = (props) => {
         await returnBook(apiData);
       }
     } catch (error) {
-      console.error('Error lending or returning book', error);
+      console.log('Error lending or returning book', error);
       setClicked(false);
       setBorrowingCompleteDialog(false);
       setBorrowingSuccessfulDialog(false);
