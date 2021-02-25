@@ -7,7 +7,7 @@ import faker from 'faker';
 class UserSeeder {
   async run() {
     console.log('Seeding users...');
-    const data = Array.apply(null, Array(5)).map((arr) => {
+    const data = Array.apply(null, Array(5)).map(() => {
       return {
         email: faker.internet.email(),
         name: faker.name.findName(),

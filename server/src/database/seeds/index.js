@@ -1,8 +1,7 @@
 import BookSeeder from './BookSeeder.js';
 import UserSeeder from './UserSeeder.js';
-import LendingSeeder  from './LendingSeeder.js';
+import LendingSeeder from './LendingSeeder.js';
 
-import moongose from '../connection.js';
 import mongoose from '../connection.js';
 
 class Seeder {

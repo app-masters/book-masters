@@ -1,4 +1,3 @@
-
 import Lending from '../../models/Lending.js';
 import User from '../../models/User.js';
 import Book from '../../models/Book.js';
@@ -12,10 +11,10 @@ class LendingSeeder {
     console.log('Seeding lendings...');
     const users = await User.find({});
     const books = await Book.find({});
-    const usersIds = users.map((u) => u._id)
-    const booksIds = books.map((u) => u._id)
+    const usersIds = users.map((u) => u._id);
+    const booksIds = books.map((u) => u._id);
 
-    const data = Array.apply(null, Array(5)).map((arr) => {
+    const data = Array.apply(null, Array(5)).map(() => {
       return {
         idUser: faker.random.arrayElement(usersIds),
         idBook: faker.random.arrayElement(booksIds),
@@ -24,7 +23,7 @@ class LendingSeeder {
         lendingStartedAt: faker.date.past(),
         lendingEndAt: faker.date.past(),
         reservationStartedAt: faker.date.past(),
-        reservationEndAt:faker.date.past()
+        reservationEndAt: faker.date.past()
       };
     });
     await Lending.create(data);
@@ -32,13 +31,3 @@ class LendingSeeder {
 }
 
 export default LendingSeeder;
-
-/*
-  {
-    idUser: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
-    },
-  },
-*/

@@ -9,8 +9,8 @@ class BookSeeder {
   async run() {
     console.log('Seeding books...');
     const users = await User.find({});
-    const usersIds = users.map((u) => u._id)
-    const data = Array.apply(null, Array(5)).map((arr) => {
+    const usersIds = users.map((u) => u._id);
+    const data = Array.apply(null, Array(5)).map(() => {
       return {
         idUser: faker.random.arrayElement(usersIds),
         isbn: faker.random.alphaNumeric(10),
