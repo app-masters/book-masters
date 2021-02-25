@@ -16,7 +16,7 @@ const fetchUserAppMasters = async (email) => {
       throw new Error(response.status, 'Erro ao consultar a API');
     }
   } catch (error) {
-    throw error;
+    console.error('Error fetching users', error);
   }
 };
 

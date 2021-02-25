@@ -1,39 +1,50 @@
-import Book from "../models/Book.js"
+import Book from '../models/Book.js';
+import BaseController from './BaseController.js';
 
-const bookController = {
-  
-  async getAll(req, res) {
-    const response = await Book.find()
+class BookController extends BaseController {
+  async getAll(_req, res) {
+    const response = await Book.find();
 
     return res.json(response);
-  },
+  }
 
   async getById(req, res) {
-    const response = await Book.findById(req.params.id)
+    const response = await Book.findById(req.params.id);
 
-    return res.json(response)
-  },
+    return res.json(response);
+  }
 
   async create(req, res) {
-    const response = await Book.create(req.body)
+    try {
+      const response = await Book.create(req.body);
 
-    return res.json(response)
-  },
+      return res.json(response);
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 
   async update(req, res) {
-    const response = await Book.findOneAndUpdate({ _id: req.params.id}, req.body, {
-      new: true,
-    })
+    try {
+      const response = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true
+      });
 
-    return res.json(response)
-  },
+      return res.json(response);
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 
   async delete(req, res) {
-    await Book.deleteOne({ _id: req.params.id })
+    try {
+      await Book.deleteOne({ _id: req.params.id });
 
-    return res.send()
-  },
-
+      return res.send();
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 }
 
-export default bookController;
+export default new BookController();

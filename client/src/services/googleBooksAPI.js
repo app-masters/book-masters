@@ -34,7 +34,8 @@ const fetchBookGoogle = async (isbn) => {
     }
     return bookResp;
   } catch (err) {
-    throw err;
+    console.error('Error fetching book on google API', error);
+    
   }
 };
 

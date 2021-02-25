@@ -48,7 +48,7 @@ const RegisterBook = () => {
     try {
       await api.post('/books', obj);
     } catch (e) {
-      throw e;
+      console.error('Error creating book', e);
     }
   }
 
@@ -71,7 +71,7 @@ const RegisterBook = () => {
         enviar(serverBook);
         setRedirect(true);
       } catch (error) {
-        console.log('Error saving book', error.message);
+        console.error('Error saving book', error.message);
       }
     },
     [ISBN, title, description, authors, editor, tags, coverURL, year, edition]

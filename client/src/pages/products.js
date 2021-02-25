@@ -51,7 +51,7 @@ export const Product = (props) => {
       const json = response.data;
       setLendings(json.lendings);
     } catch (error) {
-      console.log('Error getting leadings', error);
+      console.error('Error getting lendings', error);
     }
   }, [id]);
 
@@ -69,9 +69,9 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
+      console.error('Error lending book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
-      throw error;
     }
   };
 
@@ -85,6 +85,7 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
+      console.error('Error reserving book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
       throw error;
@@ -100,6 +101,7 @@ export const Product = (props) => {
       setBorrowingSuccessfulDialog(true);
       setBorrowingError(false);
     } catch (error) {
+      console.error('Error returning book', error);
       setBorrowingSuccessfulDialog(false);
       setBorrowingError(true);
       throw error;
@@ -134,6 +136,7 @@ export const Product = (props) => {
         setNotRegisteredDialog(true);
       }
       setError(error);
+      console.error('Error submitting form', error);
     }
   };
 
@@ -174,6 +177,7 @@ export const Product = (props) => {
         await returnBook(apiData);
       }
     } catch (error) {
+      console.error('Error lending or returning book', error);
       setClicked(false);
       setBorrowingCompleteDialog(false);
       setBorrowingSuccessfulDialog(false);
@@ -206,7 +210,7 @@ export const Product = (props) => {
         <Grid item xs={8} lg={8} md={8}>
           <form
             id="actionForm"
-            onSubmit={handleSubmit.bind(this)}
+            onSubmit={handleSubmit}
             style={{ marginBottom: '40px' }}
           >
             <Grid container spacing={3} direction="column" alignItems="center">

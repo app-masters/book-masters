@@ -1,37 +1,50 @@
-import User from "../models/User.js"
+import User from '../models/User.js';
+import BaseController from './BaseController.js';
 
-const userController = {
-  async getAll(req, res) {
-    const response = await User.find()
+class UserController extends BaseController {
+  async getAll(_req, res) {
+    const response = await User.find();
 
     return res.json(response);
-  },
-  
-  async getById(req, res) {
-    const response = await User.findById(req.params.id)
+  }
 
-    return res.json(response)
-  },
+  async getById(req, res) {
+    const response = await User.findById(req.params.id);
+
+    return res.json(response);
+  }
 
   async create(req, res) {
-    const response = await User.create(req.body)
+    try {
+      const response = await User.create(req.body);
 
-    return res.json(response)
-  },
+      return res.json(response);
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 
   async update(req, res) {
-    const response = await User.findOneAndUpdate({ _id: req.params.id}, req.body, {
-      new: true,
-    })
+    try {
+      const response = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true
+      });
 
-    return res.json(response)
-  },
+      return res.json(response);
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 
   async delete(req, res) {
-    await User.deleteOne({ _id: req.params.id })
+    try {
+      await User.deleteOne({ _id: req.params.id });
 
-    return res.send()
-  },
+      return res.send();
+    } catch (error) {
+      this.returnGenericException(res, error);
+    }
+  }
 }
 
-export default userController;
+export default new UserController();
