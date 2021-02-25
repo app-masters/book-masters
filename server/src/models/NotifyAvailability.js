@@ -1,11 +1,12 @@
-import pkg from 'mongoose';
-const { Schema, model } = pkg;
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
+import { errorMessage } from './constraints';
 
 const schemaOptions = {
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 };
 
-const UserSchema = new Schema(
+const NotifyAvailabilitySchema = new Schema(
   {
     idUser: {
       type: Schema.Types.ObjectId,
@@ -22,4 +23,18 @@ const UserSchema = new Schema(
   schemaOptions
 );
 
-export default new model('NotifyAvailability', UserSchema);
+NotifyAvailabilitySchema.statics.validate = (obj) => {
+  const rules = {
+    idUser: 'required',
+    idBook: 'required'
+  };
+
+  const validator = new Validator(obj, rules, errorMessage());
+  validator.setAttributeNames({
+    idUser: 'Id do usuário',
+    idUser: 'Id do livro'
+  });
+  return validator;
+};
+
+export default new model('NotifyAvailability', NotifyAvailabilitySchema);
