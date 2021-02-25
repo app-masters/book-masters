@@ -1,7 +1,6 @@
 import Book from '../models/Book.js';
-import BaseController from './BaseController.js';
 
-class BookController extends BaseController {
+class BookController {
   async getAll(_req, res) {
     const response = await Book.find();
 
@@ -14,25 +13,58 @@ class BookController extends BaseController {
     return res.json(response);
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
+      // Validating input
+      const validator = Book.validate(req.body);
+      if (validator.fails()) {
+        next({
+          status: 400,
+          message: 'Erro de validação',
+          code: 'E_VALIDATION_FAILED',
+          fields: validator.errors.errors
+        });
+      }
+
+      // Verifying if already exists a book with the same title and publishCompany
+      const book = await Book.find({ title: req.body.title, publishingCompany: req.body.publishingCompany });
+      if (book) {
+        throw {
+          status: 409,
+          error: {
+            message: 'Este livro já foi cadastrado.'
+          }
+        };
+      }
+
       const response = await Book.create(req.body);
 
       return res.json(response);
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 
   async update(req, res) {
     try {
+      // Validating input
+      const validator = Book.validate(req.body);
+      if (validator.fails()) {
+        next({
+          status: 400,
+          message: 'Erro de validação',
+          code: 'E_VALIDATION_FAILED',
+          fields: validator.errors.errors
+        });
+      }
+
       const response = await Book.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true
       });
 
       return res.json(response);
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 
@@ -42,7 +74,7 @@ class BookController extends BaseController {
 
       return res.send();
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 }

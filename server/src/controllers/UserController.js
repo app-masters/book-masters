@@ -1,7 +1,6 @@
 import User from '../models/User.js';
-import BaseController from './BaseController.js';
 
-class UserController extends BaseController {
+class UserController {
   async getAll(_req, res) {
     const response = await User.find();
 
@@ -14,17 +13,17 @@ class UserController extends BaseController {
     return res.json(response);
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const response = await User.create(req.body);
 
       return res.json(response);
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
       const response = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true
@@ -32,17 +31,17 @@ class UserController extends BaseController {
 
       return res.json(response);
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       await User.deleteOne({ _id: req.params.id });
 
       return res.send();
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 }
