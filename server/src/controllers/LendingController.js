@@ -2,7 +2,6 @@ import Lending from '../models/Lending.js';
 import User from '../models/User.js';
 import addDaysToDate from '../utils/addDaysToDate.js';
 import preprocessEmail from '../utils/preprocessEmail.js';
-import BaseController from './BaseController.js';
 
 const findOrCreateUser = async (name, email, phone) => {
   const user = await User.find({ email });
@@ -23,7 +22,7 @@ const findOrCreateUser = async (name, email, phone) => {
   }
 };
 
-class LendingController extends BaseController {
+class LendingController {
   async getAll(_req, res) {
     const response = await Lending.find();
     return res.json(response);
@@ -45,14 +44,14 @@ class LendingController extends BaseController {
     return res.json(response);
   }
 
-  async lending(req, res) {
+  async lending(req, res, next) {
     try {
       const lending = await req.body;
 
       const { email } = lending.person;
 
       const procEmail = preprocessEmail(email);
-      if (!procEmail) return this.returnGenericException({ error: 406, message: 'Email inválido.' });
+      if (!procEmail) next({ error: 406, message: 'Email inválido.' });
 
       /* Find User */
       const user = await User.findOne({ email: procEmail });
@@ -61,7 +60,7 @@ class LendingController extends BaseController {
       /* Check if book is really available for lending */
 
       const existingLending = await Lending.find({ idBook: lending.id_book, status: { $ne: 'Devolvido' } }, (err) => {
-        if (err) return this.returnGenericException();
+        if (err) next(err);
       }).sort({ reservationDateInit: 'asc' });
 
       /* Todos os livros que não estejam devolvidos
@@ -74,7 +73,7 @@ class LendingController extends BaseController {
         existingLending[0].status === 'Emprestado' ||
         (existingLending[0].status === 'Reservado' && existingLending[0].idUser != idUser)
       ) {
-        return this.returnGenericException({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
+        next({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
       }
 
       /* TODO: data do cliente ou no servidor */
@@ -93,18 +92,18 @@ class LendingController extends BaseController {
 
       return res.json(response).send();
     } catch (e) {
-      this.returnGenericException(res, e);
+      next(error);
     }
   }
 
-  async reserve(req, res) {
+  async reserve(req, res, next) {
     try {
       const lending = await req.body;
 
       const { name, email, phoneNumber } = lending.person;
 
       const procEmail = preprocessEmail(email);
-      if (!procEmail) return this.returnGenericException({ error: 406, message: 'Email inválido.' });
+      if (!procEmail) next({ error: 406, message: 'Email inválido.' });
 
       /* Find or Create User */
       const idUser = await findOrCreateUser(name, procEmail, phoneNumber);
@@ -113,12 +112,11 @@ class LendingController extends BaseController {
       const existingLending = await Lending.find(
         { idBook: lending.id_book, idUser: idUser, status: 'Reservado' },
         (err) => {
-          if (err) return this.returnGenericException();
+          if (err) return next(err);
         }
       );
 
-      if (existingLending.length != 0)
-        return this.returnGenericException({ error: 406, message: 'Livro já está reservado pelo usuário.' });
+      if (existingLending.length != 0) return next({ error: 406, message: 'Livro já está reservado pelo usuário.' });
 
       /* TODO: definir as datas de acordo com os dados já existentes no banco */
       /* pode vir do front? */
@@ -140,17 +138,17 @@ class LendingController extends BaseController {
 
       return res.json(response).send();
     } catch (e) {
-      this.returnGenericException(res, e);
+      next(error);
     }
   }
 
-  async returnBook(req, res) {
+  async returnBook(req, res, next) {
     const lending = await req.body;
     try {
       const { email } = lending.person;
 
       const procEmail = preprocessEmail(email);
-      if (!procEmail) return this.returnGenericException({ error: 406, message: 'Email inválido.' });
+      if (!procEmail) return next({ error: 406, message: 'Email inválido.' });
 
       /* Find or Create User */
       const user = await User.findOne({ email: procEmail });
@@ -160,7 +158,7 @@ class LendingController extends BaseController {
       const existingLending = await Lending.find(
         { idBook: lending.id_book, idUser: idUser, status: 'Emprestado' },
         (err) => {
-          if (err) return this.returnGenericException();
+          if (err) return next();
         }
       );
 
@@ -187,27 +185,27 @@ class LendingController extends BaseController {
 
       return res.json(response).send();
     } catch (e) {
-      this.returnGenericException(res, e);
+      next(error);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
       const response = await Lending.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true
       });
       return res.json(response);
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       await Lending.deleteOne({ _id: req.params.id });
       return res.send();
     } catch (error) {
-      this.returnGenericException(res, error);
+      next(error);
     }
   }
 }
