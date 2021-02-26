@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAuth } from '../lib/auth';
+import api from '../services/api';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -58,8 +59,8 @@ const FormLogin = () => {
     if (response.status !== 200) {
       setDialog(true);
     } else {
-      // TODO: Add more information...
-      auth.signin({ email: values.email });
+      const responseBackend = await api.post('/login', { email: values.email });
+      auth.signin(responseBackend.data);
       history.push('/');
     }
   };
