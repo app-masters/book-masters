@@ -21,9 +21,9 @@ routes.get('/lendings/book/:id', LendingController.getAllBookLending);
 routes.get('/lendings/:id', LendingController.getById);
 routes.put('/lendings/:id', authMiddleware, LendingController.update);
 routes.delete('/lendings/:id', authMiddleware, LendingController.delete);
-routes.post('/lendings/', authMiddleware, LendingController.lending);
-routes.post('/lendings/reserve', authMiddleware, LendingController.reserve);
-routes.post('/lendings/return', authMiddleware, LendingController.returnBook);
+routes.get('/lendings/lend/:bookId', authMiddleware, LendingController.lending);
+routes.get('/lendings/reserve/:bookId', authMiddleware, LendingController.reserve);
+routes.get('/lendings/return/:bookId', authMiddleware, LendingController.returnBook);
 
 // User Routes
 routes.get('/users/', UserController.getAll);
