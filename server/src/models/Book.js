@@ -46,12 +46,6 @@ const BookSchema = new Schema(
     },
     edition: {
       type: Number
-    },
-    status: {
-      type: String,
-      required: true,
-      enum: ['Disponível', 'Emprestado', 'Reservado'],
-      default: 'Disponível'
     }
   },
   schemaOptions
