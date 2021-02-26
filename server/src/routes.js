@@ -2,6 +2,7 @@ import express from 'express';
 import LendingController from './controllers/LendingController.js';
 import BookController from './controllers/BookController.js';
 import UserController from './controllers/UserController.js';
+import AuthController from './controllers/AuthController.js';
 import NotifyAvailabilityController from './controllers/NotifyAvailabilityController.js';
 import authMiddleware from './middleware/auth.js';
 
@@ -30,6 +31,9 @@ routes.get('/users/:id', UserController.getById);
 routes.post('/users/', authMiddleware, UserController.create);
 routes.put('/users/:id', authMiddleware, UserController.update);
 routes.delete('/users/:id', authMiddleware, UserController.delete);
+
+// Auth Routes
+routes.post('/login/', AuthController.login);
 
 // NotifyAvailability Routes
 routes.get('/notifyMe/:bookId', authMiddleware, NotifyAvailabilityController.notifyMe);
