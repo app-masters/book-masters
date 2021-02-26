@@ -1,4 +1,6 @@
 import Book from '../models/Book.js';
+import db from 'mongodb';
+const { ObjectID } = db;
 
 class BookController {
   async getAll(_req, res) {
@@ -28,7 +30,7 @@ class BookController {
 
       // Verifying if already exists a book with the same title and publishCompany
       const book = await Book.find({ title: req.body.title, publishingCompany: req.body.publishingCompany });
-      if (book) {
+      if (book && book.length > 0) {
         throw {
           status: 409,
           error: {
@@ -37,10 +39,15 @@ class BookController {
         };
       }
 
-      const response = await Book.create(req.body);
+      const data = {
+        idUser: ObjectID(Number(req.body.idUser)),
+        ...req.body
+      };
+      const response = await Book.create(data);
 
       return res.json(response);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
