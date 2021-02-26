@@ -11,11 +11,8 @@ class AuthController {
     try {
       const { email } = await req.body;
       const user = await User.findOne({ email: email }).exec();
-      const roles = isAdmin(email) ? ['admin'] : ['common'];
-      console.log(roles)
       if (user) {
-        const roles = isAdmin(email) ? ['admin'] : ['common'];
-        const token = jwt.sign({ email, roles: roles }, auth.secret, {
+        const token = jwt.sign({ email, isAdmin: isAdmin(email) }, auth.secret, {
           expiresIn: auth.expiresIn
         });
 
