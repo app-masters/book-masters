@@ -4,8 +4,9 @@ import { useAuth } from '../lib/auth';
 import Modal from '@material-ui/core/Modal';
 import FormLogin from '../components/FormLogin';
 import { modalLogin } from '../assets/css/makeStyles';
+import api from '../services/api';
 
-const LendingModal = () => {
+const LendingModal = (props) => {
   const { auth } = useAuth();
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -14,12 +15,25 @@ const LendingModal = () => {
 
   const handleClose = () => setOpen(false);
 
+  const doLendingBook = async () => {
+    const response = await api.get(`/lendings/reserve/${props.bookId}`);
+    console.log(response);
+  };
+
   const handleAction = () => {
     // User not logged them display login
     if (!auth) {
-      setModalContent(<FormLogin callback={() => setOpen(false)} />);
+      setModalContent(
+        <FormLogin
+          callback={() => {
+            setOpen(false);
+            doLendingBook();
+          }}
+        />
+      );
       setOpen(true);
     } else {
+      doLendingBook();
     }
   };
 

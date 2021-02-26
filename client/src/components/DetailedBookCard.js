@@ -1,6 +1,6 @@
 import React from 'react';
 import { detailedBookCard } from '../assets/css/makeStyles';
-import { Paper, Button, Box, Grid, Chip, Typography } from '@material-ui/core';
+import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
 import LendingModal from './LendingModal';
 
 const DetailedBookCard = (props) => {
@@ -60,7 +60,7 @@ const DetailedBookCard = (props) => {
             justify="flex-end"
             alignContent="flex-end"
           >
-            <LendingModal />
+            <LendingModal bookId={book._id} />
           </Grid>
         </Grid>
       </Grid>
