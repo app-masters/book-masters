@@ -31,9 +31,7 @@ class BookController {
       if (book) {
         throw {
           status: 409,
-          error: {
-            message: 'Este livro já foi cadastrado.'
-          }
+          message: 'Este livro já foi cadastrado.'
         };
       }
 
