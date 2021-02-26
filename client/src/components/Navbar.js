@@ -7,11 +7,11 @@ import { useHistory } from 'react-router-dom';
 
 const Navbar = () => {
   const classes = navbar();
-  const auth = useAuth();
+  const { auth, signout } = useAuth();
   const history = useHistory();
 
   const handleLogout = () => {
-    auth.signout();
+    signout();
     history.push('/');
   };
 
@@ -26,7 +26,7 @@ const Navbar = () => {
         >
           Book Masters
         </Button>
-        {auth.auth ? (
+        {auth && auth.role === 'admin' && (
           <Button
             component={RouterLink}
             to="/register"
@@ -35,7 +35,8 @@ const Navbar = () => {
           >
             Registrar livro
           </Button>
-        ) : (
+        )}
+        {!auth && (
           <Button
             component={RouterLink}
             to="/login"
@@ -53,7 +54,7 @@ const Navbar = () => {
         >
           Sobre
         </Button>
-        {auth.auth && (
+        {auth && (
           <Button size="large" className={classes.btn} onClick={handleLogout}>
             Sair
           </Button>

@@ -62,8 +62,7 @@ BookSchema.statics.validate = (obj) => {
     idUser: 'required',
     title: 'required',
     publishingCompany: 'required',
-    author: 'required',
-    status: ['required', { in: ['Disponível', 'Emprestado', 'Reservado'] }]
+    author: 'required'
   };
 
   const validator = new Validator(obj, rules, errorMessage(['Disponível', 'Emprestado', 'Reservado'].join(', ')));

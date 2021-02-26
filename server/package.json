@@ -35,6 +35,6 @@
     "prettier-check": "^2.0.0"
   },
   "engines": {
-    "node": "13.14"
+    "node": ">=13"
   }
 }
