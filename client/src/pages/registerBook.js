@@ -252,7 +252,7 @@ const RegisterBook = () => {
               newChipKeyCodes={[188, 9]}
               value={values.tags}
               onAdd={(chip) => handleAddChip(chip)}
-              onDelete={(chip, index) => handleDeleteChip(chip, index)}
+              onDelete={(chip, index) => handleDeleteChip(chip)}
             />
           </Grid>
           <Grid container item xs={12}>
