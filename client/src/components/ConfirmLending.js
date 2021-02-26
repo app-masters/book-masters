@@ -12,25 +12,14 @@ import { confirmLending } from '../assets/css/makeStyles';
 
 const ConfirmLending = (props) => {
   const classes = confirmLending();
-
-  const action = () => {
-    if (props.formOpt === 'pegar') {
-      return 'o empréstimo';
-    } else if (props.formOpt === 'devolver') {
-      return 'a devolução';
-    }
-  };
-
   return (
     <Dialog open={props.open} onClose={props.onClose}>
       <DialogTitle id="form-dialog-title">Ler QRCode</DialogTitle>
-
       <DialogContent className={classes.content}>
         <DialogContentText>
-          Olá {props.name}. Obrigado por utilizar nossa plataforma. Leia o
-          QRCode para confirmar {action()}.
+          Obrigado por utilizar nossa plataforma. Leia o QRCode para confirmar a
+          ação
         </DialogContentText>
-
         <QrReader
           className={classes.qrCode}
           delay={300}

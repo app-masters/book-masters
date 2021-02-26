@@ -1,39 +1,43 @@
 import React, { useState } from 'react';
-import { Button, Typography } from '@material-ui/core';
-import { useAuth } from '../lib/auth';
-import Modal from '@material-ui/core/Modal';
-import FormLogin from '../components/FormLogin';
-import { modalLogin } from '../assets/css/makeStyles';
+import { Button } from '@material-ui/core';
 import api from '../services/api';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import ConfirmLending from './ConfirmLending';
 
 const LendingModal = (props) => {
-  const { auth } = useAuth();
   const [open, setOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
 
-  const classes = modalLogin();
-
-  const handleClose = () => setOpen(false);
-
-  const doLendingBook = async () => {
-    const response = await api.get(`/lendings/reserve/${props.bookId}`);
-    console.log(response);
+  const [request, setRequest] = useState({ type: '', message: '' });
+  const [snackOpen, setSnackOpen] = useState(false);
+  const handleSnack = (type, message) => {
+    setRequest({
+      type,
+      message,
+    });
+    setSnackOpen(true);
+  };
+  const closeSnack = () => {
+    setSnackOpen(false);
+    setRequest({ type: '', message: '' });
   };
 
   const handleAction = () => {
-    // User not logged them display login
-    if (!auth) {
-      setModalContent(
-        <FormLogin
-          callback={() => {
-            setOpen(false);
-            doLendingBook();
-          }}
-        />
-      );
-      setOpen(true);
-    } else {
-      doLendingBook();
+    setOpen(true);
+  };
+
+  const handleScan = async (data) => {
+    try {
+      if (data === 'https://appmasters.io') {
+        const response = await api.get(`/lendings/lend/${props.bookId}`);
+        if (response.status === 200) {
+          handleSnack('success', 'Livro pego com sucesso!');
+        }
+      } else {
+        handleSnack('error', 'QRCode inválido');
+      }
+    } catch (err) {
+      handleSnack('error', 'Ocorreu um erro durante a requisição');
     }
   };
 
@@ -45,22 +49,19 @@ const LendingModal = (props) => {
         color="primary"
         onClick={handleAction}
       >
-        Reservar
+        Pegar livro
       </Button>
-      <Modal
+      <ConfirmLending
         open={open}
-        className={classes.modal}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div className={classes.content}>
-          <Typography className={classes.title}>
-            Para continuar você precisa estar autenticado
-          </Typography>
-          {modalContent}
-        </div>
-      </Modal>
+        onClose={() => setOpen(false)}
+        handleError={(data) => console.log('handleError', data)}
+        handleScan={handleScan}
+      />
+      <Snackbar open={snackOpen} autoHideDuration={6000} onClose={closeSnack}>
+        <Alert onClose={closeSnack} severity={request.type}>
+          {request.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

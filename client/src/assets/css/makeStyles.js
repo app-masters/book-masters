@@ -329,7 +329,7 @@ export const confirmLending = makeStyles((theme) => ({
   },
 }));
 
-export const modalLogin = makeStyles((theme) => ({
+export const modal = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     justifyContent: 'center',

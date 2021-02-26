@@ -1,18 +1,34 @@
-import Book from '../models/Book.js';
+import Book from '../models/Book';
+import Lending from '../models/Lending';
 import db from 'mongodb';
 const { ObjectID } = db;
 
 class BookController {
   async getAll(_req, res) {
-    const response = await Book.find();
-
-    return res.json(response);
+    const response = await Book.find().lean();
+    const listA = [];
+    // TODO: replace this code
+    for (let i = 0; i < response.length; i++) {
+      const item = response[i];
+      const lending = await Lending.findOne({ idBook: item._id, returnedAt: null });
+      listA.push({
+        ...item,
+        status: lending ? lending.status : 'Disponível',
+        idUserReserve: lending ? lending.idUser : null
+      });
+    }
+    return res.json(listA);
   }
 
   async getById(req, res) {
-    const response = await Book.findById(req.params.id);
+    const response = await Book.findById(req.params.id).lean();
+    const lending = await Lending.findOne({ idBook: response._id, returnedAt: null }).lean();
 
-    return res.json(response);
+    return res.json({
+      ...response,
+      status: lending ? lending.status : 'Disponível',
+      idUserReserve: lending ? lending.idUser : null
+    });
   }
 
   async create(req, res, next) {

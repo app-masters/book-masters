@@ -1,17 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { detailedBookCard } from '../assets/css/makeStyles';
 import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
+import ReserveModal from './ReserveModal';
 import LendingModal from './LendingModal';
+import ReturnModal from './ReturnModal';
+import { useAuth } from '../lib/auth';
+import bookImage from '../assets/img/book.png';
 
 const DetailedBookCard = (props) => {
+  const { auth } = useAuth();
   const classes = detailedBookCard();
-  const { book } = props;
+  const [book, setBook] = useState(props.book);
+
+  const handleStatus = () => {
+    if (book.idUserReserve && book.idUserReserve === auth?.user?._id) {
+      if (book.status === 'Reservado')
+        return <LendingModal bookId={book._id} />;
+      if (book.status === 'Emprestado')
+        return <ReturnModal bookId={book._id} />;
+    } else if (book.status === 'Reservado') {
+      return <div>avise quando disponível</div>;
+    } else {
+      return (
+        <ReserveModal
+          bookId={book._id}
+          callback={() =>
+            setBook({
+              ...book,
+              status: 'Reservado',
+              idUserReserve: auth?.user?._id,
+            })
+          }
+        />
+      );
+    }
+  };
 
   return (
     <Paper className={classes.root}>
       <Grid container justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={4}>
-          <img src={book.imageUrl} alt="BookCover" className={classes.cover} />
+          <img
+            src={book.img || bookImage}
+            alt="BookCover"
+            className={classes.cover}
+          />
         </Grid>
         <Grid item xs={12} sm={8}>
           <Grid item xs={12}>
@@ -56,11 +89,11 @@ const DetailedBookCard = (props) => {
           <Grid
             item
             xs={12}
-            style={{ display: 'flex' }}
+            container
             justify="flex-end"
             alignContent="flex-end"
           >
-            <LendingModal bookId={book._id} />
+            {handleStatus()}
           </Grid>
         </Grid>
       </Grid>

@@ -8,6 +8,9 @@ import authMiddleware from './middleware/auth.js';
 
 const routes = express.Router();
 
+// Auth Routes
+routes.post('/login/', AuthController.login);
+
 // Book Routes
 routes.get('/books/', BookController.getAll);
 routes.get('/books/:id', BookController.getById);
@@ -31,9 +34,6 @@ routes.get('/users/:id', UserController.getById);
 routes.post('/users/', authMiddleware, UserController.create);
 routes.put('/users/:id', authMiddleware, UserController.update);
 routes.delete('/users/:id', authMiddleware, UserController.delete);
-
-// Auth Routes
-routes.post('/login/', AuthController.login);
 
 // NotifyAvailability Routes
 routes.get('/notifyMe/:bookId', authMiddleware, NotifyAvailabilityController.notifyMe);

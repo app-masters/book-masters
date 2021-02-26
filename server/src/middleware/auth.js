@@ -2,7 +2,7 @@ import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import authConfig from '../config/auth';
 
-export default async (req, res, _next) => {
+export default async (req, res, next) => {
   const authHeaders = req.headers.authorization;
   if (!authHeaders) {
     return res.status(401).json({ error: 'You aren`t logged in' });

@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { product } from '../assets/css/makeStyles';
 import { Link as RouterLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DetailedBookCard from '../components/DetailedBookCard';
+import api from '../services/api';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 export const Product = (props) => {
   const classes = product();
-  const location = useLocation();
-  const [details] = useState(location.state);
+  const { id } = useParams();
+  const [details, setDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  console.log(details);
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      try {
+        const response = await api.get(`/books/${id}`);
+        if (response.status === 200) {
+          setDetails(response.data);
+        }
+        setLoading(false);
+      } catch (err) {
+        console.log('Not able to get book', err);
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [id]);
 
   return (
     <Grid
@@ -31,7 +49,11 @@ export const Product = (props) => {
         Voltar
       </Button>
       <Grid item xs={12} lg={12} md={12}>
-        <DetailedBookCard book={details} />
+        {!details || loading ? (
+          <Skeleton animation="wave" />
+        ) : (
+          <DetailedBookCard book={details} />
+        )}
       </Grid>
     </Grid>
   );
