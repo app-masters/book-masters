@@ -242,12 +242,8 @@ export const personStyle = makeStyles((theme) => ({
 
 export const product = makeStyles((theme) => ({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '75vh',
-    width: '98vw',
     maxWidth: '1500px',
-    margin: '70px auto auto auto',
+    margin: '16px auto auto auto',
   },
   buttonOutlined: {
     border: '1px solid #0ab6ff',
@@ -330,5 +326,27 @@ export const confirmLending = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+}));
+
+export const modalLogin = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    marginBottom: 32,
+  },
+  content: {
+    backgroundColor: '#FFFFFF',
+    maxWidth: 500,
+    padding: 32,
+    borderRadius: 5,
+    minHeight: 400,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 }));

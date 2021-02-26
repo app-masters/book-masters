@@ -14,7 +14,6 @@ export default function Home() {
       }
 
       const json = response.data;
-
       const fetchbooks = json.sort((bookA, bookB) => {
         if (bookA.status === bookB.status) {
           if (bookA.title < bookB.title) {

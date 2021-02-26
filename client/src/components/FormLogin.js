@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormLogin = () => {
+const FormLogin = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const auth = useAuth();
@@ -60,7 +60,11 @@ const FormLogin = () => {
     } else {
       // TODO: Add more information...
       auth.signin({ email: values.email });
-      history.push('/');
+      if (props.callback) {
+        props.callback();
+      } else {
+        history.push('/');
+      }
     }
   };
 
