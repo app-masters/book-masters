@@ -12,7 +12,7 @@ class AuthController {
       const { email } = await req.body;
       const user = await User.findOne({ email: email }).exec();
       if (user) {
-        const token = jwt.sign({ email, isAdmin: isAdmin(email) }, auth.secret, {
+        const token = jwt.sign({ email, admin: isAdmin(email) }, auth.secret, {
           expiresIn: auth.expiresIn
         });
 
