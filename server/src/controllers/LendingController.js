@@ -39,7 +39,7 @@ class LendingController {
       if (
         existingLending.length === 0 ||
         existingLending[0].status === 'Emprestado' ||
-        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != idUser)
+        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != req.userId)
       ) {
         next({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
       }
@@ -57,7 +57,8 @@ class LendingController {
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
 
       return res.json(response).send();
-    } catch (e) {
+    } catch (error) {
+      console.log(error)
       next(error);
     }
   }

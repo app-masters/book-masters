@@ -29,14 +29,27 @@ const LendingModal = (props) => {
   const handleScan = async (data) => {
     try {
       if (data === 'https://appmasters.io') {
-        const response = await api.get(`/lendings/lend/${props.bookId}`);
+        const response = await api.get(
+          `/lendings/${props.type === 'return' ? 'return' : 'lend'}/${
+            props.bookId
+          }`
+        );
         if (response.status === 200) {
-          handleSnack('success', 'Livro pego com sucesso!');
+          handleSnack(
+            'success',
+            `Livro ${
+              props.type === 'return' ? 'retornado' : 'pego'
+            } com sucesso!`
+          );
+          if (props.callback) {
+            props.callback();
+          }
         }
       } else {
         handleSnack('error', 'QRCode inválido');
       }
     } catch (err) {
+      console.log('lending error: ', err);
       handleSnack('error', 'Ocorreu um erro durante a requisição');
     }
   };
@@ -49,7 +62,7 @@ const LendingModal = (props) => {
         color="primary"
         onClick={handleAction}
       >
-        Pegar livro
+        {props.type === 'return' ? 'Devolver livro' : 'Pegar livro'}
       </Button>
       <ConfirmLending
         open={open}
