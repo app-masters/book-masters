@@ -17,7 +17,7 @@ class AuthController {
         user = await User.create({ email, role: 'common' });
       }
 
-      const token = jwt.sign({ email, admin: isAdmin(email) }, auth.secret, {
+      const token = jwt.sign({ id: user._id, email, admin: isAdmin(email) }, auth.secret, {
         expiresIn: auth.expiresIn
       });
       res.json({ user, type: 'bearer', token: token });
