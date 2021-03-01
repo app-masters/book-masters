@@ -15,8 +15,8 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
     "faker": "^5.4.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.1",
     "validatorjs": "^3.22.1"
   },
@@ -35,6 +35,6 @@
     "prettier-check": "^2.0.0"
   },
   "engines": {
-    "node": ">=13"
+    "node": "13.14"
   }
 }
