@@ -22,7 +22,7 @@ jobs:
         run: cd client && yarn install
 
       - name: Build
-        run: cd client && REACT_APP_ENV_BACKEND_HOST=https://book-masters.herokuapp.com/ yarn run build
+        run: cd client && REACT_APP_API_BOOKS_NODE=https://book-masters.herokuapp.com/ yarn run build
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
