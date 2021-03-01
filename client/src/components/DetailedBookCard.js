@@ -13,7 +13,6 @@ const DetailedBookCard = (props) => {
   const { auth } = useAuth();
   const classes = detailedBookCard();
   const [book, setBook] = useState(props.book);
-  console.log(book);
 
   const handleStatus = () => {
     const lending = book?.lending;

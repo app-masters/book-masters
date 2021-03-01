@@ -18,7 +18,6 @@ import {
 
 const BookCard = ({ book }) => {
   const classes = bookCard();
-  console.log(book);
 
   let status = () => {
     const lending = book?.lending;
