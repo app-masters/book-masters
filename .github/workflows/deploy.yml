@@ -32,6 +32,7 @@ jobs:
           PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           PROJECT_PATH: client
 
+
   deploy_backend:
     if: github.event.pull_request.merged == true || github.ref == 'refs/heads/98-deploy-producao'
     runs-on: ubuntu-latest
