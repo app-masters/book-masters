@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import api from '../services/api';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import ConfirmLending from './ConfirmLending';
+import moment from 'moment';
 
 const LendingModal = (props) => {
   const [open, setOpen] = useState(false);
@@ -54,16 +55,62 @@ const LendingModal = (props) => {
     }
   };
 
+  const handleStatus = () => {
+    const isReserve = props.type !== 'return';
+
+    if (isReserve) {
+      const haveDelay = moment().isAfter(
+        moment(props.lending.reservationEndAt)
+      );
+      if (haveDelay) {
+        return (
+          <Alert severity="error">
+            A reserva deste livro se encontra em atraso - Previsto para{' '}
+            {moment(moment(props.lending.reservationEndAt)).format(
+              'DD/MM/YYYY'
+            )}
+          </Alert>
+        );
+      } else {
+        return (
+          <Alert severity="info">
+            Você tem até{' '}
+            {moment(props.lending.reservationEndAt).format('DD/MM/YYYY')}{' '}
+            para pegar esse livro
+          </Alert>
+        );
+      }
+    } else {
+      const haveDelay = moment().isAfter(moment(props.lending.lendingEndAt));
+      if (haveDelay) {
+        return (
+          <Alert severity="error">
+            A entrega deste livro se encontra em atraso - Previsto para{' '}
+            {moment(moment(props.lending.lendingEndAt)).format('DD/MM/YYYY')}
+          </Alert>
+        );
+      }
+    }
+  };
+
+  // const date = props.type === 'return' ? props.lending?.reservationEndAt : props.lending?.lendingEndAt;
+
   return (
     <>
-      <Button
-        size="large"
-        variant="contained"
-        color="primary"
-        onClick={handleAction}
-      >
-        {props.type === 'return' ? 'Devolver livro' : 'Pegar livro'}
-      </Button>
+      <Grid container direction="column" alignItems="flex-end" spacing={2}>
+        <Grid item>
+          <Button
+            size="large"
+            variant="contained"
+            color="primary"
+            onClick={handleAction}
+          >
+            {props.type === 'return' ? 'Devolver livro' : 'Pegar livro'}
+          </Button>
+        </Grid>
+        <Grid item>{handleStatus()}</Grid>
+      </Grid>
+
       <ConfirmLending
         open={open}
         onClose={() => setOpen(false)}

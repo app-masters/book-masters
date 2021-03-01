@@ -26,7 +26,7 @@ const Navbar = () => {
         >
           Book Masters
         </Button>
-        {auth && auth.role === 'admin' && (
+        {auth && auth.user.role === 'admin' && (
           <Button
             component={RouterLink}
             to="/register"

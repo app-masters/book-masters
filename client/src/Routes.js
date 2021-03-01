@@ -15,7 +15,7 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/products/:id" component={Product} />
-      <PrivateRoute path="/register">
+      <PrivateRoute path="/register" role="admin">
         <RegisterBook />
       </PrivateRoute>
       <Route path="/about" component={About} />
@@ -25,14 +25,23 @@ const Routes = () => (
   </BrowserRouter>
 );
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ children, role, ...rest }) => {
   const { auth } = useAuth();
+
+  if (role) {
+    if (auth.user.role === role) {
+      return children;
+    } else {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
+  }
+
   return (
     <>
       <Route
         {...rest}
         render={({ location }) =>
-          !auth ? (
+          auth ? (
             children
           ) : (
             <Redirect
