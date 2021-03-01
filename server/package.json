@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node src/server.js",
-    "start": "node --es-module-specifier-resolution=node src/server.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/server.js",
     "check-prettier": "prettier-check \"**/*.js\"",
     "check-lint": "eslint \"**/*.js\" --max-warnings 0 ",
     "checks": "yarn run check-lint && yarn run check-prettier",
