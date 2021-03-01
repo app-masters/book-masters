@@ -13,6 +13,7 @@ jobs:
     if: github.event.pull_request.merged == true || github.ref == 'refs/heads/98-deploy-producao'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -37,6 +38,7 @@ jobs:
     if: github.event.pull_request.merged == true || github.ref == 'refs/heads/98-deploy-producao'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v2
