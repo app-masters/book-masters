@@ -39,7 +39,7 @@ class LendingController {
       if (
         existingLending.length === 0 ||
         existingLending[0].status === 'Emprestado' ||
-        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != idUser)
+        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != req.userId)
       ) {
         next({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
       }
@@ -57,7 +57,8 @@ class LendingController {
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
 
       return res.json(response).send();
-    } catch (e) {
+    } catch (error) {
+      console.log(error)
       next(error);
     }
   }
@@ -65,14 +66,14 @@ class LendingController {
   async reserve(req, res, next) {
     try {
       /* Check if book is really available for reservation */
-      const existingLending = await Lending.find(
-        { idBook: req.params.bookId, idUser: req.userId, status: 'Reservado' },
-        (err) => {
-          if (err) next(err);
-        }
-      );
+      // !!CHANGE removed idUser
+      const existingLending = await Lending.find({ idBook: req.params.bookId, status: 'Reservado' }, (err) => {
+        if (err) next(err);
+      });
 
-      if (existingLending.length != 0) throw { error: 406, message: 'Livro já está reservado pelo usuário.' };
+      if (existingLending && existingLending.length > 0) {
+        return res.status(400).json({ error: 'Este livro já está reservado.' });
+      }
 
       /* TODO: definir as datas de acordo com os dados já existentes no banco */
       /* pode vir do front? */
@@ -88,7 +89,7 @@ class LendingController {
       const response = await Lending.create(reserveJson);
 
       return res.json(response).send();
-    } catch (e) {
+    } catch (error) {
       next(error);
     }
   }

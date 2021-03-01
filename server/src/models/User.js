@@ -22,7 +22,8 @@ const UserSchema = new Schema(
       type: String,
       enum: ['admin', 'common'],
       required: true
-    }
+    },
+    lendings: [{ type: Schema.Types.ObjectId, ref: 'Lending' }]
   },
   schemaOptions
 );

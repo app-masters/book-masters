@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormLogin = () => {
+const FormLogin = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const auth = useAuth();
@@ -61,7 +61,11 @@ const FormLogin = () => {
     } else {
       const responseBackend = await api.post('/login', { email: values.email });
       auth.signin(responseBackend.data);
-      history.push('/');
+      if (props.callback) {
+        props.callback();
+      } else {
+        history.push('/');
+      }
     }
   };
 
