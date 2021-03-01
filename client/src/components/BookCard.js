@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import book from '../assets/img/book.png';
+import bookImage from '../assets/img/book.png';
 import { bookCard } from '../assets/css/makeStyles';
 import DoneIcon from '@material-ui/icons/Done';
-import CloseIcon from '@material-ui/icons/Close';
 import PauseIcon from '@material-ui/icons/Pause';
 import {
   Avatar,
@@ -17,22 +16,13 @@ import {
   CardActionArea,
 } from '@material-ui/core';
 
-const BookCard = (props) => {
+const BookCard = ({ book }) => {
   const classes = bookCard();
+  console.log(book);
 
   let status = () => {
-    if (props.book.status === 'Disponível') {
-      return (
-        <CardContent className={classes.bookStatus}>
-          <Avatar variant="rounded" className={classes.green}>
-            <DoneIcon />
-          </Avatar>
-          <Typography className={classes.status} variant="h6">
-            Livro disponível
-          </Typography>
-        </CardContent>
-      );
-    } else if (props.book.status === 'Reservado') {
+    const lending = book?.lending;
+    if (lending?.status === 'Reservado' || lending?.status === 'Emprestado') {
       return (
         <CardContent className={classes.bookStatus}>
           <Avatar variant="rounded" className={classes.yellow}>
@@ -46,11 +36,11 @@ const BookCard = (props) => {
     } else {
       return (
         <CardContent className={classes.bookStatus}>
-          <Avatar variant="rounded" className={classes.red}>
-            <CloseIcon />
+          <Avatar variant="rounded" className={classes.green}>
+            <DoneIcon />
           </Avatar>
           <Typography className={classes.status} variant="h6">
-            Livro alugado
+            Livro disponível
           </Typography>
         </CardContent>
       );
@@ -63,19 +53,19 @@ const BookCard = (props) => {
         className={classes.rootAction}
         component={RouterLink}
         to={{
-          pathname: `/products/${props.book._id}`,
-          state: props.book,
+          pathname: `/products/${book._id}`,
+          state: book,
         }}
       >
         <CardHeader
-          title={props.book.title}
-          subheader={props.book.autor}
+          title={book.title}
+          subheader={book.autor}
           className={classes.header}
         />
         <CardMedia
           component="img"
           className={classes.cover}
-          image={props.book.img ? props.book.img : book}
+          image={book.img ? book.img : bookImage}
           title="Image title"
         />
         {status()}
@@ -84,8 +74,8 @@ const BookCard = (props) => {
         <Button
           component={RouterLink}
           to={{
-            pathname: `/products/${props.book._id}`,
-            state: props.book,
+            pathname: `/products/${book._id}`,
+            state: book,
           }}
           size="large"
         >

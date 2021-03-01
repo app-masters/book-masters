@@ -1,7 +1,7 @@
 import Book from '../models/Book';
+import User from '../models/User';
 import Lending from '../models/Lending';
-import db from 'mongodb';
-const { ObjectID } = db;
+import mongoose from 'mongoose';
 
 class BookController {
   async getAll(_req, res) {
@@ -13,8 +13,7 @@ class BookController {
       const lending = await Lending.findOne({ idBook: item._id, returnedAt: null });
       listA.push({
         ...item,
-        status: lending ? lending.status : 'Disponível',
-        idUserReserve: lending ? lending.idUser : null
+        lending: lending || { status: 'Disponível' }
       });
     }
     return res.json(listA);
@@ -26,8 +25,7 @@ class BookController {
 
     return res.json({
       ...response,
-      status: lending ? lending.status : 'Disponível',
-      idUserReserve: lending ? lending.idUser : null
+      lending: lending || { status: 'Disponível' }
     });
   }
 
@@ -53,9 +51,10 @@ class BookController {
         };
       }
 
+      const user = await User.findOne({ _id: req.userId }).lean();
       const data = {
-        idUser: ObjectID(Number(req.body.idUser)),
-        ...req.body
+        ...req.body,
+        idUser: user._id
       };
       const response = await Book.create(data);
 

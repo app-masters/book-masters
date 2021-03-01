@@ -1,38 +1,70 @@
 import React, { useState } from 'react';
 import { detailedBookCard } from '../assets/css/makeStyles';
-import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
+import { Paper, Box, Grid, Chip, Button, Typography } from '@material-ui/core';
 import ReserveModal from './ReserveModal';
 import LendingModal from './LendingModal';
 import ReturnModal from './LendingModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
+import moment from 'moment';
+import Alert from '@material-ui/lab/Alert';
 
 const DetailedBookCard = (props) => {
   const { auth } = useAuth();
   const classes = detailedBookCard();
   const [book, setBook] = useState(props.book);
+  console.log(book);
 
   const handleStatus = () => {
-    if (book.idUserReserve && book.idUserReserve === auth?.user?._id) {
-      if (book.status === 'Reservado')
+    const lending = book?.lending;
+    if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
+      if (lending.status === 'Reservado')
         return (
           <LendingModal
             bookId={book._id}
-            callback={() => setBook({ ...book, status: 'Emprestado' })}
-          />
-        );
-      if (book.status === 'Emprestado')
-        return (
-          <ReturnModal
-            bookId={book._id}
-            type="return"
+            lending={lending}
             callback={() =>
-              setBook({ ...book, status: 'Devolvido', idUserReserve: null })
+              setBook({
+                ...book,
+                lending: { ...book.lending, status: 'Emprestado' },
+              })
             }
           />
         );
-    } else if (book.status === 'Reservado') {
-      return <div>avise quando disponível</div>;
+      if (lending.status === 'Emprestado')
+        return (
+          <ReturnModal
+            bookId={book._id}
+            lending={lending}
+            type="return"
+            callback={() =>
+              setBook({
+                ...book,
+                lending: { ...book.lending, status: 'Devolvido' },
+              })
+            }
+          />
+        );
+    } else if (lending?.status === 'Reservado') {
+      const date = moment(lending.lendingEndAt || lending.reservationEndAt);
+      return (
+        <Grid container direction="column" alignItems="flex-end" spacing={2}>
+          <Grid item>
+            <Button size="large" variant="contained" color="primary">
+              Avise me quando chegar
+            </Button>
+          </Grid>
+          <Grid item>
+            {moment().isAfter(date) ? (
+              <Alert severity="error">A reserva deste livro se encontra em atraso - Previsto para {moment(date).format('DD/MM/YYYY')}</Alert>
+            ) : (
+              <Alert severity="info">
+                Previsão de retorno para {moment(date).format('DD/MM/YYYY')}
+              </Alert>
+            )}
+          </Grid>
+        </Grid>
+      );
     } else {
       return (
         <ReserveModal
@@ -40,8 +72,10 @@ const DetailedBookCard = (props) => {
           callback={() =>
             setBook({
               ...book,
-              status: 'Reservado',
-              idUserReserve: auth?.user?._id,
+              lending: {
+                status: 'Reservado',
+                idUser: auth?.user?._id,
+              },
             })
           }
         />

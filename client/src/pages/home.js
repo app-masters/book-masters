@@ -14,19 +14,22 @@ export default function Home() {
       }
 
       const json = response.data;
-      const fetchbooks = json.sort((bookA, bookB) => {
-        if (bookA.status === bookB.status) {
-          if (bookA.title < bookB.title) {
-            return -1;
+      let fetchbooks = [];
+      if (json && json.length > 0) {
+        fetchbooks = json.sort((bookA, bookB) => {
+          if (bookA.lending?.status === bookB.lending?.status) {
+            if (bookA.title < bookB.title) {
+              return -1;
+            }
+            if (bookA.title > bookB.title) {
+              return 1;
+            }
+            return 0;
+          } else {
+            return bookA.lending?.status !== 'Disponível' ? 1 : -1;
           }
-          if (bookA.title > bookB.title) {
-            return 1;
-          }
-          return 0;
-        } else {
-          return bookA.status !== 'Disponível' ? 1 : -1;
-        }
-      });
+        });
+      }
       setBooks(fetchbooks);
     } catch (error) {
       console.log('Error listing books', error);
