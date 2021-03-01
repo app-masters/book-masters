@@ -3,7 +3,7 @@ import { detailedBookCard } from '../assets/css/makeStyles';
 import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
 import ReserveModal from './ReserveModal';
 import LendingModal from './LendingModal';
-import ReturnModal from './ReturnModal';
+import ReturnModal from './LendingModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
 
@@ -15,9 +15,22 @@ const DetailedBookCard = (props) => {
   const handleStatus = () => {
     if (book.idUserReserve && book.idUserReserve === auth?.user?._id) {
       if (book.status === 'Reservado')
-        return <LendingModal bookId={book._id} />;
+        return (
+          <LendingModal
+            bookId={book._id}
+            callback={() => setBook({ ...book, status: 'Emprestado' })}
+          />
+        );
       if (book.status === 'Emprestado')
-        return <ReturnModal bookId={book._id} />;
+        return (
+          <ReturnModal
+            bookId={book._id}
+            type="return"
+            callback={() =>
+              setBook({ ...book, status: 'Devolvido', idUserReserve: null })
+            }
+          />
+        );
     } else if (book.status === 'Reservado') {
       return <div>avise quando disponível</div>;
     } else {
