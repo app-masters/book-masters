@@ -16,7 +16,7 @@ class NotifyAvailabilitySeeder {
     const data = Array.apply(null, Array(5)).map(() => {
       return {
         idUser: faker.random.arrayElement(usersIds),
-        idBook: '5f9bfab790eb2c1d6c53b738',
+        idBook: faker.random.arrayElement(booksIds),
         notifiedAt: ''
       };
     });
