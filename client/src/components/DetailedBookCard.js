@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { detailedBookCard } from '../assets/css/makeStyles';
-import { Paper, Box, Grid, Chip, Button, Typography } from '@material-ui/core';
+import { Paper, Box, Grid, Chip, Typography } from '@material-ui/core';
 import ReserveModal from './ReserveModal';
 import LendingModal from './LendingModal';
 import ReturnModal from './LendingModal';
 import AvailabilityModal from './AvailabilityModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
-import moment from 'moment';
-import Alert from '@material-ui/lab/Alert';
 import AlertSnackBar from './AlertSnackbar';
 
 const DetailedBookCard = (props) => {

@@ -4,9 +4,8 @@ import PersonCard from '../components/PersonCard';
 import { about } from '../assets/css/makeStyles';
 import { people } from '../assets/info/people';
 
-export default function About() {
+const About = () => {
   const classes = about();
-
   return (
     <Container className={classes.container}>
       <Box className={classes.heroContent}>
@@ -58,4 +57,6 @@ export default function About() {
       </Box>
     </Container>
   );
-}
+};
+
+export default About;

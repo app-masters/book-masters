@@ -35,6 +35,8 @@ routes.post('/users/', authMiddleware, UserController.create);
 routes.put('/users/:id', authMiddleware, UserController.update);
 routes.delete('/users/:id', authMiddleware, UserController.delete);
 
+routes.get('/usersBooks', authMiddleware, UserController.getAllBooks);
+
 // NotifyAvailability Routes
 routes.get('/notifyMe/:bookId', authMiddleware, NotifyAvailabilityController.notifyMe);
 

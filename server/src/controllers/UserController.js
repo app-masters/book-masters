@@ -1,9 +1,17 @@
-import User from '../models/User.js';
+import User from '../models/User';
+import Lending from '../models/Lending';
 
 class UserController {
   async getAll(_req, res) {
     const response = await User.find();
 
+    return res.json(response);
+  }
+
+  async getAllBooks(req, res) {
+    const response = await Lending.find({ idUser: req.userId, status: { $ne: 'Devolvido' } })
+      .populate('idBook')
+      .lean();
     return res.json(response);
   }
 

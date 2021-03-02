@@ -250,10 +250,18 @@ export const personStyle = makeStyles((theme) => ({
   },
 }));
 
-export const product = makeStyles((theme) => ({
+export const book = makeStyles((theme) => ({
+  root: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+  },
   container: {
-    maxWidth: '1500px',
-    margin: '16px auto auto auto',
+    flex: 1,
+    maxWidth: '1200px',
+    width: '100%',
+    margin: 16,
+    alignItems: 'flex-start',
   },
   buttonOutlined: {
     border: '1px solid #0ab6ff',
@@ -298,7 +306,7 @@ export const detailedBookCard = makeStyles((theme) => ({
   },
   cover: {
     width: '100%',
-    borderRadius: 5
+    borderRadius: 5,
   },
   details: {
     overflow: 'auto',
