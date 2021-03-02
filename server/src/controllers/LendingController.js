@@ -23,6 +23,7 @@ class LendingController {
   async checkDueDate(req, res, next) {
     const daysToNotify = 1;
     try {
+      // Getting all almost due Lended registries
       const allLended = await Lending.find({
         status: 'Emprestado',
         returnedAt: null,
@@ -31,6 +32,7 @@ class LendingController {
         .populate('idUser')
         .populate('idBook');
 
+      // Getting all almost due reserved registries
       const allReserved = await Lending.find({
         status: 'Reservado',
         lendingStartedAt: null,
@@ -39,6 +41,7 @@ class LendingController {
         .populate('idUser')
         .populate('idBook');
 
+      // Sending emails to notify those users
       if ((allLended && allLended.length > 0) || (allReserved && allReserved.length > 0)) {
         for (const lend of [...allLended, ...allReserved]) {
           lend.notifyDueDate(daysToNotify, lend.status === 'Emprestado' ? 'devolução' : 'reserva');
