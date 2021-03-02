@@ -93,8 +93,6 @@ const LendingModal = (props) => {
     }
   };
 
-  // const date = props.type === 'return' ? props.lending?.reservationEndAt : props.lending?.lendingEndAt;
-
   return (
     <>
       <Grid container direction="column" alignItems="flex-end" spacing={2}>
