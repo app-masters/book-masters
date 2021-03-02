@@ -120,7 +120,7 @@ class LendingController {
       };
 
       const response = await Lending.create(reserveJson);
-      // await response.notifyReservation();
+      await response.notifyReservation();
 
       return res.json(response).send();
     } catch (error) {
