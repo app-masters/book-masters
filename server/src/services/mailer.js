@@ -8,7 +8,7 @@ const { from, ...mailConfig } = config;
 class Mailer {
   constructor() {
     this.transporter = nodemailer.createTransport({ ...mailConfig });
-    this.viewPath = resolve(resolve(dirname('')), '..', 'resources', 'views', 'emails');
+    this.viewPath = resolve(resolve(dirname('')), 'src', 'resources', 'views', 'emails');
     this.hsb = exphbs.create({
       layoutsDir: resolve(this.viewPath, 'layouts'),
       // partialsDir: resolve(this.viewPath, 'partials'),
