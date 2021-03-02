@@ -5,8 +5,49 @@ import UserController from './controllers/UserController.js';
 import AuthController from './controllers/AuthController.js';
 import NotifyAvailabilityController from './controllers/NotifyAvailabilityController.js';
 import authMiddleware from './middleware/auth.js';
+import mailer from './services/mailer.js';
+import appConfig from './config/app.js';
 
 const routes = express.Router();
+
+routes.get('/mail-example', async (req, res) => {
+  try {
+    /* // Mail example
+    await mailer.sendEmail('reserve', {
+      to: 'viniciuss10@hotmail.com',
+      subject: '[Book Masters] Livro reservado.',
+      context: {
+        name: 'vinicius'
+      }
+    });
+
+    await mailer.sendEmail('lendEnding', {
+      to: 'viniciuss10@hotmail.com',
+      subject: '[Book Masters] Prazo chegando ao fim.',
+      context: {
+        name: 'vinicius',
+        days: 1,
+        type: 'devolução'
+      }
+    });
+    */
+
+    await mailer.sendEmail('notifyAvailability', {
+      to: 'viniciuss10@hotmail.com',
+      subject: '[Book Masters] Livro Disponível.',
+      context: {
+        name: 'vinicius',
+        bookName: 'Senhor dos aneis',
+        bookUrl: `${appConfig.frontUrl}/bookId`
+      }
+    });
+
+    res.status(200).json({ message: 'Email enviado com sucesso.' });
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+});
 
 // Auth Routes
 routes.post('/login/', AuthController.login);
