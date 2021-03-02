@@ -1,7 +1,6 @@
 import Book from '../models/Book';
 import User from '../models/User';
 import Lending from '../models/Lending';
-import mongoose from 'mongoose';
 
 class BookController {
   async getAll(_req, res) {
