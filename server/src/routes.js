@@ -40,4 +40,9 @@ routes.get('/usersBooks', authMiddleware, UserController.getAllBooks);
 // NotifyAvailability Routes
 routes.get('/notifyMe/:bookId', authMiddleware, NotifyAvailabilityController.notifyMe);
 
+//test
+routes.get('/', function (req, res) {
+  res.send(JSON.stringify({ 'I am': 'alive!' }));
+});
+
 export default routes;

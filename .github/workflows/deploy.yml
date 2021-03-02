@@ -1,0 +1,52 @@
+name: Deploy to Firebase and Heroku
+on:
+  push:
+    branches:
+      - 98-deploy-producao
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy_frontend:
+    if: github.event.pull_request.merged == true || github.ref == 'refs/heads/98-deploy-producao'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: prodution
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: cd client && yarn install
+
+      - name: Build
+        run: cd client && REACT_APP_API_BOOKS_NODE=https://book-masters.herokuapp.com/ yarn run build
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          PROJECT_PATH: client
+
+
+  deploy_backend:
+    if: github.event.pull_request.merged == true || github.ref == 'refs/heads/98-deploy-producao'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: prodution
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: book-masters
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: server

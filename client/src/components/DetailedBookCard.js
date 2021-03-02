@@ -4,6 +4,7 @@ import { Paper, Box, Grid, Chip, Button, Typography } from '@material-ui/core';
 import ReserveModal from './ReserveModal';
 import LendingModal from './LendingModal';
 import ReturnModal from './LendingModal';
+import AvailabilityModal from './AvailabilityModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
 import moment from 'moment';
@@ -62,28 +63,7 @@ const DetailedBookCard = (props) => {
           />
         );
     } else if (lending?.status === 'Reservado') {
-      const date = moment(lending.lendingEndAt || lending.reservationEndAt);
-      return (
-        <Grid container direction="column" alignItems="flex-end" spacing={2}>
-          <Grid item>
-            <Button size="large" variant="contained" color="primary">
-              Avise me quando chegar
-            </Button>
-          </Grid>
-          <Grid item>
-            {moment().isAfter(date) ? (
-              <Alert severity="error">
-                A reserva deste livro se encontra em atraso - Previsto para{' '}
-                {moment(date).format('DD/MM/YYYY')}
-              </Alert>
-            ) : (
-              <Alert severity="info">
-                Previsão de retorno para {moment(date).format('DD/MM/YYYY')}
-              </Alert>
-            )}
-          </Grid>
-        </Grid>
-      );
+      return <AvailabilityModal bookId={book._id} lending={lending} />;
     } else {
       return (
         <ReserveModal
