@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 import mailer from '../services/mailer';
 import User from './User';
+import Book from './Book';
 
 const schemaOptions = {
   timestamps: {
@@ -40,13 +41,13 @@ const LendingSchema = new Schema(
 );
 
 LendingSchema.methods.notifyReservation = async function () {
-  const user = await User.findOne({ _id: this.idUser._id }).exec();
-  const book = await User.findOne({ _id: this.idBook._id }).exec();
+  const user = await User.findOne({ _id: this.idUser }).lean();
+  const book = await Book.findOne({ _id: this.idBook }).lean();
   await mailer.sendEmail('reserve', {
     to: user.email,
     subject: '[Book Masters] Livro reservado.',
     context: {
-      name: user.name,
+      name: user.name || '',
       bookName: book.title
     }
   });

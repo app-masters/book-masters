@@ -113,14 +113,14 @@ class LendingController {
       const date = new Date();
       const reserveJson = {
         idBook: req.params.bookId,
-        idUser: '603e3b5dc39554545e24050d',
+        idUser: req.userId,
         status: 'Reservado',
         reservationStartedAt: date,
         reservationEndAt: addDaysToDate(date, 3)
       };
 
       const response = await Lending.create(reserveJson);
-      await response.notifyReservation();
+      // await response.notifyReservation();
 
       return res.json(response).send();
     } catch (error) {
