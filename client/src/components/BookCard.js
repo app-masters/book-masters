@@ -6,10 +6,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import PauseIcon from '@material-ui/icons/Pause';
 import {
   Avatar,
-  CardActions,
   CardHeader,
   Typography,
-  Button,
   CardMedia,
   CardContent,
   Card,
@@ -56,31 +54,19 @@ const BookCard = ({ book }) => {
           state: book,
         }}
       >
+        <CardMedia
+          component="img"
+          className={classes.cover}
+          image={book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage}
+          title="Image title"
+        />
         <CardHeader
           title={book.title}
           subheader={book.autor}
           className={classes.header}
         />
-        <CardMedia
-          component="img"
-          className={classes.cover}
-          image={book.img ? book.img : bookImage}
-          title="Image title"
-        />
         {status()}
       </CardActionArea>
-      <CardActions className={classes.footer}>
-        <Button
-          component={RouterLink}
-          to={{
-            pathname: `/products/${book._id}`,
-            state: book,
-          }}
-          size="large"
-        >
-          Ver mais
-        </Button>
-      </CardActions>
     </Card>
   );
 };

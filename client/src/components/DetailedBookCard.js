@@ -9,11 +9,26 @@ import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
 import moment from 'moment';
 import Alert from '@material-ui/lab/Alert';
+import AlertSnackBar from './AlertSnackbar';
 
 const DetailedBookCard = (props) => {
   const { auth } = useAuth();
   const classes = detailedBookCard();
   const [book, setBook] = useState(props.book);
+
+  const [request, setRequest] = useState({ type: '', message: '' });
+  const [snackOpen, setSnackOpen] = useState(false);
+  const handleSnack = (type, message) => {
+    setRequest({
+      type,
+      message,
+    });
+    setSnackOpen(true);
+  };
+  const closeSnack = () => {
+    setSnackOpen(false);
+    setRequest({ type: '', message: '' });
+  };
 
   const handleStatus = () => {
     const lending = book?.lending;
@@ -23,6 +38,7 @@ const DetailedBookCard = (props) => {
           <LendingModal
             bookId={book._id}
             lending={lending}
+            handleSnack={handleSnack}
             callback={() =>
               setBook({
                 ...book,
@@ -37,10 +53,11 @@ const DetailedBookCard = (props) => {
             bookId={book._id}
             lending={lending}
             type="return"
-            callback={() =>
+            handleSnack={handleSnack}
+            callback={(newStatus) =>
               setBook({
                 ...book,
-                lending: { ...book.lending, status: 'Devolvido' },
+                lending: { ...book.lending, ...newStatus },
               })
             }
           />
@@ -51,12 +68,12 @@ const DetailedBookCard = (props) => {
       return (
         <ReserveModal
           bookId={book._id}
-          callback={() =>
+          handleSnack={handleSnack}
+          callback={(newStatus) =>
             setBook({
               ...book,
               lending: {
-                status: 'Reservado',
-                idUser: auth?.user?._id,
+                ...newStatus,
               },
             })
           }
@@ -66,67 +83,82 @@ const DetailedBookCard = (props) => {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Grid container justify="flex-start" alignItems="flex-start">
-        <Grid item xs={12} sm={4}>
-          <img
-            src={book.img || bookImage}
-            alt="BookCover"
-            className={classes.cover}
-          />
+    <>
+      <Paper className={classes.root}>
+        <Grid
+          container
+          justify="flex-start"
+          style={{ flex: 1 }}
+          spacing={3}
+          alignItems="flex-start"
+        >
+          <Grid item xs={12} sm={4}>
+            <img
+              src={
+                book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage
+              }
+              alt="BookCover"
+              className={classes.cover}
+            />
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Grid item xs={12}>
+              <Typography>ISBN: {book.isbn}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h3" variant="h4">
+                {book.title}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Autor: {book.author}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">
+                Editora: {book.publishingCompany}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">
+                Ano de publicação: {book.publicationYear}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Edição: {book.edition}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Descrição:</Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.details}>
+              <Box component="div" overflow="auto">
+                {book.description}
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              {book.tag.map((t) => (
+                <Chip key={t} label={t} style={{ marginTop: '20px' }} />
+              ))}
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={8}>
-          <Grid item xs={12}>
-            <Typography>ISBN: {book.isbn}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography component="h3" variant="h4">
-              {book.title}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h5">{book.author}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6">
-              Editora {book.publishingCompany}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>Ano de publicação: {book.publicationYear}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography>Edição: {book.edition}</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6">Descrição</Typography>
-          </Grid>
-          <Grid item xs={12} className={classes.details}>
-            <Box
-              component="div"
-              overflow="auto"
-              style={{ maxHeight: '200px', maxWidth: '95%' }}
-            >
-              {book.description}
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            {book.tag.map((t) => (
-              <Chip key={t} label={t} style={{ marginTop: '20px' }} />
-            ))}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            justify="flex-end"
-            alignContent="flex-end"
-          >
-            {handleStatus()}
-          </Grid>
+        <Grid
+          item
+          xs={12}
+          style={{ paddingTop: 16 }}
+          container
+          justify="flex-end"
+          alignContent="flex-end"
+        >
+          {handleStatus()}
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+      <AlertSnackBar
+        open={snackOpen}
+        onClose={closeSnack}
+        severity={request.type}
+        message={request.message}
+      />
+    </>
   );
 };
 

@@ -3,13 +3,12 @@ import { Box, Container, Typography } from '@material-ui/core';
 
 import { header } from '../assets/css/makeStyles';
 
-export default function Header() {
+const Header = ({ extra }) => {
   const classes = header();
-
   return (
     <main>
       <Box className={classes.heroContent}>
-        <Container>
+        <Container className={classes.header}>
           <Typography
             className={classes.heroText}
             component="h1"
@@ -30,7 +29,10 @@ export default function Header() {
             Bem vindo a biblioteca virtual da App Masters
           </Typography>
         </Container>
+        {extra}
       </Box>
     </main>
   );
-}
+};
+
+export default Header;
