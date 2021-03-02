@@ -26,7 +26,7 @@ const Navbar = () => {
         >
           Book Masters
         </Button>
-        {auth && auth.role === 'admin' && (
+        {auth && auth.user.role === 'admin' && (
           <Button
             component={RouterLink}
             to="/register"
@@ -36,7 +36,7 @@ const Navbar = () => {
             Registrar livro
           </Button>
         )}
-        {!auth && (
+        {!auth ? (
           <Button
             component={RouterLink}
             to="/login"
@@ -45,6 +45,17 @@ const Navbar = () => {
           >
             Entrar
           </Button>
+        ) : (
+          <>
+            <Button
+              component={RouterLink}
+              to="/reserves"
+              size="large"
+              className={classes.btn}
+            >
+              Minhas reservas
+            </Button>
+          </>
         )}
         <Button
           component={RouterLink}

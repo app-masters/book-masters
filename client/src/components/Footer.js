@@ -13,8 +13,8 @@ const Footer = () => {
           App Masters
         </Typography>
         <Typography variant="subtitle1" align="center" component="p">
-          Acesse o site da App Masters em
-          <Link href="https://appmasters.io/en/"> appmasters.io/en/</Link>
+          Acesse o site da App Masters em {' '}
+          <Link href="https://appmasters.io">appmasters.io</Link>
         </Typography>
       </Container>
     </Container>

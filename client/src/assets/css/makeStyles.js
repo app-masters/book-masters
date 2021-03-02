@@ -59,10 +59,11 @@ export const footer = makeStyles((theme) => ({
 
 export const spinner = makeStyles((theme) => ({
   spinner: {
+    flex: 1,
+    padding: 32,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '80vh',
   },
 }));
 
@@ -73,10 +74,19 @@ export const header = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     paddingTop: 40,
-    height: '50vh',
+    minHeight: '50vh',
     backgroundImage: 'url(./breadcrumb.webp)',
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   heroText: {
     fontFamily: 'Poppins, sans-serif',
@@ -92,6 +102,7 @@ export const body = makeStyles((theme) => ({
 
 export const booksContainer = makeStyles((theme) => ({
   container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
@@ -139,7 +150,6 @@ export const bookCard = makeStyles((theme) => ({
   },
   cover: {
     height: '200px',
-    width: 'auto',
   },
   header: {
     height: 120,
@@ -240,10 +250,18 @@ export const personStyle = makeStyles((theme) => ({
   },
 }));
 
-export const product = makeStyles((theme) => ({
+export const book = makeStyles((theme) => ({
+  root: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+  },
   container: {
-    maxWidth: '1500px',
-    margin: '16px auto auto auto',
+    flex: 1,
+    maxWidth: '1200px',
+    width: '100%',
+    margin: 16,
+    alignItems: 'flex-start',
   },
   buttonOutlined: {
     border: '1px solid #0ab6ff',
@@ -274,6 +292,8 @@ export const product = makeStyles((theme) => ({
 
 export const detailedBookCard = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
     boxShadow:
       'inset 0px -3px 0px 0px rgba(10, 182, 255), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 3px 0px rgba(0, 0, 0, 0.12)',
     padding: '20px',
@@ -285,9 +305,8 @@ export const detailedBookCard = makeStyles((theme) => ({
     maxWidth: '100vw',
   },
   cover: {
-    margin: 20,
-    width: '80%',
-    maxWidth: '250px',
+    width: '100%',
+    borderRadius: 5,
   },
   details: {
     overflow: 'auto',
@@ -348,5 +367,28 @@ export const modal = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     textAlign: 'center',
+  },
+}));
+
+export const search = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    maxWidth: 1280,
+    width: '80%',
+    margin: 32,
+    backgroundColor: '#FFF',
+    padding: 8,
+    paddingLeft: 16,
+    paddingRight: 8,
+    borderRadius: 5,
+    boxShadow: '0px 0px 37px -8px #00000012',
+  },
+  input: {
+    width: '100%',
+    fontSize: 18,
+    height: 35,
+    border: 'none',
+    outline: 'none',
   },
 }));
