@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 import { errorMessage } from './constraints';
+import appConfig from '../config/app';
+import mailer from '../services/mailer';
 
 const schemaOptions = {
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
@@ -22,6 +24,18 @@ const NotifyAvailabilitySchema = new Schema(
   },
   schemaOptions
 );
+
+NotifyAvailabilitySchema.methods.notifyUser = async function () {
+  await mailer.sendEmail('notifyAvailability', {
+    to: this.idUser.email,
+    subject: '[Book Masters] Livro Disponível',
+    context: {
+      name: this.idUser.name,
+      bookName: this.idBook.title,
+      bookUrl: `${appConfig.frontUrl}/${this.idBook._id}`
+    }
+  });
+};
 
 NotifyAvailabilitySchema.statics.validate = (obj) => {
   const rules = {

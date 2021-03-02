@@ -5,8 +5,46 @@ import UserController from './controllers/UserController.js';
 import AuthController from './controllers/AuthController.js';
 import NotifyAvailabilityController from './controllers/NotifyAvailabilityController.js';
 import authMiddleware from './middleware/auth.js';
+import mailer from './services/mailer.js';
+import appConfig from './config/app.js';
 
 const routes = express.Router();
+
+routes.get('/mail-test', async (req, res) => {
+  try {
+    // await mailer.sendEmail('reserve', {
+    //   to: 'viniciuss10@hotmail.com',
+    //   subject: '[Book Masters] Livro reservado.',
+    //   context: {
+    //     name: 'vinicius'
+    //   }
+    // });
+
+    await mailer.sendEmail('notifyAvailability', {
+      to: 'viniciuss10@hotmail.com',
+      subject: '[Book Masters] Livro Disponível.',
+      context: {
+        name: 'vinicius',
+        bookName: 'Senhor dos aneis',
+        bookUrl: `${appConfig.frontUrl}/bookId`
+      }
+    });
+
+    // await mailer.sendEmail('lendEnding', {
+    //   to: 'viniciuss10@hotmail.com',
+    //   subject: '[Book Masters] Prazo chegando ao fim.',
+    //   context: {
+    //     name: 'vinicius',
+    //     days: 1,
+    //     type: 'devolução'
+    //   }
+    // });
+    res.status(200).json({ message: 'Email enviado com sucesso.' });
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+});
 
 // Auth Routes
 routes.post('/login/', AuthController.login);
@@ -25,7 +63,7 @@ routes.get('/lendings/:id', LendingController.getById);
 routes.put('/lendings/:id', authMiddleware, LendingController.update);
 routes.delete('/lendings/:id', authMiddleware, LendingController.delete);
 routes.get('/lendings/lend/:bookId', authMiddleware, LendingController.lending);
-routes.get('/lendings/reserve/:bookId', authMiddleware, LendingController.reserve);
+routes.get('/lendings/reserve/:bookId', LendingController.reserve);
 routes.get('/lendings/return/:bookId', authMiddleware, LendingController.returnBook);
 
 // User Routes

@@ -1,4 +1,5 @@
 import Lending from '../models/Lending.js';
+import NotifyAvailability from '../models/NotifyAvailability.js';
 import User from '../models/User.js';
 import addDaysToDate from '../utils/addDaysToDate.js';
 
@@ -17,6 +18,36 @@ class LendingController {
     const users = await User.find({ _id: { $in: lendings.map((l) => l.idUser) } });
 
     return res.json({ lendings, users });
+  }
+
+  async checkDueDate(req, res, next) {
+    const daysToNotify = 1;
+    try {
+      const allLended = await Lending.find({
+        status: 'Emprestado',
+        returnedAt: null,
+        lendingEndAt: addDaysToDate('', daysToNotify)
+      })
+        .populate('idUser')
+        .populate('idBook');
+
+      const allReserved = await Lending.find({
+        status: 'Reservado',
+        lendingStartedAt: null,
+        reservationEndAt: addDaysToDate('', daysToNotify)
+      })
+        .populate('idUser')
+        .populate('idBook');
+
+      if ((allLended && allLended.length > 0) || (allReserved && allReserved.length > 0)) {
+        for (const lend of [...allLended, ...allReserved]) {
+          lend.notifyDueDate(daysToNotify, lend.status === 'Emprestado' ? 'devolução' : 'reserva');
+        }
+      }
+      res.status(200).send();
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getById(req, res) {
@@ -58,7 +89,6 @@ class LendingController {
 
       return res.json(response).send();
     } catch (error) {
-      console.log(error)
       next(error);
     }
   }
@@ -72,7 +102,7 @@ class LendingController {
       });
 
       if (existingLending && existingLending.length > 0) {
-        return res.status(400).json({ error: 'Este livro já está reservado.' });
+        throw { status: 400, message: 'Este livro já está reservado.' };
       }
 
       /* TODO: definir as datas de acordo com os dados já existentes no banco */
@@ -80,16 +110,18 @@ class LendingController {
       const date = new Date();
       const reserveJson = {
         idBook: req.params.bookId,
-        idUser: req.userId,
+        idUser: '603e3b5dc39554545e24050d',
         status: 'Reservado',
         reservationStartedAt: date,
         reservationEndAt: addDaysToDate(date, 3)
       };
 
       const response = await Lending.create(reserveJson);
+      await response.notifyReservation();
 
       return res.json(response).send();
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -119,8 +151,18 @@ class LendingController {
       /*TODO: é possível alterar o existingLending que já existia? */
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, reserveJson, { new: true });
 
+      // Notify availability of this returned book
+      const objectsToNotify = await NotifyAvailability.find({ idBook: req.params.bookId })
+        .populate('idUser')
+        .populate('idBook');
+      if (objectsToNotify && objectsToNotify.length > 0) {
+        for (const item of objectsToNotify) {
+          await item.notifyUser();
+        }
+      }
+
       return res.json(response).send();
-    } catch (e) {
+    } catch (error) {
       next(error);
     }
   }
