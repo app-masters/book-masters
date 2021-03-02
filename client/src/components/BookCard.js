@@ -50,7 +50,7 @@ const BookCard = ({ book }) => {
         className={classes.rootAction}
         component={RouterLink}
         to={{
-          pathname: `/products/${book._id}`,
+          pathname: `/book/${book._id}`,
           state: book,
         }}
       >

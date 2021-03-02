@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { product } from '../assets/css/makeStyles';
+import { book } from '../assets/css/makeStyles';
 import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import DetailedBookCard from '../components/DetailedBookCard';
 import api from '../services/api';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { useHistory } from 'react-router-dom';
 
-export const Product = (props) => {
-  const classes = product();
+export const Book = (props) => {
+  const classes = book();
   const { id } = useParams();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setLoading(true);
@@ -40,9 +42,9 @@ export const Product = (props) => {
     >
       <Button
         component={RouterLink}
-        to="/"
         size="large"
         color="primary"
+        onClick={() => history.goBack()}
         className={classes.button}
         startIcon={<ArrowBackIosIcon />}
       >
@@ -59,4 +61,4 @@ export const Product = (props) => {
   );
 };
 
-export default Product;
+export default Book;

@@ -250,7 +250,7 @@ export const personStyle = makeStyles((theme) => ({
   },
 }));
 
-export const product = makeStyles((theme) => ({
+export const book = makeStyles((theme) => ({
   container: {
     maxWidth: '1500px',
     margin: '16px auto auto auto',
