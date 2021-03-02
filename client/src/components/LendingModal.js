@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import api from '../services/api';
-import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import ConfirmLending from './ConfirmLending';
+import moment from 'moment';
 
-const LendingModal = (props) => {
+const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
   const [open, setOpen] = useState(false);
-
-  const [request, setRequest] = useState({ type: '', message: '' });
-  const [snackOpen, setSnackOpen] = useState(false);
-  const handleSnack = (type, message) => {
-    setRequest({
-      type,
-      message,
-    });
-    setSnackOpen(true);
-  };
-  const closeSnack = () => {
-    setSnackOpen(false);
-    setRequest({ type: '', message: '' });
-  };
 
   const handleAction = () => {
     setOpen(true);
@@ -30,19 +16,15 @@ const LendingModal = (props) => {
     try {
       if (data === 'https://appmasters.io') {
         const response = await api.get(
-          `/lendings/${props.type === 'return' ? 'return' : 'lend'}/${
-            props.bookId
-          }`
+          `/lendings/${type === 'return' ? 'return' : 'lend'}/${bookId}`
         );
         if (response.status === 200) {
           handleSnack(
             'success',
-            `Livro ${
-              props.type === 'return' ? 'retornado' : 'pego'
-            } com sucesso!`
+            `Livro ${type === 'return' ? 'devolvido' : 'pego'} com sucesso!`
           );
-          if (props.callback) {
-            props.callback();
+          if (callback) {
+            callback({ status: 'Devolvido', idUser: null });
           }
         }
       } else {
@@ -54,27 +36,61 @@ const LendingModal = (props) => {
     }
   };
 
+  const handleStatus = () => {
+    const isReserve = type !== 'return';
+
+    if (isReserve) {
+      const haveDelay = moment().isAfter(moment(lending.reservationEndAt));
+      if (haveDelay) {
+        return (
+          <Alert severity="error">
+            A reserva deste livro se encontra em atraso - Previsto para{' '}
+            {moment(moment(lending.reservationEndAt)).format('DD/MM/YYYY')}
+          </Alert>
+        );
+      } else {
+        return (
+          <Alert severity="info">
+            Você tem até {moment(lending.reservationEndAt).format('DD/MM/YYYY')}{' '}
+            para pegar esse livro
+          </Alert>
+        );
+      }
+    } else {
+      const haveDelay = moment().isAfter(moment(lending.lendingEndAt));
+      if (haveDelay) {
+        return (
+          <Alert severity="error">
+            A entrega deste livro se encontra em atraso - Previsto para{' '}
+            {moment(moment(lending.lendingEndAt)).format('DD/MM/YYYY')}
+          </Alert>
+        );
+      }
+    }
+  };
+
   return (
     <>
-      <Button
-        size="large"
-        variant="contained"
-        color="primary"
-        onClick={handleAction}
-      >
-        {props.type === 'return' ? 'Devolver livro' : 'Pegar livro'}
-      </Button>
+      <Grid container direction="column" alignItems="flex-end" spacing={2}>
+        <Grid item>
+          <Button
+            size="large"
+            variant="contained"
+            color="primary"
+            onClick={handleAction}
+            // onClick={() => handleScan('https://appmasters.io')}
+          >
+            {type === 'return' ? 'Devolver livro' : 'Pegar livro'}
+          </Button>
+        </Grid>
+        <Grid item>{handleStatus()}</Grid>
+      </Grid>
       <ConfirmLending
         open={open}
         onClose={() => setOpen(false)}
         handleError={(data) => console.log('handleError', data)}
         handleScan={handleScan}
       />
-      <Snackbar open={snackOpen} autoHideDuration={6000} onClose={closeSnack}>
-        <Alert onClose={closeSnack} severity={request.type}>
-          {request.message}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

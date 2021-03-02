@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -38,16 +38,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormLogin = (props) => {
+const FormLogin = ({ callback }) => {
   const classes = useStyles();
   const history = useHistory();
-  const auth = useAuth();
+  const { auth, signin } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [showDialog, setDialog] = useState(false);
   const [values, setValues] = useState({
     email: '',
   });
+
+  useEffect(() => {
+    if (auth) {
+      if (callback) {
+        callback();
+      } else {
+        history.push('/');
+      }
+    }
+  }, [auth, callback, history]);
 
   const doLogin = async (e) => {
     e.preventDefault();
@@ -60,11 +70,8 @@ const FormLogin = (props) => {
       setDialog(true);
     } else {
       const responseBackend = await api.post('/login', { email: values.email });
-      auth.signin(responseBackend.data);
-      if (props.callback) {
-        props.callback();
-      } else {
-        history.push('/');
+      if (responseBackend.status === 200) {
+        signin(responseBackend.data);
       }
     }
   };

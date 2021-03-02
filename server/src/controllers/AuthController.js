@@ -4,7 +4,7 @@ import auth from '../config/auth.js';
 import User from '../models/User.js';
 
 const isAdmin = (email) => {
-  return ['tiago@tiagogouvea.com.br', 'tiago@appmasters.io'].includes(email);
+  return email.includes('admin');
 };
 
 class AuthController {
@@ -14,7 +14,7 @@ class AuthController {
       let user = await User.findOne({ email }).exec();
 
       if (!user) {
-        user = await User.create({ email, role: 'common' });
+        user = await User.create({ email, role: isAdmin(email) ? 'admin' : 'common' });
       }
 
       const token = jwt.sign({ id: user._id, email, admin: isAdmin(email) }, auth.secret, {
