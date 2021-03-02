@@ -2,13 +2,13 @@ import nodemailer from 'nodemailer';
 import exphbs from 'express-handlebars';
 import config from '../config/mail';
 import { htmlToText } from 'html-to-text';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 const { from, ...mailConfig } = config;
 
 class Mailer {
   constructor() {
     this.transporter = nodemailer.createTransport({ ...mailConfig });
-    this.viewPath = resolve(__dirname, '..', 'resources', 'views', 'emails');
+    this.viewPath = resolve(resolve(dirname('')), '..', 'resources', 'views', 'emails');
     this.hsb = exphbs.create({
       layoutsDir: resolve(this.viewPath, 'layouts'),
       // partialsDir: resolve(this.viewPath, 'partials'),

@@ -21,8 +21,7 @@ class BookSeeder {
         tag: faker.random.arrayElements(['frontend', 'backend', 'node', 'database'], 2),
         imageUrl: faker.image.imageUrl(),
         publicationYear: faker.date.past().getFullYear(),
-        edition: faker.random.number(10),
-        status: faker.random.arrayElement(['Disponível', 'Emprestado', 'Reservado'])
+        edition: faker.random.number(10)
       };
     });
     await Book.create(data);
