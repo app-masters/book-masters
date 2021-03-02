@@ -6,7 +6,6 @@ class BookController {
   async getAll(_req, res) {
     const response = await Book.find().lean();
     const listA = [];
-    // TODO: replace this code
     for (let i = 0; i < response.length; i++) {
       const item = response[i];
       const lending = await Lending.findOne({ idBook: item._id, returnedAt: null });
@@ -18,14 +17,18 @@ class BookController {
     return res.json(listA);
   }
 
-  async getById(req, res) {
-    const response = await Book.findById(req.params.id).lean();
-    const lending = await Lending.findOne({ idBook: response._id, returnedAt: null }).lean();
+  async getById(req, res, next) {
+    try {
+      const response = await Book.findById(req.params.id).lean();
+      const lending = await Lending.findOne({ idBook: response._id, returnedAt: null }).lean();
 
-    return res.json({
-      ...response,
-      lending: lending || { status: 'Disponível' }
-    });
+      return res.json({
+        ...response,
+        lending: lending || { status: 'Disponível' }
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 
   async create(req, res, next) {
