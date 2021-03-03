@@ -79,9 +79,6 @@ const FormLogin = ({ callback }) => {
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Bem vindo
-        </Typography>
         <form className={classes.form} onSubmit={doLogin}>
           <TextField
             variant="outlined"
@@ -114,12 +111,24 @@ const FormLogin = ({ callback }) => {
         <DialogTitle>{'Não conseguimos encontrar seu email'}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Para ter acesso ao BOOK MASTERS você precisa primeiro se registrar
-            no <a href={'https://programador.emjuizdefora.com/'}>DevFinder</a>
+            Para ter acesso ao Book masters você precisa primeiro se registrar
+            no{' '}
+            <a href={'https://programador.emjuizdefora.com/'} target="_blank">
+              programadores de Juiz de Fora
+            </a>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialog(false)} color="primary" autoFocus>
+          <a
+            href={'https://programador.emjuizdefora.com/entrar'}
+            style={{ textDecoration: 'none' }}
+            target="_blank"
+          >
+            <Button variant="contained" color="primary">
+              Registrar agora
+            </Button>
+          </a>
+          <Button onClick={() => setDialog(false)} color="primary">
             Fechar
           </Button>
         </DialogActions>
