@@ -60,7 +60,7 @@ const DetailedBookCard = (props) => {
             }
           />
         );
-    } else if (lending?.status === 'Reservado') {
+    } else if (lending?.status === 'Reservado' || lending?.status === 'Emprestado') {
       return <AvailabilityModal bookId={book._id} lending={lending} />;
     } else {
       return (
@@ -133,8 +133,8 @@ const DetailedBookCard = (props) => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              {book.tag.map((t) => (
-                <Chip key={t} label={t} style={{ marginTop: '20px' }} />
+              {book.tags.map((t) => (
+                <Chip key={t} label={t} style={{ marginTop: 16, marginRight: 8 }} />
               ))}
             </Grid>
           </Grid>
