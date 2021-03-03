@@ -35,7 +35,7 @@ const BookSchema = new Schema(
       type: String,
       required: true
     },
-    tag: {
+    tags: {
       type: Array
     },
     imageUrl: {

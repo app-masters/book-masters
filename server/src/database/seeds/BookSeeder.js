@@ -18,7 +18,7 @@ class BookSeeder {
         description: faker.lorem.paragraph(2),
         author: faker.name.findName(),
         publishingCompany: faker.company.companyName(),
-        tag: faker.random.arrayElements(['frontend', 'backend', 'node', 'database'], 2),
+        tags: faker.random.arrayElements(['frontend', 'backend', 'node', 'database'], 2),
         imageUrl: faker.image.imageUrl(),
         publicationYear: faker.date.past().getFullYear(),
         edition: faker.random.number(10)
