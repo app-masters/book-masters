@@ -66,7 +66,12 @@ const Navbar = () => {
           Sobre
         </Button>
         {auth && (
-          <Button size="large" className={classes.btn} onClick={handleLogout}>
+          <Button
+            size="large"
+            className={classes.btnExit}
+            variant="outlined"
+            onClick={handleLogout}
+          >
             Sair
           </Button>
         )}

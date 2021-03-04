@@ -7,14 +7,20 @@ export const navbar = makeStyles((theme) => ({
     paddingBottom: '1px',
   },
   appBar: {
-    backgroundColor: '#0ab6ff',
+    background:
+      'linear-gradient(90deg, #19AFFB 66.77%, rgba(64, 202, 252, 0) 171.25%)',
     boxShadow:
       '0px 0px 0px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
   },
   btn: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#ffffff',
-    height: '100%',
+    fontWeight: 300,
+  },
+  btnExit: {
+    color: '#ffffff',
+    fontWeight: 300,
+    marginLeft: 'auto',
+    borderColor: '#FFFFFF',
   },
   menuButton: {
     marginRight: theme.spacing(2),
