@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import fetchUserAppMasters from '../services/appMastersAPI';
 import { useHistory } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -45,6 +44,7 @@ const FormLogin = ({ callback }) => {
 
   const [loading, setLoading] = useState(false);
   const [showDialog, setDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
   const [values, setValues] = useState({
     email: '',
   });
@@ -62,18 +62,25 @@ const FormLogin = ({ callback }) => {
   const doLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const response = await fetchUserAppMasters(
-      values.email.toLocaleLowerCase()
-    );
-    setLoading(false);
-    if (response.status !== 200) {
-      setDialog(true);
-    } else {
+    try {
       const responseBackend = await api.post('/login', { email: values.email });
       if (responseBackend.status === 200) {
         signin(responseBackend.data);
-      }
+      } 
+
+    } catch (err) {
+      if(err.response.status === 404)
+        setDialogMessage(err.response.data.error);
+      else if(err.response.status === 400)
+        setDialogMessage(err.response.data.message);
+      else
+        setDialogMessage("Erro ao fazer login");
+
+      setDialog(true);
+      console.log('login error: ', err.response);
     }
+    setLoading(false);
+    
   };
 
   return (
@@ -111,7 +118,7 @@ const FormLogin = ({ callback }) => {
         </form>
       </div>
       <Dialog open={showDialog} onClose={() => setDialog(true)}>
-        <DialogTitle>{'Não conseguimos encontrar seu email'}</DialogTitle>
+        <DialogTitle>{dialogMessage}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Para ter acesso ao BOOK MASTERS você precisa primeiro se registrar

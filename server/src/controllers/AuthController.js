@@ -2,19 +2,33 @@ import jwt from 'jsonwebtoken';
 
 import auth from '../config/auth.js';
 import User from '../models/User.js';
-
-const isAdmin = (email) => {
-  return email.includes('admin');
-};
+import isAdmin from '../utils/isAdmin';
+import userApi from '../config/devFinder';
+import fetch from 'node-fetch';
 
 class AuthController {
   async login(req, res, next) {
     try {
       const { email } = await req.body;
-      let user = await User.findOne({ email }).exec();
+      console.log(email);
+      console.log(`${userApi.devFinderApi}?email=${email}&test=${userApi.devFinderTestMode}`);
+      const response = await fetch(`${userApi.devFinderApi}?email=${email}&test=${userApi.devFinderTestMode}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      });
 
+      console.log('status', response.status);
+      if (!response.ok) {
+        return res.status(response.status).send(await response.text());
+      }
+      const userData = await response.json();
+
+      let user = await User.findOne({ email }).exec();
       if (!user) {
-        user = await User.create({ email, role: isAdmin(email) ? 'admin' : 'common' });
+        user = await User.create({ ...userData, role: isAdmin(email) ? 'admin' : 'common' });
       }
 
       const token = jwt.sign({ id: user._id, email, admin: isAdmin(email) }, auth.secret, {
