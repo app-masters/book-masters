@@ -4,6 +4,7 @@ import api from '../services/api';
 import Alert from '@material-ui/lab/Alert';
 import ConfirmLending from './ConfirmLending';
 import moment from 'moment';
+import { statusBook } from '../utils/constraints';
 
 const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,14 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             `Livro ${type === 'return' ? 'devolvido' : 'pego'} com sucesso!`
           );
           if (callback) {
-            callback({ status: 'Devolvido', idUser: null });
+            const data = {
+              status:
+                type === 'return' ? statusBook.returned : statusBook.borrowed,
+            };
+            if (type === 'return') {
+              data.idUser = null;
+            }
+            callback(data);
           }
         }
       } else {
@@ -77,8 +85,8 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             size="large"
             variant="contained"
             color="primary"
-            onClick={handleAction}
-            // onClick={() => handleScan('https://appmasters.io')}
+            // onClick={handleAction}
+            onClick={() => handleScan('https://appmasters.io')}
           >
             {type === 'return' ? 'Devolver livro' : 'Pegar livro'}
           </Button>

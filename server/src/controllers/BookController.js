@@ -11,7 +11,7 @@ class BookController {
       const lending = await Lending.findOne({ idBook: item._id, returnedAt: null });
       listA.push({
         ...item,
-        lending: lending || { status: 'Disponível' }
+        lending: lending || { status: 'available' }
       });
     }
     return res.json(listA);
@@ -24,7 +24,7 @@ class BookController {
 
       return res.json({
         ...response,
-        lending: lending || { status: 'Disponível' }
+        lending: lending || { status: 'available' }
       });
     } catch (error) {
       next(error);

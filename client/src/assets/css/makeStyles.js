@@ -58,6 +58,7 @@ export const footer = makeStyles((theme) => ({
     marginLeft: 8,
   },
   footer: {
+    marginTop: 32,
     bottom: 0,
     backgroundColor: '#F5F5FC',
     width: '100%',

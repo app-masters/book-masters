@@ -6,3 +6,9 @@ export const breakpoints = {
   desktop: 1280,
   wide: 1440,
 };
+
+export const statusBook = {
+  reserved: 'reserved',
+  borrowed: 'borrowed',
+  returned: 'returned',
+};

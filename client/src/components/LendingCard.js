@@ -9,6 +9,7 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
+import { statusBook } from '../utils/constraints';
 
 const LendingCard = (props) => {
   const { lendings } = props;
@@ -45,7 +46,7 @@ const LendingCard = (props) => {
         <Box component="div" overflow="auto" maxHeight={200}>
           <List>
             {lendings.map((l) => {
-              if (l.status === 'Reservado') {
+              if (l.status === statusBook.reserved) {
                 return (
                   <ListItem key={l.idUser}>
                     <ListItemText

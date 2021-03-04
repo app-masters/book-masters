@@ -8,6 +8,7 @@ import AvailabilityModal from './AvailabilityModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
 import AlertSnackBar from './AlertSnackbar';
+import { statusBook } from '../utils/constraints';
 
 const DetailedBookCard = (props) => {
   const { auth } = useAuth();
@@ -28,10 +29,11 @@ const DetailedBookCard = (props) => {
     setRequest({ type: '', message: '' });
   };
 
+  console.log(book);
   const handleStatus = () => {
     const lending = book?.lending;
     if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
-      if (lending.status === 'Reservado')
+      if (lending.status === statusBook.reserved)
         return (
           <LendingModal
             bookId={book._id}
@@ -40,12 +42,12 @@ const DetailedBookCard = (props) => {
             callback={() =>
               setBook({
                 ...book,
-                lending: { ...book.lending, status: 'Emprestado' },
+                lending: { ...book.lending, status: statusBook.borrowed },
               })
             }
           />
         );
-      if (lending.status === 'Emprestado')
+      if (lending.status === statusBook.borrowed)
         return (
           <ReturnModal
             bookId={book._id}
@@ -60,7 +62,10 @@ const DetailedBookCard = (props) => {
             }
           />
         );
-    } else if (lending?.status === 'Reservado' || lending?.status === 'Emprestado') {
+    } else if (
+      lending?.status === statusBook.reserved ||
+      lending?.status === statusBook.borrowed
+    ) {
       return <AvailabilityModal bookId={book._id} lending={lending} />;
     } else {
       return (
@@ -134,7 +139,11 @@ const DetailedBookCard = (props) => {
             </Grid>
             <Grid item xs={12}>
               {book.tags.map((t) => (
-                <Chip key={t} label={t} style={{ marginTop: 16, marginRight: 8 }} />
+                <Chip
+                  key={t}
+                  label={t}
+                  style={{ marginTop: 16, marginRight: 8 }}
+                />
               ))}
             </Grid>
           </Grid>
