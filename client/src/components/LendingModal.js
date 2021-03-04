@@ -94,6 +94,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
       </Grid>
       <ConfirmLending
         open={open}
+        return={type === 'return'}
         onClose={() => setOpen(false)}
         handleError={(data) => console.log('handleError', data)}
         handleScan={handleScan}
