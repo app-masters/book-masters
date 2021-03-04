@@ -126,62 +126,50 @@ export const body = makeStyles((theme) => ({
 
 export const booksContainer = makeStyles((theme) => ({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+    justifyContent: 'center'
   },
 }));
 
 export const bookCard = makeStyles((theme) => ({
   root: {
-    width: 345,
+    justifySelf: 'center',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'column',
     margin: 20,
+    maxWidth: 300,
+    padding: 16,
+    paddingBottom: 0,
+    background: '#FFFFFF',
+    boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
+    borderRadius: 5,
+    border: 'none',
   },
-  rootAction: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  bookStatus: {
+  content: {
+    paddingLeft: 0,
     width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
+    paddingRight: 0,
   },
-  status: {
-    margin: '0 20px',
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#223464',
   },
-  green: {
-    color: '#fff',
-    backgroundColor: green[500],
+  tags: {
+    paddingTop: 8,
+    paddingBottom: 8,
   },
-  red: {
-    color: '#fff',
-    backgroundColor: red[500],
-  },
-  yellow: {
-    color: '#fff',
-    backgroundColor: '#FD9A24',
-  },
-  cover: {
-    height: '200px',
-  },
-  header: {
-    height: 120,
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    width: '100%',
+  button: {
+    marginTop: 8,
+    borderRadius: 40,
+    height: 30,
+    border: 'none',
+    paddingLeft: 12,
+    paddingRight: 12,
+    background:
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
+    color: '#FFFFFF',
   },
 }));
 
