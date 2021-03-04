@@ -13,12 +13,12 @@ const SearchBar = ({ doSearch }) => {
     <div className={classes.container}>
       <input
         className={classes.input}
-        placeholder="Pesquisa"
+        placeholder="Buscar livros"
         value={query}
         onChange={({ target }) => setQuery(target.value)}
       />
       <IconButton
-        style={{ padding: 6 }}
+        className={classes.btn}
         onClick={() => doSearch(query)}
         aria-label="search"
       >

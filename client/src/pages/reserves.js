@@ -12,6 +12,7 @@ import api from '../services/api';
 import moment from 'moment';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Typography } from '@material-ui/core';
+import { statusBook } from '../utils/constraints';
 
 const useStyles = makeStyles({
   container: {
@@ -89,9 +90,9 @@ const Reserves = () => {
                 <TableCell align="left">{row.idBook.title}</TableCell>
                 <TableCell align="left">{row.status}</TableCell>
                 <TableCell align="left">
-                  {row.status === 'Reservado'
-                    ? `${moment(row.reservationEndAt).format('DD/MM/YYYY')}`
-                    : `${moment(row.lendingEndAt).format('DD/MM/YYYY')}`}
+                  {row.status === statusBook.reserved
+                    ? moment(row.reservationEndAt).format('DD/MM/YYYY')
+                    : moment(row.lendingEndAt).format('DD/MM/YYYY')}
                 </TableCell>
               </TableRow>
             ))}

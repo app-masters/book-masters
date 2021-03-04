@@ -18,7 +18,7 @@ class LendingSeeder {
       return {
         idUser: faker.random.arrayElement(usersIds),
         idBook: faker.random.arrayElement(booksIds),
-        status: faker.random.arrayElement(['Reservado', 'Emprestado', 'Devolvido']),
+        status: faker.random.arrayElement(['reserved', 'borrowed', 'returned']),
         returnedAt: faker.date.past(),
         lendingStartedAt: faker.date.past(),
         lendingEndAt: faker.date.past(),

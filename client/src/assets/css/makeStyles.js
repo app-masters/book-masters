@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { green, red } from '@material-ui/core/colors';
 
 export const navbar = makeStyles((theme) => ({
   root: {
@@ -7,14 +6,20 @@ export const navbar = makeStyles((theme) => ({
     paddingBottom: '1px',
   },
   appBar: {
-    backgroundColor: '#0ab6ff',
+    background:
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
     boxShadow:
       '0px 0px 0px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
   },
   btn: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#ffffff',
-    height: '100%',
+    fontWeight: 300,
+  },
+  btnExit: {
+    color: '#ffffff',
+    fontWeight: 300,
+    marginLeft: 'auto',
+    borderColor: '#FFFFFF',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -40,20 +45,24 @@ export const login = makeStyles((theme) => ({
 }));
 
 export const footer = makeStyles((theme) => ({
-  footer: {
-    bottom: 0,
-    margin: 0,
-    height: 'auto',
-    width: '100vw',
-    maxWidth: '100%',
+  container: {
+    maxWidth: 1200,
+  },
+  social: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0ab6ff',
-    paddingTop: '60px',
-    paddingBottom: '50px',
-    color: 'white',
-    backgroundImage: 'url(./breadcrumb.webp)',
+    justifyContent: 'flex-end',
+  },
+  socialLink: {
+    color: '#7F7F7F',
+    marginLeft: 8,
+  },
+  footer: {
+    marginTop: 32,
+    bottom: 0,
+    backgroundColor: '#F5F5FC',
+    width: '100%',
+    minHeight: 220,
+    padding: '64px 16px',
   },
 }));
 
@@ -68,29 +77,44 @@ export const spinner = makeStyles((theme) => ({
 }));
 
 export const header = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    paddingTop: 40,
-    minHeight: '50vh',
-    backgroundImage: 'url(./breadcrumb.webp)',
+  container: {
+    position: 'relative',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  bottom: {
+    zIndex: 3,
+    position: 'absolute',
+    bottom: 16,
+    width: '100%',
+    display: 'flex',
     justifyContent: 'center',
   },
-  header: {
+  content: {
     flex: 1,
+    position: 'relative',
+    maxWidth: 1200,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  heroText: {
-    fontFamily: 'Poppins, sans-serif',
-    color: '#ffffff',
+  info: {
+    zIndex: 2,
+    maxWidth: 380,
+  },
+  title: {
+    lineHeight: 'normal',
+    color: '#223464',
+    fontWeight: 500,
+    fontSize: 50,
+  },
+  subtitle: {
+    fontWeight: 200,
+    fontSize: 18,
+  },
+  backgroundImage: {
+    zIndex: 1,
+    position: 'absolute',
+    right: 0,
   },
 }));
 
@@ -102,62 +126,50 @@ export const body = makeStyles((theme) => ({
 
 export const booksContainer = makeStyles((theme) => ({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+    justifyContent: 'center'
   },
 }));
 
 export const bookCard = makeStyles((theme) => ({
   root: {
-    width: 345,
+    justifySelf: 'center',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'column',
     margin: 20,
+    maxWidth: 300,
+    padding: 16,
+    paddingBottom: 0,
+    background: '#FFFFFF',
+    boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
+    borderRadius: 5,
+    border: 'none',
   },
-  rootAction: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  bookStatus: {
+  content: {
+    paddingLeft: 0,
     width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
+    paddingRight: 0,
   },
-  status: {
-    margin: '0 20px',
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#223464',
   },
-  green: {
-    color: '#fff',
-    backgroundColor: green[500],
+  tags: {
+    paddingTop: 8,
+    paddingBottom: 8,
   },
-  red: {
-    color: '#fff',
-    backgroundColor: red[500],
-  },
-  yellow: {
-    color: '#fff',
-    backgroundColor: '#FD9A24',
-  },
-  cover: {
-    height: '200px',
-  },
-  header: {
-    height: 120,
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    width: '100%',
+  button: {
+    marginTop: 8,
+    borderRadius: 40,
+    height: 30,
+    border: 'none',
+    paddingLeft: 12,
+    paddingRight: 12,
+    background:
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
+    color: '#FFFFFF',
   },
 }));
 
@@ -171,27 +183,23 @@ export const about = makeStyles((theme) => ({
     marginBottom: '100px',
   },
   heroText: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 50,
     marginTop: 20,
   },
   description: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 18,
     marginTop: 5,
     padding: 15,
   },
   heroDev: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 30,
     padding: 15,
     marginTop: 5,
   },
   link: {
-    fontFamily: 'Poppins, sans-serif',
     fontSize: 15,
     paddingLeft: 15,
   },
@@ -316,7 +324,6 @@ export const detailedBookCard = makeStyles((theme) => ({
     fontSize: '18px',
     margin: '10px 0',
     fontWeight: '500',
-    fontFamily: 'Roboto, sans-serif',
     color: '#343a40',
   },
   description: {
@@ -374,21 +381,28 @@ export const search = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    maxWidth: 1280,
     width: '80%',
+    maxWidth: 530,
     margin: 32,
+    height: 60,
     backgroundColor: '#FFF',
     padding: 8,
-    paddingLeft: 16,
+    paddingLeft: 32,
     paddingRight: 8,
-    borderRadius: 5,
-    boxShadow: '0px 0px 37px -8px #00000012',
+    borderRadius: 40,
+    boxShadow: '0px 15px 30px 13px rgba(187, 187, 187, 0.25)',
   },
   input: {
     width: '100%',
-    fontSize: 18,
+    fontSize: 14,
     height: 35,
+    fontWeight: 300,
     border: 'none',
     outline: 'none',
+  },
+  btn: {
+    background:
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
+    color: '#FFFFFF',
   },
 }));

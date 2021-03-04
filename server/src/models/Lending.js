@@ -25,7 +25,7 @@ const LendingSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['lended', 'borrowed', 'returned']
+      enum: ['reserved', 'borrowed', 'returned']
     },
     returnedAt: Schema.Types.Date,
 

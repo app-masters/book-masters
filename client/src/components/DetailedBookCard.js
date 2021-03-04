@@ -8,6 +8,7 @@ import AvailabilityModal from './AvailabilityModal';
 import { useAuth } from '../lib/auth';
 import bookImage from '../assets/img/book.png';
 import AlertSnackBar from './AlertSnackbar';
+import { statusBook } from '../utils/constraints';
 
 const DetailedBookCard = (props) => {
   const { auth } = useAuth();
@@ -28,10 +29,11 @@ const DetailedBookCard = (props) => {
     setRequest({ type: '', message: '' });
   };
 
+  console.log(book);
   const handleStatus = () => {
     const lending = book?.lending;
     if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
-      if (lending.status === 'Reservado')
+      if (lending.status === statusBook.reserved)
         return (
           <LendingModal
             bookId={book._id}
@@ -40,12 +42,12 @@ const DetailedBookCard = (props) => {
             callback={() =>
               setBook({
                 ...book,
-                lending: { ...book.lending, status: 'Emprestado' },
+                lending: { ...book.lending, status: statusBook.borrowed },
               })
             }
           />
         );
-      if (lending.status === 'Emprestado')
+      if (lending.status === statusBook.borrowed)
         return (
           <ReturnModal
             bookId={book._id}
@@ -61,8 +63,8 @@ const DetailedBookCard = (props) => {
           />
         );
     } else if (
-      lending?.status === 'Reservado' ||
-      lending?.status === 'Emprestado'
+      lending?.status === statusBook.reserved ||
+      lending?.status === statusBook.borrowed
     ) {
       return (
         <AvailabilityModal
