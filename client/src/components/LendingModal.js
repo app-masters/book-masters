@@ -52,7 +52,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
       if (haveDelay) {
         return (
           <Alert severity="error">
-            A reserva deste livro se encontra em atraso - Previsto para{' '}
+            A reserva deste livro se encontra em atraso - Entrega prevista para{' '}
             {moment(moment(lending.reservationEndAt)).format('DD/MM/YYYY')}
           </Alert>
         );
@@ -70,7 +70,14 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
         return (
           <Alert severity="error">
             A entrega deste livro se encontra em atraso - Previsto para{' '}
-            {moment(moment(lending.lendingEndAt)).format('DD/MM/YYYY')}
+            {moment(lending.lendingEndAt).format('DD/MM/YYYY')}
+          </Alert>
+        );
+      } else {
+        return (
+          <Alert severity="info">
+            Você tem até {moment(lending.lendingEndAt).format('DD/MM/YYYY')}{' '}
+            para devolver este livro
           </Alert>
         );
       }
@@ -95,6 +102,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
       </Grid>
       <ConfirmLending
         open={open}
+        return={type === 'return'}
         onClose={() => setOpen(false)}
         handleError={(data) => console.log('handleError', data)}
         handleScan={handleScan}

@@ -21,11 +21,14 @@ const ConfirmLending = (props) => {
 
   return (
     <Dialog open={props.open} onClose={onClose}>
-      <DialogTitle id="form-dialog-title">Pegar livro</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {props.return ? 'Devolver livro' : 'Pegar livro'}
+      </DialogTitle>
       <DialogContent className={classes.content}>
         {!displayQrCode ? (
           <DialogContentText>
-            Siga os passos abaixo para pegar o livro.
+            Siga os passos abaixo para {props.return ? 'devolver' : 'pegar'} o
+            livro.
             <ul>
               <li>
                 Vá até a appmasters
@@ -41,7 +44,10 @@ const ConfirmLending = (props) => {
                 Escaneie o QRcode disponibilizado na appmasters para confirmar a
                 sua localização
               </li>
-              <li>Pegue o livro com um dos nossos colaboradores</li>
+              <li>
+                {props.return ? 'Devolva o livro para' : 'Pegue o livro com'}{' '}
+                um dos nossos colaboradores
+              </li>
             </ul>
           </DialogContentText>
         ) : (

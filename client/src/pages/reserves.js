@@ -23,7 +23,6 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   table: {
-    minWidth: 650,
     maxWidth: 1200,
     display: 'table',
   },
@@ -73,10 +72,10 @@ const Reserves = () => {
                 <strong>Livro</strong>
               </TableCell>
               <TableCell align="left">
-                <strong>Status</strong>
+                <strong>Estado</strong>
               </TableCell>
               <TableCell align="left">
-                <strong>Prazo para coleta/devolução</strong>
+                <strong>Prazo</strong>
               </TableCell>
             </TableRow>
           </TableHead>

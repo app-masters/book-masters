@@ -382,7 +382,6 @@ export const search = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    maxWidth: 1280,
     width: '80%',
     maxWidth: 530,
     margin: 32,
