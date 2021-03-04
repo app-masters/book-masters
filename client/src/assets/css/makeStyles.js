@@ -40,20 +40,23 @@ export const login = makeStyles((theme) => ({
 }));
 
 export const footer = makeStyles((theme) => ({
+  container: {
+    maxWidth: 1200,
+  },
+  social: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  socialLink: {
+    color: '#7F7F7F',
+    marginLeft: 8,
+  },
   footer: {
     bottom: 0,
-    margin: 0,
-    height: 'auto',
-    width: '100vw',
-    maxWidth: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0ab6ff',
-    paddingTop: '60px',
-    paddingBottom: '50px',
-    color: 'white',
-    backgroundImage: 'url(./breadcrumb.webp)',
+    backgroundColor: '#F5F5FC',
+    width: '100%',
+    minHeight: 220,
+    padding: '64px 16px',
   },
 }));
 
