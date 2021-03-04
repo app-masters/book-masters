@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
+  DialogTitle,
+  Container,
+  Button,
+  TextField,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import fetchUserAppMasters from '../services/appMastersAPI';
 import { useHistory } from 'react-router-dom';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { useAuth } from '../lib/auth';
 import api from '../services/api';
 
@@ -79,9 +80,6 @@ const FormLogin = ({ callback }) => {
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Bem vindo
-        </Typography>
         <form className={classes.form} onSubmit={doLogin}>
           <TextField
             variant="outlined"
@@ -114,12 +112,29 @@ const FormLogin = ({ callback }) => {
         <DialogTitle>{'Não conseguimos encontrar seu email'}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Para ter acesso ao BOOK MASTERS você precisa primeiro se registrar
-            no <a href={'https://programador.emjuizdefora.com/'}>DevFinder</a>
+            Para ter acesso ao Book masters você precisa primeiro se registrar
+            no{' '}
+            <a
+              href={'https://programador.emjuizdefora.com/'}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              programadores de Juiz de Fora
+            </a>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialog(false)} color="primary" autoFocus>
+          <a
+            href={'https://programador.emjuizdefora.com/entrar'}
+            style={{ textDecoration: 'none' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="contained" color="primary">
+              Registrar agora
+            </Button>
+          </a>
+          <Button onClick={() => setDialog(false)} color="primary">
             Fechar
           </Button>
         </DialogActions>
