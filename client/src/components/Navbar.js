@@ -4,9 +4,7 @@ import {
   Toolbar,
   Button,
   Drawer,
-  List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   IconButton,
   Typography,
@@ -16,7 +14,6 @@ import { navbar } from '../assets/css/makeStyles';
 import { useAuth } from '../lib/auth';
 import { useHistory } from 'react-router-dom';
 import useWindowSize from '../utils/useWindowSize';
-import { breakpoints } from '../utils/constraints';
 import { Menu } from '@material-ui/icons';
 
 const Navbar = () => {

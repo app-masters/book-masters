@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { green, red } from '@material-ui/core/colors';
 
 export const navbar = makeStyles((theme) => ({
   root: {

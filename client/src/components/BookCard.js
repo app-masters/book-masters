@@ -1,17 +1,11 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import bookImage from '../assets/img/book.png';
 import { bookCard } from '../assets/css/makeStyles';
-import DoneIcon from '@material-ui/icons/Done';
-import PauseIcon from '@material-ui/icons/Pause';
 import {
-  Avatar,
-  CardHeader,
   Typography,
   CardMedia,
   CardContent,
   Card,
-  CardActionArea,
   Chip,
 } from '@material-ui/core';
 

@@ -3,13 +3,10 @@ import { Typography, Container, Grid } from '@material-ui/core';
 import { footer } from '../assets/css/makeStyles';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useWindowSize from '../utils/useWindowSize';
-import { breakpoints } from '../utils/constraints';
 
 const Footer = () => {
   const classes = footer();
   const size = useWindowSize();
-
-  const compact = size.width <= breakpoints.laptop;
 
   return (
     <div className={classes.footer}>
@@ -17,7 +14,7 @@ const Footer = () => {
         <Grid
           container
           spacing={2}
-          direction={compact ? 'column-reverse' : 'row'}
+          direction={size.compact ? 'column-reverse' : 'row'}
         >
           <Grid item xs={12} md={4} style={{ marginTop: 8 }}>
             <Grid container justify="center">
@@ -30,6 +27,7 @@ const Footer = () => {
                   <img
                     src={require('../assets/img/appmasters.png')}
                     width={200}
+                    alt="app-masters-logo"
                   />
                 </a>
                 <div className={classes.social}>
@@ -62,13 +60,13 @@ const Footer = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} md={4} style={{ marginTop: 8 }}>
-            <Grid container justify={compact ? 'center' : 'flex-start'}>
+            <Grid container justify={size.compact ? 'center' : 'flex-start'}>
               <div>
                 <Typography
                   variant="h6"
                   style={{
                     fontWeight: '400',
-                    textAlign: compact ? 'center' : 'left',
+                    textAlign: size.compact ? 'center' : 'left',
                   }}
                 >
                   Endereço
@@ -90,7 +88,11 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={require('../assets/img/map.png')} width={60} />
+                <img
+                  src={require('../assets/img/map.png')}
+                  width={60}
+                  alt="map-icon"
+                />
               </a>
             </Grid>
           </Grid>
