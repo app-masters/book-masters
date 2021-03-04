@@ -22,7 +22,6 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   table: {
-    minWidth: 650,
     maxWidth: 1200,
     display: 'table',
   },
@@ -72,10 +71,10 @@ const Reserves = () => {
                 <strong>Livro</strong>
               </TableCell>
               <TableCell align="left">
-                <strong>Status</strong>
+                <strong>Estado</strong>
               </TableCell>
               <TableCell align="left">
-                <strong>Prazo para coleta/devolução</strong>
+                <strong>Prazo</strong>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -91,8 +90,8 @@ const Reserves = () => {
                 <TableCell align="left">{row.status}</TableCell>
                 <TableCell align="left">
                   {row.status === 'Reservado'
-                    ? moment(row.reservationEndAt).format('DD/MM/YYYY')
-                    : moment(row.lendingEndAt).format('DD/MM/YYYY')}
+                    ? `${moment(row.reservationEndAt).format('DD/MM/YYYY')}`
+                    : `${moment(row.lendingEndAt).format('DD/MM/YYYY')}`}
                 </TableCell>
               </TableRow>
             ))}

@@ -60,8 +60,18 @@ const DetailedBookCard = (props) => {
             }
           />
         );
-    } else if (lending?.status === 'Reservado' || lending?.status === 'Emprestado') {
-      return <AvailabilityModal bookId={book._id} lending={lending} />;
+    } else if (
+      lending?.status === 'Reservado' ||
+      lending?.status === 'Emprestado'
+    ) {
+      return (
+        <AvailabilityModal
+          bookId={book._id}
+          lending={lending}
+          watching={book.watching}
+          callback={() => setBook({ ...book, watching: true })}
+        />
+      );
     } else {
       return (
         <ReserveModal
@@ -100,42 +110,60 @@ const DetailedBookCard = (props) => {
             />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <Grid item xs={12}>
-              <Typography>ISBN: {book.isbn}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h4">
-                {book.title}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">Autor: {book.author}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                Editora: {book.publishingCompany}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                Ano de publicação: {book.publicationYear}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">Edição: {book.edition}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">Descrição:</Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.details}>
-              <Box component="div" overflow="auto">
-                {book.description}
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              {book.tags.map((t) => (
-                <Chip key={t} label={t} style={{ marginTop: 16, marginRight: 8 }} />
-              ))}
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="body2">ISBN {book.isbn}</Typography>
+                <Typography variant="h4">{book.title}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h6">
+                  Autor
+                  <Typography variant="body2">{book.author}</Typography>
+                </Typography>
+              </Grid>
+              {!!book.publishingCompany && (
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6">
+                    Editora
+                    <Typography variant="body2">
+                      {book.publishingCompany}
+                    </Typography>
+                  </Typography>
+                </Grid>
+              )}
+              {!!book.publicationYear && (
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6">
+                    Ano de publicação
+                    <Typography variant="body2">
+                      {book.publicationYear}
+                    </Typography>
+                  </Typography>
+                </Grid>
+              )}
+              {!!book.edition && (
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6">
+                    Edição
+                    <Typography variant="body2">{book.edition}</Typography>
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <Typography variant="h6">Descrição</Typography>
+                <Box component="div" overflow="auto">
+                  <Typography variant="body2">{book.description}</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                {book.tags.map((t) => (
+                  <Chip
+                    key={t}
+                    label={t}
+                    style={{ marginRight: 8 }}
+                  />
+                ))}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

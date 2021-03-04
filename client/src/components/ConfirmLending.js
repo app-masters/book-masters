@@ -17,8 +17,7 @@ const ConfirmLending = (props) => {
       <DialogTitle id="form-dialog-title">Ler QRCode</DialogTitle>
       <DialogContent className={classes.content}>
         <DialogContentText>
-          Obrigado por utilizar nossa plataforma. Leia o QRCode para confirmar a
-          ação
+          Leia o QRCode para confirmar a ação
         </DialogContentText>
         <QrReader
           className={classes.qrCode}

@@ -3,6 +3,7 @@ import { Button, Grid, Modal, Typography } from '@material-ui/core';
 import api from '../services/api';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import moment from 'moment';
 import { useAuth } from '../lib/auth';
 import { modal } from '../assets/css/makeStyles';
@@ -73,25 +74,42 @@ const AvailabilityModal = (props) => {
   return (
     <>
       <Grid container direction="column" alignItems="flex-end" spacing={2}>
-        <Grid item>
-          <Button
-            size="large"
-            variant="contained"
-            color="primary"
-            onClick={handleAction}
-          >
-            Avise me quando chegar
-          </Button>
-        </Grid>
+        {!props.watching && (
+          <Grid item>
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={handleAction}
+            >
+              Avise me quando chegar
+            </Button>
+          </Grid>
+        )}
         <Grid item>
           {moment().isAfter(date) ? (
             <Alert severity="error">
+              {props.watching && (
+                <AlertTitle>
+                  Você será notificado quando esteve livro retornar
+                </AlertTitle>
+              )}
               A reserva deste livro se encontra em atraso - Previsto para{' '}
               {moment(date).format('DD/MM/YYYY')}
             </Alert>
           ) : (
             <Alert severity="info">
-              Previsão de retorno para {moment(date).format('DD/MM/YYYY')}
+              {props.watching && (
+                <AlertTitle>
+                  Você será notificado quando esteve livro retornar
+                </AlertTitle>
+              )}
+              A data prevista para o retorno deste livro é{' '}
+              {props.lending.lendingEndAt
+                ? moment(props.lending.lendingEndAt).format('DD/MM/YYYY')
+                : moment(props.lending.reservationEndAt)
+                    .add(30, 'days')
+                    .format('DD/MM/YYYY')}
             </Alert>
           )}
         </Grid>
