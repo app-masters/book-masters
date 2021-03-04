@@ -5,6 +5,7 @@ import UserController from './controllers/UserController.js';
 import AuthController from './controllers/AuthController.js';
 import NotifyAvailabilityController from './controllers/NotifyAvailabilityController.js';
 import authMiddleware from './middleware/auth.js';
+import commonMiddleware from './middleware/common';
 import mailer from './services/mailer.js';
 import appConfig from './config/app.js';
 
@@ -54,7 +55,7 @@ routes.post('/login/', AuthController.login);
 
 // Book Routes
 routes.get('/books/', BookController.getAll);
-routes.get('/books/:id', BookController.getById);
+routes.get('/books/:id', commonMiddleware, BookController.getById);
 routes.post('/books/', authMiddleware, BookController.create);
 routes.put('/books/:id', authMiddleware, BookController.update);
 routes.delete('/books/:id', authMiddleware, BookController.delete);

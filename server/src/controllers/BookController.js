@@ -1,6 +1,7 @@
 import Book from '../models/Book';
 import User from '../models/User';
 import Lending from '../models/Lending';
+import NotifyAvailability from '../models/NotifyAvailability';
 
 class BookController {
   async getAll(_req, res) {
@@ -20,10 +21,11 @@ class BookController {
   async getById(req, res, next) {
     try {
       const response = await Book.findById(req.params.id).lean();
-      const lending = await Lending.findOne({ idBook: response._id, returnedAt: null }).lean();
-
+      const notify = await NotifyAvailability.findOne({ idBook: req.params.id, idUser: req.userId }).lean();
+      const lending = await Lending.findOne({ idBook: req.params.id, returnedAt: null }).lean();
       return res.json({
         ...response,
+        watching: !!notify,
         lending: lending || { status: 'Disponível' }
       });
     } catch (error) {
