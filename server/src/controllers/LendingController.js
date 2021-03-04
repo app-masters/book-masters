@@ -13,7 +13,7 @@ class LendingController {
   async getAllBookLending(req, res) {
     const idBook = req.params.id;
 
-    const lendings = await Lending.find({ idBook, status: { $ne: 'Devolvido' } });
+    const lendings = await Lending.find({ idBook, status: { $ne: 'returned' } });
 
     //console.log(lendings.map((l) => l.idUser));
     const users = await User.find({ _id: { $in: lendings.map((l) => l.idUser) } });
@@ -26,7 +26,7 @@ class LendingController {
     try {
       // Getting all almost due Lended registries
       const allLended = await Lending.find({
-        status: 'Emprestado',
+        status: 'borrowed',
         returnedAt: null,
         lendingEndAt: addDaysToDate('', daysToNotify)
       })
@@ -35,7 +35,7 @@ class LendingController {
 
       // Getting all almost due reserved registries
       const allReserved = await Lending.find({
-        status: 'Reservado',
+        status: 'reserved',
         lendingStartedAt: null,
         reservationEndAt: addDaysToDate('', daysToNotify)
       })
@@ -45,7 +45,7 @@ class LendingController {
       // Sending emails to notify those users
       if ((allLended && allLended.length > 0) || (allReserved && allReserved.length > 0)) {
         for (const lend of [...allLended, ...allReserved]) {
-          lend.notifyDueDate(daysToNotify, lend.status === 'Emprestado' ? 'devolução' : 'reserva');
+          lend.notifyDueDate(daysToNotify, lend.status === 'borrowed' ? 'devolução' : 'reserva');
         }
       }
       res.status(200).send();
@@ -62,7 +62,7 @@ class LendingController {
   async lending(req, res, next) {
     try {
       /* Check if book is really available for lending */
-      const existingLending = await Lending.find({ idBook: req.params.bookId, status: { $ne: 'Devolvido' } }, (err) => {
+      const existingLending = await Lending.find({ idBook: req.params.bookId, status: { $ne: 'returned' } }, (err) => {
         if (err) next(err);
       }).sort({ reservationDateInit: 'asc' });
 
@@ -73,8 +73,8 @@ class LendingController {
       */
       if (
         existingLending.length === 0 ||
-        existingLending[0].status === 'Emprestado' ||
-        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != req.userId)
+        existingLending[0].status === 'borrowed' ||
+        (existingLending[0].status === 'reserved' && existingLending[0].idUser != req.userId)
       ) {
         next({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
       }
@@ -84,7 +84,7 @@ class LendingController {
       const lendingJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Emprestado',
+        status: 'borrowed',
         lendingStartedAt: date,
         lendingEndAt: addDaysToDate(date, deadline.borrow)
       };
@@ -101,7 +101,7 @@ class LendingController {
     try {
       /* Check if book is really available for reservation */
       // !!CHANGE removed idUser
-      const existingLending = await Lending.find({ idBook: req.params.bookId, status: 'Reservado' }, (err) => {
+      const existingLending = await Lending.find({ idBook: req.params.bookId, status: 'reserved' }, (err) => {
         if (err) next(err);
       });
 
@@ -115,7 +115,7 @@ class LendingController {
       const reserveJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Reservado',
+        status: 'reserved',
         reservationStartedAt: date,
         reservationEndAt: addDaysToDate(date, deadline.reserve)
       };
@@ -134,7 +134,7 @@ class LendingController {
     try {
       /* Check if book is really available for reservation */
       const existingLending = await Lending.find(
-        { idBook: req.params.bookId, idUser: req.userId, status: 'Emprestado' },
+        { idBook: req.params.bookId, idUser: req.userId, status: 'borrowed' },
         (err) => {
           if (err) next();
         }
@@ -148,7 +148,7 @@ class LendingController {
       const reserveJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Devolvido',
+        status: 'returned',
         returnedAt: date
       };
 
