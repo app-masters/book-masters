@@ -2,6 +2,7 @@ import Lending from '../models/Lending.js';
 import NotifyAvailability from '../models/NotifyAvailability.js';
 import User from '../models/User.js';
 import addDaysToDate from '../utils/addDaysToDate.js';
+import deadline from '../config/deadline';
 
 class LendingController {
   async getAll(_req, res) {
@@ -21,7 +22,7 @@ class LendingController {
   }
 
   async checkDueDate(req, res, next) {
-    const daysToNotify = 1;
+    const daysToNotify = deadline.notify;
     try {
       // Getting all almost due Lended registries
       const allLended = await Lending.find({
@@ -85,7 +86,7 @@ class LendingController {
         idUser: req.userId,
         status: 'Emprestado',
         lendingStartedAt: date,
-        lendingEndAt: addDaysToDate(date, 28)
+        lendingEndAt: addDaysToDate(date, deadline.borrow)
       };
 
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
@@ -116,7 +117,7 @@ class LendingController {
         idUser: req.userId,
         status: 'Reservado',
         reservationStartedAt: date,
-        reservationEndAt: addDaysToDate(date, 3)
+        reservationEndAt: addDaysToDate(date, deadline.reserve)
       };
 
       const response = await Lending.create(reserveJson);

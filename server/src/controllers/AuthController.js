@@ -3,16 +3,15 @@ import jwt from 'jsonwebtoken';
 import auth from '../config/auth.js';
 import User from '../models/User.js';
 import isAdmin from '../utils/isAdmin';
-import userApi from '../config/devFinder';
+import devFinder from '../config/devFinder';
 import fetch from 'node-fetch';
 
 class AuthController {
   async login(req, res, next) {
     try {
       const { email } = await req.body;
-      console.log(email);
-      console.log(`${userApi.devFinderApi}?email=${email}&test=${userApi.devFinderTestMode}`);
-      const response = await fetch(`${userApi.devFinderApi}?email=${email}&test=${userApi.devFinderTestMode}`, {
+      console.log('Fetching dev-finder API');
+      const response = await fetch(`${devFinder.api}?email=${email}&test=${devFinder.testMode}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
