@@ -12,14 +12,14 @@ export const navbar = makeStyles((theme) => ({
       '0px 0px 0px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
   },
   btn: {
-    color: '#ffffff',
-    fontWeight: 300,
+    color: '#ffffff !important',
+    fontWeight: '300 !important',
   },
   btnExit: {
-    color: '#ffffff',
-    fontWeight: 300,
-    marginLeft: 'auto',
-    borderColor: '#FFFFFF',
+    color: '#ffffff !important',
+    fontWeight: '300 !important',
+    marginLeft: 'auto !important',
+    borderColor: '#FFFFFF !important',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -103,13 +103,13 @@ export const header = makeStyles((theme) => ({
   },
   title: {
     lineHeight: 'normal',
-    color: '#223464',
-    fontWeight: 500,
-    fontSize: 50,
+    color: '#223464 !important',
+    fontWeight: '500 !important',
+    fontSize: '50px !important',
   },
   subtitle: {
-    fontWeight: 200,
-    fontSize: 18,
+    fontWeight: '200 !important',
+    fontSize: '18px !important',
   },
   backgroundImage: {
     zIndex: 1,
@@ -128,7 +128,7 @@ export const booksContainer = makeStyles((theme) => ({
   container: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 }));
 
@@ -403,6 +403,6 @@ export const search = makeStyles((theme) => ({
   btn: {
     background:
       'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
-    color: '#FFFFFF',
+    color: '#FFFFFF !important',
   },
 }));
