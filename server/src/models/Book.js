@@ -59,7 +59,7 @@ BookSchema.statics.validate = (obj) => {
     author: 'required'
   };
 
-  const validator = new Validator(obj, rules, errorMessage(['Disponível', 'Emprestado', 'Reservado'].join(', ')));
+  const validator = new Validator(obj, rules, errorMessage());
   validator.setAttributeNames({
     title: 'título',
     idUser: 'Id do usuário',

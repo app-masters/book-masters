@@ -2,6 +2,7 @@ import Lending from '../models/Lending.js';
 import NotifyAvailability from '../models/NotifyAvailability.js';
 import User from '../models/User.js';
 import addDaysToDate from '../utils/addDaysToDate.js';
+import deadline from '../config/deadline';
 
 class LendingController {
   async getAll(_req, res) {
@@ -12,7 +13,7 @@ class LendingController {
   async getAllBookLending(req, res) {
     const idBook = req.params.id;
 
-    const lendings = await Lending.find({ idBook, status: { $ne: 'Devolvido' } });
+    const lendings = await Lending.find({ idBook, status: { $ne: 'returned' } });
 
     //console.log(lendings.map((l) => l.idUser));
     const users = await User.find({ _id: { $in: lendings.map((l) => l.idUser) } });
@@ -21,11 +22,11 @@ class LendingController {
   }
 
   async checkDueDate(req, res, next) {
-    const daysToNotify = 1;
+    const daysToNotify = deadline.notify;
     try {
       // Getting all almost due Lended registries
       const allLended = await Lending.find({
-        status: 'Emprestado',
+        status: 'borrowed',
         returnedAt: null,
         lendingEndAt: addDaysToDate('', daysToNotify)
       })
@@ -34,7 +35,7 @@ class LendingController {
 
       // Getting all almost due reserved registries
       const allReserved = await Lending.find({
-        status: 'Reservado',
+        status: 'reserved',
         lendingStartedAt: null,
         reservationEndAt: addDaysToDate('', daysToNotify)
       })
@@ -44,7 +45,7 @@ class LendingController {
       // Sending emails to notify those users
       if ((allLended && allLended.length > 0) || (allReserved && allReserved.length > 0)) {
         for (const lend of [...allLended, ...allReserved]) {
-          lend.notifyDueDate(daysToNotify, lend.status === 'Emprestado' ? 'devolução' : 'reserva');
+          lend.notifyDueDate(daysToNotify, lend.status === 'borrowed' ? 'devolução' : 'reserva');
         }
       }
       res.status(200).send();
@@ -61,7 +62,7 @@ class LendingController {
   async lending(req, res, next) {
     try {
       /* Check if book is really available for lending */
-      const existingLending = await Lending.find({ idBook: req.params.bookId, status: { $ne: 'Devolvido' } }, (err) => {
+      const existingLending = await Lending.find({ idBook: req.params.bookId, status: { $ne: 'returned' } }, (err) => {
         if (err) next(err);
       }).sort({ reservationDateInit: 'asc' });
 
@@ -72,8 +73,8 @@ class LendingController {
       */
       if (
         existingLending.length === 0 ||
-        existingLending[0].status === 'Emprestado' ||
-        (existingLending[0].status === 'Reservado' && existingLending[0].idUser != req.userId)
+        existingLending[0].status === 'borrowed' ||
+        (existingLending[0].status === 'reserved' && existingLending[0].idUser != req.userId)
       ) {
         next({ error: 406, message: 'Livro emprestado/reservado para outro usuário.' });
       }
@@ -83,9 +84,9 @@ class LendingController {
       const lendingJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Emprestado',
+        status: 'borrowed',
         lendingStartedAt: date,
-        lendingEndAt: addDaysToDate(date, 28)
+        lendingEndAt: addDaysToDate(date, deadline.borrow)
       };
 
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
@@ -100,7 +101,7 @@ class LendingController {
     try {
       /* Check if book is really available for reservation */
       // !!CHANGE removed idUser
-      const existingLending = await Lending.find({ idBook: req.params.bookId, status: 'Reservado' }, (err) => {
+      const existingLending = await Lending.find({ idBook: req.params.bookId, status: 'reserved' }, (err) => {
         if (err) next(err);
       });
 
@@ -114,9 +115,9 @@ class LendingController {
       const reserveJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Reservado',
+        status: 'reserved',
         reservationStartedAt: date,
-        reservationEndAt: addDaysToDate(date, 3)
+        reservationEndAt: addDaysToDate(date, deadline.reserve)
       };
 
       const response = await Lending.create(reserveJson);
@@ -133,7 +134,7 @@ class LendingController {
     try {
       /* Check if book is really available for reservation */
       const existingLending = await Lending.find(
-        { idBook: req.params.bookId, idUser: req.userId, status: 'Emprestado' },
+        { idBook: req.params.bookId, idUser: req.userId, status: 'borrowed' },
         (err) => {
           if (err) next();
         }
@@ -147,7 +148,7 @@ class LendingController {
       const reserveJson = {
         idBook: req.params.bookId,
         idUser: req.userId,
-        status: 'Devolvido',
+        status: 'returned',
         returnedAt: date
       };
 
