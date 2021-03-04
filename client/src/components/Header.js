@@ -1,36 +1,42 @@
 import React from 'react';
-import { Box, Container, Typography } from '@material-ui/core';
-
+import { Typography } from '@material-ui/core';
 import { header } from '../assets/css/makeStyles';
+import useWindowSize from '../utils/useWindowSize';
+import { breakpoints } from '../utils/constraints';
 
 const Header = ({ extra }) => {
   const classes = header();
+  const size = useWindowSize();
+
+  const compact = size.width <= breakpoints.laptop;
   return (
-    <main>
-      <Box className={classes.heroContent}>
-        <Container className={classes.header}>
-          <Typography
-            className={classes.heroText}
-            component="h1"
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Book Masters
+    <main
+      className={classes.container}
+      style={{ paddingBottom: compact ? 145 : 64 }}
+    >
+      <div
+        className={classes.content}
+        style={{
+          minHeight: compact ? 200 : 560,
+          alignItems: compact ? 'flex-start' : 'center',
+          justifyContent: compact ? 'center' : 'flex-start',
+        }}
+      >
+        <div className={classes.info}>
+          <Typography className={classes.title}>Book Masters</Typography>
+          <Typography className={classes.subtitle}>
+            Biblioteca da appmasters, aqui você encontra os mais variados livros
+            de programação. Venha conferir e ainda pegue um emprestado.
           </Typography>
-          <Typography
-            className={classes.heroText}
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Bem vindo a biblioteca virtual da App Masters
-          </Typography>
-        </Container>
-        {extra}
-      </Box>
+        </div>
+        {!compact && (
+          <img
+            src={require('../assets/img/home-image.png')}
+            className={classes.backgroundImage}
+          />
+        )}
+      </div>
+      <div className={classes.bottom}>{extra}</div>
     </main>
   );
 };

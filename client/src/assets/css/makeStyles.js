@@ -8,7 +8,7 @@ export const navbar = makeStyles((theme) => ({
   },
   appBar: {
     background:
-      'linear-gradient(90deg, #19AFFB 66.77%, rgba(64, 202, 252, 0) 171.25%)',
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
     boxShadow:
       '0px 0px 0px 0px rgba(0,0,0,0.2), inset 0px 0px 0px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
   },
@@ -77,29 +77,44 @@ export const spinner = makeStyles((theme) => ({
 }));
 
 export const header = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    paddingTop: 40,
-    minHeight: '50vh',
-    backgroundImage: 'url(./breadcrumb.webp)',
+  container: {
+    position: 'relative',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  bottom: {
+    zIndex: 3,
+    position: 'absolute',
+    bottom: 16,
+    width: '100%',
+    display: 'flex',
     justifyContent: 'center',
   },
-  header: {
+  content: {
     flex: 1,
+    position: 'relative',
+    maxWidth: 1200,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  heroText: {
-    fontFamily: 'Poppins, sans-serif',
-    color: '#ffffff',
+  info: {
+    zIndex: 2,
+    maxWidth: 380,
+  },
+  title: {
+    lineHeight: 'normal',
+    color: '#223464',
+    fontWeight: 500,
+    fontSize: 50,
+  },
+  subtitle: {
+    fontWeight: 200,
+    fontSize: 18,
+  },
+  backgroundImage: {
+    zIndex: 1,
+    position: 'absolute',
+    right: 0,
   },
 }));
 
@@ -180,27 +195,23 @@ export const about = makeStyles((theme) => ({
     marginBottom: '100px',
   },
   heroText: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 50,
     marginTop: 20,
   },
   description: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 18,
     marginTop: 5,
     padding: 15,
   },
   heroDev: {
-    fontFamily: 'Poppins, sans-serif',
     color: '#000000',
     fontSize: 30,
     padding: 15,
     marginTop: 5,
   },
   link: {
-    fontFamily: 'Poppins, sans-serif',
     fontSize: 15,
     paddingLeft: 15,
   },
@@ -325,7 +336,6 @@ export const detailedBookCard = makeStyles((theme) => ({
     fontSize: '18px',
     margin: '10px 0',
     fontWeight: '500',
-    fontFamily: 'Roboto, sans-serif',
     color: '#343a40',
   },
   description: {
@@ -385,19 +395,27 @@ export const search = makeStyles((theme) => ({
     alignItems: 'center',
     maxWidth: 1280,
     width: '80%',
+    maxWidth: 530,
     margin: 32,
+    height: 60,
     backgroundColor: '#FFF',
     padding: 8,
-    paddingLeft: 16,
+    paddingLeft: 32,
     paddingRight: 8,
-    borderRadius: 5,
-    boxShadow: '0px 0px 37px -8px #00000012',
+    borderRadius: 40,
+    boxShadow: '0px 15px 30px 13px rgba(187, 187, 187, 0.25)',
   },
   input: {
     width: '100%',
-    fontSize: 18,
+    fontSize: 14,
     height: 35,
+    fontWeight: 300,
     border: 'none',
     outline: 'none',
+  },
+  btn: {
+    background:
+      'linear-gradient(90deg, rgba(25,175,251,1) 0%, rgba(125,211,255,1) 100%)',
+    color: '#FFFFFF',
   },
 }));
