@@ -85,8 +85,8 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             size="large"
             variant="contained"
             color="primary"
-            // onClick={handleAction}
-            onClick={() => handleScan('https://appmasters.io')}
+            onClick={handleAction}
+            // onClick={() => handleScan('https://appmasters.io')}
           >
             {type === 'return' ? 'Devolver livro' : 'Pegar livro'}
           </Button>
