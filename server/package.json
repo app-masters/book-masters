@@ -21,6 +21,7 @@
     "html-to-text": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.1",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
     "validatorjs": "^3.22.1"

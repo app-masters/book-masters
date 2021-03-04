@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import exphbs from 'express-handlebars';
 import config from '../config/mail';
-import { htmlToText } from 'html-to-text';
+import htmlLib from 'html-to-text';
 import { resolve, dirname } from 'path';
 const { from, ...mailConfig } = config;
 
@@ -26,7 +26,7 @@ class Mailer {
 
   async sendEmail(template, message) {
     const { context, ...msg } = message;
-
+    const { htmlToText } = htmlLib;
     try {
       //* Getting the template requested
       const bodyHtml = await this.hsb.render(resolve(this.viewPath, `${template}.handlebars`), context);
