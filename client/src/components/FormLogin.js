@@ -69,10 +69,8 @@ const FormLogin = ({ callback }) => {
       } 
 
     } catch (err) {
-      if(err.response.status === 404)
-        setDialogMessage(err.response.data.error);
-      else if(err.response.status === 400)
-        setDialogMessage(err.response.data.message);
+      if(err.response.status === 404 || err.response.status === 400)
+        setDialogMessage(err.response.data);
       else
         setDialogMessage("Erro ao fazer login");
 

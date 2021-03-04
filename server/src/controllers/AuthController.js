@@ -22,7 +22,9 @@ class AuthController {
 
       console.log('status', response.status);
       if (!response.ok) {
-        return res.status(response.status).send(await response.text());
+        const text = await response.json();
+        if (response.status === 400) return res.status(response.status).send(text.message);
+        else if (response.status === 404) return res.status(response.status).send(text.error);
       }
       const userData = await response.json();
 
