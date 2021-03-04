@@ -10,7 +10,7 @@ class AuthController {
   async login(req, res, next) {
     try {
       const { email } = await req.body;
-      console.log('Fetching dev-finder API');
+
       const response = await fetch(`${devFinder.api}?email=${email}&test=${devFinder.testMode}`, {
         method: 'GET',
         headers: {
@@ -19,7 +19,6 @@ class AuthController {
         }
       });
 
-      console.log('status', response.status);
       if (!response.ok) {
         const text = await response.json();
         if (response.status === 400) return res.status(response.status).send(text.message);
