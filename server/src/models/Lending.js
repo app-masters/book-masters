@@ -45,7 +45,7 @@ LendingSchema.methods.notifyReservation = async function () {
   const book = await Book.findOne({ _id: this.idBook }).lean();
   await mailer.sendEmail('reserve', {
     to: user.email,
-    subject: '[Book Masters] Livro reservado.',
+    subject: 'Livro reservado',
     context: {
       name: user.name || '',
       bookName: book.title
@@ -56,7 +56,7 @@ LendingSchema.methods.notifyReservation = async function () {
 LendingSchema.methods.notifyDueDate = async function (days, type) {
   await mailer.sendEmail('lendEnding', {
     to: this.idUser.email,
-    subject: '[Book Masters] Prazo chegando ao fim.',
+    subject: 'Prazo para devolver o livro chegando ao fim',
     context: {
       name: this.idUser.name,
       days: days,

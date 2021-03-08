@@ -28,7 +28,7 @@ const NotifyAvailabilitySchema = new Schema(
 NotifyAvailabilitySchema.methods.notifyUser = async function () {
   await mailer.sendEmail('notifyAvailability', {
     to: this.idUser.email,
-    subject: '[Book Masters] Livro Disponível',
+    subject: 'Livro disponível para vir buscar',
     context: {
       name: this.idUser.name,
       bookName: this.idBook.title,
