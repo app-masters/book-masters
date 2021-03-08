@@ -16,17 +16,19 @@ const BookCard = ({ book }) => {
       <CardMedia
         component="img"
         className={classes.cover}
-        style={{ height: 250, borderRadius: 4 }}
+        style={{ height: 260 }}
         image={book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage}
         title="Image title"
       />
       <CardContent className={classes.content}>
-        <Typography variant="h5" component="h2" className={classes.title}>
-          {book.title}
-        </Typography>
+        <a href={`/book/${book._id}`} style={{ textDecoration: 'none' }}>
+          <Typography variant="h5" component="h2" className={classes.title}>
+            {book.title}
+          </Typography>
+        </a>
         <div className={classes.tags}>
           {book.tags.map((t) => (
-            <Chip size="small" key={t} label={t} style={{ marginRight: 8 }} />
+            <Chip size="small" key={t} label={t} style={{ marginRight: 8, marginBottom: 4 }} />
           ))}
         </div>
         {book.description && (
@@ -36,11 +38,13 @@ const BookCard = ({ book }) => {
               : book.description}
           </Typography>
         )}
-        <a href={`/book/${book._id}`}>
-          <button style={{ cursor: 'pointer' }} className={classes.button}>
-            Ver detalhes
-          </button>
-        </a>
+        <div className={classes.footer}>
+          <a href={`/book/${book._id}`}>
+            <button style={{ cursor: 'pointer' }} className={classes.button}>
+              Ver detalhes
+            </button>
+          </a>
+        </div>
       </CardContent>
     </Card>
   );
