@@ -127,7 +127,7 @@ export const body = makeStyles((theme) => ({
 export const booksContainer = makeStyles((theme) => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
     justifyContent: 'center',
   },
 }));
@@ -146,7 +146,17 @@ export const bookCard = makeStyles((theme) => ({
     borderRadius: 5,
     border: 'none',
   },
+  footer :{
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
   content: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     paddingLeft: 0,
     width: '100%',
     paddingRight: 0,
@@ -159,6 +169,9 @@ export const bookCard = makeStyles((theme) => ({
   tags: {
     paddingTop: 8,
     paddingBottom: 8,
+  },
+  cover: {
+    objectFit: 'contain !important',
   },
   button: {
     marginTop: 8,

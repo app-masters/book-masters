@@ -75,7 +75,7 @@ const Reserves = () => {
                 <strong>Estado</strong>
               </TableCell>
               <TableCell align="left">
-                <strong>Prazo</strong>
+                <strong>Prazo de coleta/devolução</strong>
               </TableCell>
             </TableRow>
           </TableHead>
