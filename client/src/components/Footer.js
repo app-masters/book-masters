@@ -97,6 +97,23 @@ const Footer = () => {
             </Grid>
           </Grid>
         </Grid>
+        <Grid
+          container
+          justify="center"
+          alignItems="flex-end"
+          style={{ paddingTop: 32 }}
+        >
+          <label>
+            Este é um projeto open source desenvolvido em conjunto com a App
+            Masters, {' '}
+            <a
+              href="https://github.com/app-masters/book-masters"
+              target="_blank"
+            >
+              link do repositório
+            </a>
+          </label>
+        </Grid>
       </Container>
     </div>
   );

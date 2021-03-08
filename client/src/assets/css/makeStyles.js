@@ -62,7 +62,7 @@ export const footer = makeStyles((theme) => ({
     backgroundColor: '#F5F5FC',
     width: '100%',
     minHeight: 220,
-    padding: '64px 16px',
+    padding: '64px 16px 32px 16px',
   },
 }));
 
