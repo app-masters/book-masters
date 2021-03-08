@@ -10,7 +10,6 @@ const theme = createMuiTheme({
           },
           '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
               borderColor: '#19affb',
-              // Reset on touch devices, it doesn't add specificity
               '@media (hover: none)': {
                   borderColor: 'rgba(0, 0, 0, 0.23)',
               },
