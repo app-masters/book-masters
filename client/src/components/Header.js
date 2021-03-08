@@ -10,12 +10,12 @@ const Header = ({ extra }) => {
   return (
     <main
       className={classes.container}
-      style={{ paddingBottom: size.compact ? 145 : 64 }}
+      style={{ paddingBottom: size.compact ? 145 : 64, marginBottom: size.compact ? 32 : 80 }}
     >
       <div
         className={classes.content}
         style={{
-          minHeight: size.compact ? 200 : 560,
+          minHeight: size.compact ? 200 : 360,
           alignItems: size.compact ? 'flex-start' : 'center',
           justifyContent: size.compact ? 'center' : 'flex-start',
         }}
@@ -31,6 +31,7 @@ const Header = ({ extra }) => {
           <img
             src={require('../assets/img/home-image.png')}
             className={classes.backgroundImage}
+            height={'100%'}
             alt="home-background"
           />
         )}

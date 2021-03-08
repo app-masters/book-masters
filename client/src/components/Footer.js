@@ -97,6 +97,22 @@ const Footer = () => {
             </Grid>
           </Grid>
         </Grid>
+        <Grid
+          container
+          justify="center"
+          alignItems="flex-end"
+          style={{ paddingTop: 32 }}
+        >
+          <label>
+            Projeto open source - {' '}
+            <a
+              href="https://github.com/app-masters/book-masters"
+              target="_blank"
+            >
+              github.com/app-masters/book-masters
+            </a>
+          </label>
+        </Grid>
       </Container>
     </div>
   );
