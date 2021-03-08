@@ -17,10 +17,7 @@ const BookCard = ({ book }) => {
         component="img"
         className={classes.cover}
         style={{ height: 260 }}
-        // image={book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage}
-        image={
-          'https://images-na.ssl-images-amazon.com/images/I/71M3JsysioL.jpg'
-        }
+        image={book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage}
         title="Image title"
       />
       <CardContent className={classes.content}>
