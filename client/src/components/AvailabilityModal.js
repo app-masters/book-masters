@@ -122,7 +122,7 @@ const AvailabilityModal = (props) => {
         aria-describedby="simple-modal-description"
       >
         <div className={classes.content}>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" style={{ paddingBottom: 16 }}>
             Informe o email a ser notificado
           </Typography>
           {modalContent}
