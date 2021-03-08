@@ -119,9 +119,6 @@ class LendingController {
         reservationStartedAt: date,
         reservationEndAt: addDaysToDate(date, deadline.reserve)
       };
-      console.log('reserve', deadline.reserve);
-      console.log(reserveJson);
-
       const response = await Lending.create(reserveJson);
       await response.notifyReservation();
 
