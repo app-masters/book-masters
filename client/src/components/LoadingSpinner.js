@@ -15,7 +15,7 @@ const LoadingSpinner = () => {
       animationData: animationData,
       rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
     });
-  }, [animationData]);
+  }, []);
   return (
     <div className={styles.loading}>
       <div className={styles.book} ref={container}></div>
