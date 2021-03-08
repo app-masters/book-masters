@@ -104,13 +104,12 @@ const Footer = () => {
           style={{ paddingTop: 32 }}
         >
           <label>
-            Este é um projeto open source desenvolvido em conjunto com a App
-            Masters, {' '}
+            Projeto open source - {' '}
             <a
               href="https://github.com/app-masters/book-masters"
               target="_blank"
             >
-              link do repositório
+              github.com/app-masters/book-masters
             </a>
           </label>
         </Grid>
