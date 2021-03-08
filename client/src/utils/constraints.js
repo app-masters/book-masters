@@ -7,6 +7,12 @@ export const breakpoints = {
   wide: 1440,
 };
 
+export const statusTranslate = {
+  reserved: 'Reservado',
+  borrowed: 'Pego',
+  returned: 'Retornado',
+};
+
 export const statusBook = {
   reserved: 'reserved',
   borrowed: 'borrowed',

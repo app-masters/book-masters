@@ -31,7 +31,7 @@ const ConfirmLending = (props) => {
             livro.
             <ul>
               <li>
-                Vá até a appmasters
+                Vá até a App Masters
                 <br />
                 <small>
                   <strong>
@@ -41,7 +41,7 @@ const ConfirmLending = (props) => {
                 </small>
               </li>
               <li>
-                Escaneie o QRcode disponibilizado na appmasters para confirmar a
+                Escaneie o QRcode disponibilizado na App Masters para confirmar a
                 sua localização
               </li>
               <li>
@@ -53,7 +53,7 @@ const ConfirmLending = (props) => {
         ) : (
           <>
             <DialogContentText>
-              Escaneie o QRcode disponibilizado na appmasters para confirmar a
+              Escaneie o QRcode disponibilizado na App Masters para confirmar a
               sua localização
             </DialogContentText>
             <QrReader
