@@ -6,25 +6,32 @@ import { IconButton } from '@material-ui/core';
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import { search } from '../assets/css/makeStyles';
 
-const SearchBar = ({ doSearch }) => {
+const SearchBar = ({ doSearch, searchOnChange }) => {
   const [query, setQuery] = useState('');
   const classes = search();
+
+  React.useEffect(() => {
+    if (searchOnChange) doSearch(query);
+  }, [searchOnChange, doSearch, query]);
+
   return (
-    <div className={classes.container}>
+    <form
+      className={classes.container}
+      onSubmit={(e) => {
+        e.preventDefault();
+        doSearch(query);
+      }}
+    >
       <input
         className={classes.input}
         placeholder="Buscar livros"
         value={query}
         onChange={({ target }) => setQuery(target.value)}
       />
-      <IconButton
-        className={classes.btn}
-        onClick={() => doSearch(query)}
-        aria-label="search"
-      >
+      <IconButton className={classes.btn} type="submit" aria-label="search">
         <SearchOutlined />
       </IconButton>
-    </div>
+    </form>
   );
 };
 
@@ -70,7 +77,11 @@ export default function Home() {
     if (query === '') {
       setBooks(data);
     } else {
-      const result = data.filter((f) => f.title.includes(query));
+      const result = data.filter((f) => {
+        if (f.title.toLowerCase().includes(query.toLowerCase())) return f;
+        if (f.tags && f.tags.join(',').toLowerCase().includes(query.toLowerCase())) return f;
+        return null;
+      });
       setBooks(result);
     }
   };

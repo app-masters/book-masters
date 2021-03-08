@@ -23,8 +23,8 @@ const Header = ({ extra }) => {
         <div className={classes.info}>
           <Typography className={classes.title}>Book Masters</Typography>
           <Typography className={classes.subtitle}>
-            Biblioteca da appmasters, aqui você encontra os mais variados livros
-            de programação. Venha conferir e ainda pegue um emprestado.
+            Biblioteca pública com livros de programação e tecnologia, acessível
+            para a comunidade de Juiz de Fora e região
           </Typography>
         </div>
         {!size.compact && (

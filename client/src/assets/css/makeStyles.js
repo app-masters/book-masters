@@ -142,9 +142,12 @@ export const bookCard = makeStyles((theme) => ({
     padding: 16,
     paddingBottom: 0,
     background: '#FFFFFF',
-    boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
+    boxShadow: '0px 7px 15px rgba(0, 0, 0, 0.15)',
     borderRadius: 5,
     border: 'none',
+    '&:hover': {
+      boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
+    },
   },
   content: {
     paddingLeft: 0,
@@ -268,17 +271,17 @@ export const book = makeStyles((theme) => ({
     flex: 1,
     maxWidth: '1200px',
     width: '100%',
-    margin: 16,
+    margin: '16px !important',
     alignItems: 'flex-start',
   },
   buttonOutlined: {
-    border: '1px solid #0ab6ff',
-    color: '#0ab6ff',
-    padding: '10px 20px',
-    marginBottom: '20px',
+    border: '1px solid #0ab6ff !important',
+    color: '#0ab6ff !important',
+    padding: '10px 20px !important',
+    marginBottom: '20px !important',
     '&:hover': {
-      color: '#ffffff',
-      backgroundColor: '#0ab6ff',
+      color: '#ffffff !important',
+      backgroundColor: '#0ab6ff !important',
     },
   },
   formInput: {
@@ -294,7 +297,7 @@ export const book = makeStyles((theme) => ({
     marginRight: '10px',
   },
   button: {
-    color: '#0ab6ff',
+    color: '#0ab6ff !important',
   },
 }));
 

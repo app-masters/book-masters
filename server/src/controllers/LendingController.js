@@ -119,7 +119,6 @@ class LendingController {
         reservationStartedAt: date,
         reservationEndAt: addDaysToDate(date, deadline.reserve)
       };
-
       const response = await Lending.create(reserveJson);
       await response.notifyReservation();
 
