@@ -66,13 +66,20 @@ export const footer = makeStyles((theme) => ({
   },
 }));
 
-export const spinner = makeStyles((theme) => ({
-  spinner: {
+export const loading = makeStyles((theme) => ({
+  loading: {
     flex: 1,
+    position: 'relative',
     padding: 32,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  book: {
+    width: 160,
+    backgroundColor: '#19affb',
+    borderRadius: 100,
+    boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
   },
 }));
 
