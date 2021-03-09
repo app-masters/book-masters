@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  explanation: {
+    paddingTop: '20px'
+  }
 }));
 
 const FormLogin = ({ callback }) => {
@@ -70,7 +73,7 @@ const FormLogin = ({ callback }) => {
         signin(responseBackend.data);
       }
     } catch (err) {
-      if (err.response.status === 404 || err.response.status === 400)
+      if (err.response && (err.response.status === 404 || err.response.status === 400))
         setDialogMessage(err.response.data);
       else setDialogMessage('Erro ao fazer login');
 
@@ -83,7 +86,7 @@ const FormLogin = ({ callback }) => {
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography variant="body2">
+        <Typography variant="body2" className={classes.explanation}>
           Para pegar livros em nossa biblioteca é preciso ter uma conta na
           plataforma{' '}
           <a
