@@ -108,6 +108,7 @@ const Footer = () => {
             <a
               href="https://github.com/app-masters/book-masters"
               target="_blank"
+              rel="noopener noreferrer"
             >
               github.com/app-masters/book-masters
             </a>
