@@ -3,6 +3,7 @@ const { Schema, model } = mongoose;
 import mailer from '../services/mailer';
 import User from './User';
 import Book from './Book';
+import deadlineConfig from '../config/deadline';
 
 const schemaOptions = {
   timestamps: {
@@ -48,7 +49,8 @@ LendingSchema.methods.notifyReservation = async function () {
     subject: 'Livro reservado',
     context: {
       name: user.name || '',
-      bookName: book.title
+      bookName: book.title,
+      days: deadlineConfig.reserve
     }
   });
 };
