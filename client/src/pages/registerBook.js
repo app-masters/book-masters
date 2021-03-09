@@ -17,6 +17,8 @@ import ChipInput from 'material-ui-chip-input';
 import { useAuth } from '../lib/auth';
 import { Alert } from '@material-ui/lab';
 import Snackbar from '@material-ui/core/Snackbar';
+import axios from 'axios';
+import fetchBookOpenLibrary from '../services/openLibraryAPI';
 
 /*
 	ISBN: string ok
@@ -95,11 +97,17 @@ const RegisterBook = () => {
           setISBNError('Preencha o campo');
           return;
         }
-        const response = await fetchBookGoogle(values.isbn);
+
+        let response = await fetchBookGoogle(values.isbn);
         if (response) {
+          // Was not found this book at google books API
           if (Object.keys(response).length === 0) {
-            setISBNError('Livro não encontrado');
-            return;
+            response = await fetchBookOpenLibrary(values.isbn);
+            // Was not found this book at open library API
+            if (Object.keys(response).length === 0) {
+              setISBNError('Livro não encontrado');
+              return;
+            }
           }
           setISBNError(false);
           setValues({ ...values, ...response });
