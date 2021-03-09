@@ -8,6 +8,7 @@ import {
   Container,
   Button,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
@@ -67,24 +68,40 @@ const FormLogin = ({ callback }) => {
       const responseBackend = await api.post('/login', { email: values.email });
       if (responseBackend.status === 200) {
         signin(responseBackend.data);
-      } 
-
+      }
     } catch (err) {
-      if(err.response.status === 404 || err.response.status === 400)
+      if (err.response.status === 404 || err.response.status === 400)
         setDialogMessage(err.response.data);
-      else
-        setDialogMessage("Erro ao fazer login");
+      else setDialogMessage('Erro ao fazer login');
 
       setDialog(true);
       console.log('login error: ', err.response);
     }
     setLoading(false);
-    
   };
 
   return (
     <Container className={classes.container} component="main" maxWidth="xs">
       <div className={classes.paper}>
+        <Typography variant="body2">
+          Para pegar livros em nossa biblioteca é preciso ter uma conta na
+          plataforma{' '}
+          <a
+            href="https://programador.emjuizdefora.com/entrar"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Programadores em Juiz de Fora
+          </a>{' '}
+          . Caso não tenha ainda se registrado,{' '}
+          <a
+            href="https://programador.emjuizdefora.com/entrar"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            faça agora seu registro.
+          </a>
+        </Typography>
         <form className={classes.form} onSubmit={doLogin}>
           <TextField
             variant="outlined"
