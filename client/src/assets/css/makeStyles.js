@@ -368,7 +368,7 @@ export const lendingCard = makeStyles((theme) => ({
 
 export const confirmLending = makeStyles((theme) => ({
   qrCode: {
-    width: '40%',
+    width: '100%',
   },
   content: {
     display: 'flex',
