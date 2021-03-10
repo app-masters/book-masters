@@ -34,6 +34,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             }
             callback(data);
           }
+          setOpen(false);
         }
       } else if(data === '' || data === null) {
         return;
