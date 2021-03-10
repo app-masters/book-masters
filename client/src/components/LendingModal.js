@@ -15,7 +15,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
 
   const handleScan = async (data) => {
     try {
-      if (data === 'https://appmasters.io') {
+      if (data === 'https://books.appmasters.io') {
         const response = await api.get(
           `/lendings/${type === 'return' ? 'return' : 'lend'}/${bookId}`
         );

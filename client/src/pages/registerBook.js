@@ -17,7 +17,6 @@ import ChipInput from 'material-ui-chip-input';
 import { useAuth } from '../lib/auth';
 import { Alert } from '@material-ui/lab';
 import Snackbar from '@material-ui/core/Snackbar';
-import axios from 'axios';
 import fetchBookOpenLibrary from '../services/openLibraryAPI';
 
 /*
