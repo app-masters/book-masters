@@ -61,7 +61,7 @@ const ConfirmLending = (props) => {
               delay={300}
               onError={props.handleError}
               onScan={(data) => {
-                setDisplay(false);
+                // setDisplay(false);
                 props.handleScan(data);
               }}
             />
