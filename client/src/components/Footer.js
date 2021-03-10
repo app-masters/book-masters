@@ -20,7 +20,7 @@ const Footer = () => {
             <Grid container justify="center">
               <div style={{ display: 'inline-block' }}>
                 <a
-                  href="http://appmasters.io/pt"
+                  href="http://appmasters.io"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
