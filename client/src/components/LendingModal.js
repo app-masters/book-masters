@@ -36,6 +36,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
           }
         }
       } else {
+        setOpen(true);
         handleSnack('error', 'QRCode inválido');
       }
     } catch (err) {
@@ -104,7 +105,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
         open={open}
         return={type === 'return'}
         onClose={() => setOpen(false)}
-        handleError={(data) => console.log('handleError', data)}
+        handleError={(data) => setOpen(true)}
         handleScan={handleScan}
       />
     </>
