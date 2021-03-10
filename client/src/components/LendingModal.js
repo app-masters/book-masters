@@ -35,6 +35,8 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             callback(data);
           }
         }
+      } else if(data === '' || data === null) {
+        return;
       } else {
         handleSnack('error', 'QRCode inválido');
       }
