@@ -58,10 +58,9 @@ const ConfirmLending = (props) => {
             </DialogContentText>
             <QrReader
               className={classes.qrCode}
-              delay={300}
+              delay={1000}
               onError={props.handleError}
               onScan={(data) => {
-                // setDisplay(false);
                 props.handleScan(data);
               }}
             />
