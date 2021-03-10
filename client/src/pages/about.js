@@ -10,21 +10,12 @@ const About = () => {
     <Container className={classes.container}>
       <Box className={classes.heroContent}>
         <Typography
-          className={classes.heroText}
-          display="flex"
-          component="h1"
-          align="center"
-        >
-          Sobre
-        </Typography>
-        <Typography
           className={classes.description}
           display="flex"
           align="justify"
         >
-          Este projeto foi desenvolvido como projeto de seleção de estágio da
-          App Masters. Temos como objetivo montar uma biblioteca pública, onde
-          todos podem usufruir e adquirir conhecimento!
+          Esta é a biblioteca pública da App Masters com livros de programação, inovação e tecnologia.<br/>
+          Foi desenvolvido inicialmente como projeto de seleção para estágio na empresa. Atualmente é mantido pela equipe da App Masters e eventualmente por candidatos em processo de seleção.
         </Typography>
         <Typography
           className={classes.heroDev}
