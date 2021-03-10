@@ -8,15 +8,18 @@ import {
   Card,
   Chip,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 const BookCard = ({ book }) => {
   const classes = bookCard();
+  const router = useHistory();
   return (
     <Card className={classes.root} variant="outlined">
       <CardMedia
+        onClick={() => router.push(`/book/${book._id}`)}
         component="img"
         className={classes.cover}
-        style={{ height: 260 }}
+        style={{ height: 260, cursor: 'pointer' }}
         image={book.imageUrl ? book.imageUrl : book.img ? book.img : bookImage}
         title="Image title"
       />
