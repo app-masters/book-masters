@@ -9,7 +9,7 @@ const Books = (props) => {
   const classes = booksContainer();
 
   if (props.loading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner showLoadingText/>;
   }
 
   let booksCards = books.map((book) => {
