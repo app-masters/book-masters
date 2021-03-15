@@ -87,6 +87,16 @@ const Navbar = () => {
               Minhas reservas
             </Button>
           )}
+          {auth && auth.user.role === 'admin' && (
+            <Button
+              component={RouterLink}
+              to="/all-reserves"
+              size="large"
+              className={classes.btn}
+            >
+              Todas as reservas
+            </Button>
+          )}
           <Button
             component={RouterLink}
             to="/about"
