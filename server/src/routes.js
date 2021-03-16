@@ -6,6 +6,7 @@ import AuthController from './controllers/AuthController.js';
 import NotifyAvailabilityController from './controllers/NotifyAvailabilityController.js';
 import authMiddleware from './middleware/auth.js';
 import commonMiddleware from './middleware/common';
+import isAdminMiddleware from './middleware/isAdmin';
 import mailer from './services/mailer.js';
 import appConfig from './config/app.js';
 
@@ -13,17 +14,17 @@ const routes = express.Router();
 
 routes.get('/mail-example', async (req, res) => {
   try {
-    // Mail example
-    // await mailer.sendEmail('reserve', {
-    //   to: 'viniciuss10@hotmail.com',
-    //   subject: 'Livro reservado.',
-    //   context: {
-    //     name: 'vinicius'
-    //   }
-    // });
+    //Mail examples
+    await mailer.sendEmail('reserve', {
+      to: '',
+      subject: 'Livro reservado.',
+      context: {
+        name: 'vinicius'
+      }
+    });
 
     await mailer.sendEmail('lendEnding', {
-      to: 'viniciuss10@hotmail.com',
+      to: '',
       subject: 'Prazo chegando ao fim.',
       context: {
         name: 'vinicius',
@@ -32,16 +33,15 @@ routes.get('/mail-example', async (req, res) => {
       }
     });
 
-
-    // await mailer.sendEmail('notifyAvailability', {
-    //   to: 'viniciuss10@hotmail.com',
-    //   subject: 'Livro Disponível.',
-    //   context: {
-    //     name: 'vinicius',
-    //     bookName: 'Senhor dos aneis',
-    //     bookUrl: `${appConfig.frontUrl}/bookId`
-    //   }
-    // });
+    await mailer.sendEmail('notifyAvailability', {
+      to: '',
+      subject: 'Livro Disponível.',
+      context: {
+        name: 'vinicius',
+        bookName: 'Senhor dos aneis',
+        bookUrl: `${appConfig.frontUrl}/bookId`
+      }
+    });
 
     res.status(200).json({ message: 'Email enviado com sucesso.' });
   } catch (error) {
@@ -56,16 +56,16 @@ routes.post('/login/', AuthController.login);
 // Book Routes
 routes.get('/books/', BookController.getAll);
 routes.get('/books/:id', commonMiddleware, BookController.getById);
-routes.post('/books/', authMiddleware, BookController.create);
-routes.put('/books/:id', authMiddleware, BookController.update);
-routes.delete('/books/:id', authMiddleware, BookController.delete);
+routes.post('/books/', authMiddleware, isAdminMiddleware, BookController.create);
+routes.put('/books/:id', authMiddleware, isAdminMiddleware, BookController.update);
+routes.delete('/books/:id', authMiddleware, isAdminMiddleware, BookController.delete);
 
 // Lending Routes
-routes.get('/lendings/', LendingController.getAll);
+routes.get('/lendings/', authMiddleware, isAdminMiddleware, LendingController.getAll);
 routes.get('/lendings/book/:id', LendingController.getAllBookLending);
 routes.get('/lendings/:id', LendingController.getById);
-routes.put('/lendings/:id', authMiddleware, LendingController.update);
-routes.delete('/lendings/:id', authMiddleware, LendingController.delete);
+routes.put('/lendings/:id', authMiddleware, isAdminMiddleware, LendingController.update);
+routes.delete('/lendings/:id', authMiddleware, isAdminMiddleware, LendingController.delete);
 routes.get('/lendings/lend/:bookId', authMiddleware, LendingController.lending);
 routes.get('/lendings/reserve/:bookId', authMiddleware, LendingController.reserve);
 routes.get('/lendings/return/:bookId', authMiddleware, LendingController.returnBook);
@@ -73,9 +73,9 @@ routes.get('/lendings/return/:bookId', authMiddleware, LendingController.returnB
 // User Routes
 routes.get('/users/', UserController.getAll);
 routes.get('/users/:id', UserController.getById);
-routes.post('/users/', authMiddleware, UserController.create);
-routes.put('/users/:id', authMiddleware, UserController.update);
-routes.delete('/users/:id', authMiddleware, UserController.delete);
+routes.post('/users/', authMiddleware, isAdminMiddleware, UserController.create);
+routes.put('/users/:id', authMiddleware, isAdminMiddleware, UserController.update);
+routes.delete('/users/:id', authMiddleware, isAdminMiddleware, UserController.delete);
 
 routes.get('/usersBooks', authMiddleware, UserController.getAllBooks);
 
