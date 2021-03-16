@@ -14,17 +14,17 @@ const routes = express.Router();
 
 routes.get('/mail-example', async (req, res) => {
   try {
-    // Mail example
-    // await mailer.sendEmail('reserve', {
-    //   to: 'viniciuss10@hotmail.com',
-    //   subject: 'Livro reservado.',
-    //   context: {
-    //     name: 'vinicius'
-    //   }
-    // });
+    //Mail examples
+    await mailer.sendEmail('reserve', {
+      to: '',
+      subject: 'Livro reservado.',
+      context: {
+        name: 'vinicius'
+      }
+    });
 
     await mailer.sendEmail('lendEnding', {
-      to: 'viniciuss10@hotmail.com',
+      to: '',
       subject: 'Prazo chegando ao fim.',
       context: {
         name: 'vinicius',
@@ -33,16 +33,15 @@ routes.get('/mail-example', async (req, res) => {
       }
     });
 
-
-    // await mailer.sendEmail('notifyAvailability', {
-    //   to: 'viniciuss10@hotmail.com',
-    //   subject: 'Livro Disponível.',
-    //   context: {
-    //     name: 'vinicius',
-    //     bookName: 'Senhor dos aneis',
-    //     bookUrl: `${appConfig.frontUrl}/bookId`
-    //   }
-    // });
+    await mailer.sendEmail('notifyAvailability', {
+      to: '',
+      subject: 'Livro Disponível.',
+      context: {
+        name: 'vinicius',
+        bookName: 'Senhor dos aneis',
+        bookUrl: `${appConfig.frontUrl}/bookId`
+      }
+    });
 
     res.status(200).json({ message: 'Email enviado com sucesso.' });
   } catch (error) {
@@ -74,8 +73,8 @@ routes.get('/lendings/return/:bookId', authMiddleware, LendingController.returnB
 // User Routes
 routes.get('/users/', UserController.getAll);
 routes.get('/users/:id', UserController.getById);
-routes.post('/users/', authMiddleware, UserController.create);
-routes.put('/users/:id', authMiddleware, UserController.update);
+routes.post('/users/', authMiddleware, isAdminMiddleware, UserController.create);
+routes.put('/users/:id', authMiddleware, isAdminMiddleware, UserController.update);
 routes.delete('/users/:id', authMiddleware, isAdminMiddleware, UserController.delete);
 
 routes.get('/usersBooks', authMiddleware, UserController.getAllBooks);
