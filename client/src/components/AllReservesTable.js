@@ -10,7 +10,7 @@ import {
   Paper,
 } from '@material-ui/core';
 import moment from 'moment';
-import { statusBook, statusTranslate } from '../utils/constraints';
+import { statusBook } from '../utils/constraints';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
