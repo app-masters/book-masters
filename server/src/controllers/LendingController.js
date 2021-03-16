@@ -6,7 +6,7 @@ import deadline from '../config/deadline';
 
 class LendingController {
   async getAll(_req, res) {
-    const response = await Lending.find();
+    const response = await Lending.find().populate('idUser').populate('idBook');
     return res.json(response);
   }
 

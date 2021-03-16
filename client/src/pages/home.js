@@ -79,7 +79,11 @@ export default function Home() {
     } else {
       const result = data.filter((f) => {
         if (f.title.toLowerCase().includes(query.toLowerCase())) return f;
-        if (f.tags && f.tags.join(',').toLowerCase().includes(query.toLowerCase())) return f;
+        if (
+          f.tags &&
+          f.tags.join(',').toLowerCase().includes(query.toLowerCase())
+        )
+          return f;
         return null;
       });
       setBooks(result);
@@ -93,7 +97,7 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <Header extra={<SearchBar doSearch={doSearch} />} />
+      <Header extra={loading ? <></> : <SearchBar doSearch={doSearch} />} />
       <Books books={books} loading={loading} />
     </React.Fragment>
   );

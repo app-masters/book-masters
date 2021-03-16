@@ -74,13 +74,19 @@ export const loading = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column'
   },
   book: {
-    width: 160,
+    width: 130,
     backgroundColor: '#19affb',
     borderRadius: 100,
+    marginBottom: '10px',
     boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
   },
+  loadingText: {
+    fontWeight: '200 !important',
+    fontSize: '18px !important',
+  }
 }));
 
 export const header = makeStyles((theme) => ({

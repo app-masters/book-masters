@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import { useAuth } from './lib/auth';
+import AllReserves from './pages/allReserves';
 
 const Routes = () => (
   <BrowserRouter>
@@ -18,6 +19,9 @@ const Routes = () => (
       <Route path="/book/:id" component={Book} />
       <PrivateRoute path="/register" role="admin">
         <RegisterBook />
+      </PrivateRoute>
+      <PrivateRoute path="/all-reserves" role="admin">
+        <AllReserves />
       </PrivateRoute>
       <PrivateRoute path="/reserves">
         <Reserves />
