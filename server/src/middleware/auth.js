@@ -12,6 +12,7 @@ export default async (req, res, next) => {
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
     req.userId = decoded.id;
+    req.isAdmin = decoded.admin;
     return next();
   } catch (error) {
     return res.status(401).json({ error: 'You aren`t logged in' });
