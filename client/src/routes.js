@@ -37,7 +37,7 @@ const PrivateRoute = ({ children, role, ...rest }) => {
   const { auth } = useAuth();
 
   if (role) {
-    if (auth.user.role === role) {
+    if (auth && auth.user.role === role) {
       return children;
     } else {
       return <Redirect to={{ pathname: '/' }} />;
