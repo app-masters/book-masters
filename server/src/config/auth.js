@@ -1,5 +1,7 @@
+import 'dotenv/config.js';
+
 export default {
-  secret: '4fc74886446dd49d285e09cee82f07c90565860f38d5dbdf33ee0efa247b342e',
+  secret: process.env.JWT_SECRET,
   expiresIn: '5d',
   refreshExpiresIn: '5d'
 };
