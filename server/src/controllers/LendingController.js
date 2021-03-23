@@ -24,11 +24,13 @@ class LendingController {
   async checkDueDate(req, res, next) {
     const daysToNotify = deadline.notify;
     try {
+      const endingDeadline = addDaysToDate('', daysToNotify);
+
       // Getting all almost due Lended registries
       const allLended = await Lending.find({
         status: 'borrowed',
         returnedAt: null,
-        lendingEndAt: addDaysToDate('', daysToNotify)
+        lendingEndAt: { $gte: endingDeadline.startOf('day').toDate(), $lt: endingDeadline.endOf('day').toDate() }
       })
         .populate('idUser')
         .populate('idBook');
@@ -37,19 +39,37 @@ class LendingController {
       const allReserved = await Lending.find({
         status: 'reserved',
         lendingStartedAt: null,
-        reservationEndAt: addDaysToDate('', daysToNotify)
+        reservationEndAt: { $gte: endingDeadline.startOf('day').toDate(), $lt: endingDeadline.endOf('day').toDate() }
       })
         .populate('idUser')
         .populate('idBook');
 
+      const yesterday = addDaysToDate('', -1);
+      // Getting all overdue lendings registries
+      const overdueLending = await Lending.find({
+        status: 'borrowed',
+        returnedAt: null,
+        lendingEndAt: { $gte: yesterday.startOf('day').toDate(), $lt: yesterday.endOf('day').toDate() }
+      })
+        .populate('idUser')
+        .populate('idBook');
+
+      // Notify admins of the overdue lending
+      if (overdueLending && overdueLending.length > 0) {
+        for (const lend of overdueLending) {
+          await lend.notifyOverdueLending();
+        }
+      }
+
       // Sending emails to notify those users
       if ((allLended && allLended.length > 0) || (allReserved && allReserved.length > 0)) {
         for (const lend of [...allLended, ...allReserved]) {
-          lend.notifyDueDate(daysToNotify, lend.status === 'borrowed' ? 'devolução' : 'reserva');
+          await lend.notifyDueDate(daysToNotify, lend.status === 'borrowed' ? 'devolução' : 'reserva');
         }
       }
-      res.status(200).send();
+      res.status(200).send('Done');
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -90,6 +110,7 @@ class LendingController {
       };
 
       const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
+      await response.notifyLending();
 
       return res.json(response).send();
     } catch (error) {
