@@ -4,6 +4,7 @@ import mailer from '../services/mailer';
 import User from './User';
 import Book from './Book';
 import deadlineConfig from '../config/deadline';
+import devFinderConfig from '../config/devFinder';
 
 const schemaOptions = {
   timestamps: {
@@ -53,6 +54,35 @@ LendingSchema.methods.notifyReservation = async function () {
       days: deadlineConfig.reserve
     }
   });
+  // Notifying admins too
+  await mailer.sendEmail('reserve-admin', {
+    to: await User.getAdminsEmail(),
+    subject: 'Livro reservado',
+    context: {
+      name: user.name || '',
+      email: user.email,
+      bookName: book.title,
+      phone: user.phoneNumber,
+      profile: `${devFinderConfig.frontUrl}/dev/${user.slug}`
+    }
+  });
+};
+
+LendingSchema.methods.notifyLending = async function () {
+  const user = await User.findOne({ _id: this.idUser }).lean();
+  const book = await Book.findOne({ _id: this.idBook }).lean();
+  // Notifying admins
+  await mailer.sendEmail('lend-admin', {
+    to: await User.getAdminsEmail(),
+    subject: 'Livro emprestado',
+    context: {
+      name: user.name || '',
+      email: user.email,
+      bookName: book.title,
+      phone: user.phoneNumber,
+      profile: `${devFinderConfig.frontUrl}/dev/${user.slug}`
+    }
+  });
 };
 
 LendingSchema.methods.notifyDueDate = async function (days, type) {
@@ -63,6 +93,21 @@ LendingSchema.methods.notifyDueDate = async function (days, type) {
       name: this.idUser.name,
       days: days,
       type
+    }
+  });
+};
+
+LendingSchema.methods.notifyOverdueLending = async function () {
+  // Notifying admins
+  await mailer.sendEmail('overdueLend-admin', {
+    to: await User.getAdminsEmail(),
+    subject: 'Devolução atrasada',
+    context: {
+      name: this.idUser.name || '',
+      email: this.idUser.email,
+      bookName: this.idBook.title,
+      phone: this.idUser.phoneNumber,
+      profile: `${devFinderConfig.frontUrl}/dev/${this.idUser.slug}`
     }
   });
 };

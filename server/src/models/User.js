@@ -30,4 +30,10 @@ const UserSchema = new Schema(
   schemaOptions
 );
 
+UserSchema.statics.getAdminsEmail = async function () {
+  const admins = await this.find({ role: 'admin' });
+  const emails = admins.map((admin) => admin.email);
+  return emails;
+};
+
 export default new model('User', UserSchema, 'users');
