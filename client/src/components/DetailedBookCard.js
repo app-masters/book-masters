@@ -29,7 +29,6 @@ const DetailedBookCard = (props) => {
     setRequest({ type: '', message: '' });
   };
 
-  console.log(book);
   const handleStatus = () => {
     const lending = book?.lending;
     if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
