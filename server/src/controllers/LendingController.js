@@ -106,6 +106,7 @@ class LendingController {
         idUser: req.userId,
         status: 'borrowed',
         lendingStartedAt: date,
+        reservationEndAt: date,
         lendingEndAt: addDaysToDate(date, deadline.borrow)
       };
 
@@ -169,7 +170,8 @@ class LendingController {
         idBook: req.params.bookId,
         idUser: req.userId,
         status: 'returned',
-        returnedAt: date
+        returnedAt: date,
+        lendingEndAt: date
       };
 
       /*TODO: é possível alterar o existingLending que já existia? */
