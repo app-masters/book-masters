@@ -16,6 +16,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
   const handleScan = async (data) => {
     try {
       if (data === 'https://books.appmasters.io') {
+        setOpen(false);
         const response = await api.get(
           `/lendings/${type === 'return' ? 'return' : 'lend'}/${bookId}`
         );
@@ -26,20 +27,19 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
           );
           if (callback) {
             const data = {
-              status:
-                type === 'return' ? statusBook.returned : statusBook.borrowed,
+              ...response.data,
             };
             if (type === 'return') {
               data.idUser = null;
             }
             callback(data);
           }
-          setOpen(false);
         }
       } else if(data === '' || data === null) {
         return;
       } else {
         handleSnack('error', 'QRCode inválido');
+        setOpen(true);
       }
     } catch (err) {
       console.log('lending error: ', err);
