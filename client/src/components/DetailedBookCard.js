@@ -29,7 +29,6 @@ const DetailedBookCard = (props) => {
     setRequest({ type: '', message: '' });
   };
 
-  console.log(book);
   const handleStatus = () => {
     const lending = book?.lending;
     if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
@@ -39,10 +38,10 @@ const DetailedBookCard = (props) => {
             bookId={book._id}
             lending={lending}
             handleSnack={handleSnack}
-            callback={() =>
+            callback={(data) => 
               setBook({
                 ...book,
-                lending: { ...book.lending, status: statusBook.borrowed },
+                lending: { ...data },
               })
             }
           />
@@ -54,10 +53,10 @@ const DetailedBookCard = (props) => {
             lending={lending}
             type="return"
             handleSnack={handleSnack}
-            callback={(newStatus) =>
+            callback={(data) =>
               setBook({
                 ...book,
-                lending: { ...book.lending, ...newStatus },
+                lending: { ...data },
               })
             }
           />
@@ -159,11 +158,7 @@ const DetailedBookCard = (props) => {
               </Grid>
               <Grid item xs={12}>
                 {book.tags.map((t) => (
-                  <Chip
-                    key={t}
-                    label={t}
-                    style={{ marginRight: 8 }}
-                  />
+                  <Chip key={t} label={t} style={{ marginRight: 8 }} />
                 ))}
               </Grid>
             </Grid>
