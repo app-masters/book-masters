@@ -20,7 +20,9 @@ const LoadingSpinner = (props) => {
   return (
     <div className={styles.loading}>
       <div className={styles.book} ref={container}></div>
-      {props.showLoadingText && <Typography className={styles.loadingText}>Carregando...</Typography>}
+      {props.showLoadingText && (
+        <Typography className={styles.loadingText}>Carregando...</Typography>
+      )}
     </div>
   );
 };

@@ -4,7 +4,6 @@ import api from '../services/api';
 import Alert from '@material-ui/lab/Alert';
 import ConfirmLending from './ConfirmLending';
 import moment from 'moment';
-import { statusBook } from '../utils/constraints';
 
 const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
   const [open, setOpen] = useState(false);
@@ -35,7 +34,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             callback(data);
           }
         }
-      } else if(data === '' || data === null) {
+      } else if (data === '' || data === null) {
         return;
       } else {
         handleSnack('error', 'QRCode inválido');

@@ -1,28 +1,39 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
   },
-  extends: ["airbnb", "prettier", "prettier/react"],
+  extends: ['prettier'],
+  plugins: ['react', 'prettier'],
   globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
-    __DEV__: 'readonly'
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    __DEV__: 'readonly',
   },
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: 'module',
   },
-  plugins: ["react", "prettier"],
   rules: {
-    "prettier/prettier": "error",
-    "react/jsx-filename-extension": ["warn", { extensions: [".jsx", ".js"] }],
-    "import/prefer-default-export": "off",
-    "no-param-reassign": "off",
-    "no-console": ["error", { allow: ["tron"] }]
-  }
-}
+    'prettier/prettier': 'error',
+    'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.js'] }],
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
+    'no-console': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto', // Fixes mismatching windows/unix file end of lines
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
+};

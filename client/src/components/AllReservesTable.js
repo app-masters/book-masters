@@ -48,7 +48,11 @@ export default function AllReservesTable(props) {
                 </TableCell>
               )}
               <TableCell align="left">
-                <strong>{props.rows[0]?.status === statusBook.returned ? 'Data' : 'Prazo'}</strong>
+                <strong>
+                  {props.rows[0]?.status === statusBook.returned
+                    ? 'Data'
+                    : 'Prazo'}
+                </strong>
               </TableCell>
             </TableRow>
           </TableHead>

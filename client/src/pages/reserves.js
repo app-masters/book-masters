@@ -88,7 +88,9 @@ const Reserves = () => {
                 onClick={() => history.push(`/book/${row.idBook._id}`)}
               >
                 <TableCell align="left">{row.idBook.title}</TableCell>
-                <TableCell align="left">{statusTranslate[row.status]}</TableCell>
+                <TableCell align="left">
+                  {statusTranslate[row.status]}
+                </TableCell>
                 <TableCell align="left">
                   {row.status === statusBook.reserved
                     ? moment(row.reservationEndAt).format('DD/MM/YYYY')

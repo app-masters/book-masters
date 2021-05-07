@@ -15,12 +15,15 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-api.interceptors.response.use(res => res, (err) => {
-  if (err.response.status === 401) {
-    localStorage.removeItem('authentication');
-    window.location.reload();
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response.status === 401) {
+      localStorage.removeItem('authentication');
+      window.location.reload();
+    }
+    return Promise.reject(err);
   }
-  return Promise.reject(err);
-});
+);
 
 export default api;

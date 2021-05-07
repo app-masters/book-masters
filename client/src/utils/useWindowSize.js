@@ -14,7 +14,7 @@ const useWindowSize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
-        compact: window.innerWidth <= breakpoints.laptop
+        compact: window.innerWidth <= breakpoints.laptop,
       });
     };
 
