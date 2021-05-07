@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import api from '../services/api';
 import Alert from '@material-ui/lab/Alert';
 import ConfirmLending from './ConfirmLending';
 import moment from 'moment';
-import { statusBook } from '../utils/constraints';
 
 const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
   const [open, setOpen] = useState(false);
