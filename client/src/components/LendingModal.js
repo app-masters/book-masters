@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Grid } from '@material-ui/core';
 import api from '../services/api';
 import Alert from '@material-ui/lab/Alert';
@@ -35,7 +35,7 @@ const LendingModal = ({ type, lending, bookId, callback, handleSnack }) => {
             callback(data);
           }
         }
-      } else if(data === '' || data === null) {
+      } else if (data === '' || data === null) {
         return;
       } else {
         handleSnack('error', 'QRCode inválido');

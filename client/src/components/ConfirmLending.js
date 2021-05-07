@@ -41,12 +41,12 @@ const ConfirmLending = (props) => {
                 </small>
               </li>
               <li>
-                Escaneie o QRcode disponibilizado na App Masters para confirmar a
-                sua localização
+                Escaneie o QRcode disponibilizado na App Masters para confirmar
+                a sua localização
               </li>
               <li>
-                {props.return ? 'Devolva o livro para' : 'Pegue o livro com'}{' '}
-                um dos nossos colaboradores
+                {props.return ? 'Devolva o livro para' : 'Pegue o livro com'} um
+                dos nossos colaboradores
               </li>
             </ul>
           </DialogContentText>

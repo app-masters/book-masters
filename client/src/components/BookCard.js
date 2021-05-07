@@ -30,8 +30,13 @@ const BookCard = ({ book }) => {
           </Typography>
         </a>
         <div className={classes.tags}>
-          {book.tags.map((t) => (
-            <Chip size="small" key={t} label={t} style={{ marginRight: 8, marginBottom: 4 }} />
+          {book.tags?.map((t) => (
+            <Chip
+              size="small"
+              key={t}
+              label={t}
+              style={{ marginRight: 8, marginBottom: 4 }}
+            />
           ))}
         </div>
         {book.description && (

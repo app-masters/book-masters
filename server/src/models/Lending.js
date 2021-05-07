@@ -5,6 +5,7 @@ import User from './User';
 import Book from './Book';
 import deadlineConfig from '../config/deadline';
 import devFinderConfig from '../config/devFinder';
+import sanitizePhone from '../utils/sanitizePhone';
 
 const schemaOptions = {
   timestamps: {
@@ -62,27 +63,32 @@ LendingSchema.methods.notifyReservation = async function () {
       name: user.name || '',
       email: user.email,
       bookName: book.title,
-      phone: user.phoneNumber,
+      phone: sanitizePhone(user.phoneNumber),
       profile: `${devFinderConfig.frontUrl}/dev/${user.slug}`
     }
   });
 };
 
 LendingSchema.methods.notifyLending = async function () {
-  const user = await User.findOne({ _id: this.idUser }).lean();
-  const book = await Book.findOne({ _id: this.idBook }).lean();
-  // Notifying admins
-  await mailer.sendEmail('lend-admin', {
-    to: await User.getAdminsEmail(),
-    subject: 'Livro emprestado',
-    context: {
-      name: user.name || '',
-      email: user.email,
-      bookName: book.title,
-      phone: user.phoneNumber,
-      profile: `${devFinderConfig.frontUrl}/dev/${user.slug}`
-    }
-  });
+  try {
+    const user = await User.findOne({ _id: this.idUser }).lean();
+    const book = await Book.findOne({ _id: this.idBook }).lean();
+    // Notifying admins
+    await mailer.sendEmail('lend-admin', {
+      to: await User.getAdminsEmail(),
+      subject: 'Livro emprestado',
+      context: {
+        name: user.name || '',
+        email: user.email,
+        bookName: book.title,
+        phone: sanitizePhone(user.phoneNumber),
+        profile: `${devFinderConfig.frontUrl}/dev/${user.slug}`
+      }
+    });
+  } catch (error) {
+    console.log('notifyLending - Error sending email.');
+    console.log(error);
+  }
 };
 
 LendingSchema.methods.notifyDueDate = async function (days, type) {
@@ -106,7 +112,7 @@ LendingSchema.methods.notifyOverdueLending = async function () {
       name: this.idUser.name || '',
       email: this.idUser.email,
       bookName: this.idBook.title,
-      phone: this.idUser.phoneNumber,
+      phone: sanitizePhone(this.idUser.phoneNumber),
       profile: `${devFinderConfig.frontUrl}/dev/${this.idUser.slug}`
     }
   });

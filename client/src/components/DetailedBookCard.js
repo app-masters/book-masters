@@ -32,13 +32,13 @@ const DetailedBookCard = (props) => {
   const handleStatus = () => {
     const lending = book?.lending;
     if (lending && lending.idUser && lending.idUser === auth?.user?._id) {
-      if (lending.status === statusBook.reserved)
+      if (lending.status === statusBook.reserved) {
         return (
           <LendingModal
             bookId={book._id}
             lending={lending}
             handleSnack={handleSnack}
-            callback={(data) => 
+            callback={(data) =>
               setBook({
                 ...book,
                 lending: { ...data },
@@ -46,7 +46,8 @@ const DetailedBookCard = (props) => {
             }
           />
         );
-      if (lending.status === statusBook.borrowed)
+      }
+      if (lending.status === statusBook.borrowed) {
         return (
           <ReturnModal
             bookId={book._id}
@@ -61,6 +62,7 @@ const DetailedBookCard = (props) => {
             }
           />
         );
+      }
     } else if (
       lending?.status === statusBook.reserved ||
       lending?.status === statusBook.borrowed
@@ -157,7 +159,7 @@ const DetailedBookCard = (props) => {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                {book.tags.map((t) => (
+                {book.tags?.map((t) => (
                   <Chip key={t} label={t} style={{ marginRight: 8 }} />
                 ))}
               </Grid>

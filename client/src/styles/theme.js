@@ -4,29 +4,29 @@ const theme = createMuiTheme({
   overrides: {
     MuiOutlinedInput: {
       root: {
-          position: 'relative',
-          '& $notchedOutline': {
-              borderColor: 'rgba(0, 0, 0, 0.23)',
+        position: 'relative',
+        '& $notchedOutline': {
+          borderColor: 'rgba(0, 0, 0, 0.23)',
+        },
+        '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
+          borderColor: '#19affb',
+          '@media (hover: none)': {
+            borderColor: 'rgba(0, 0, 0, 0.23)',
           },
-          '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
-              borderColor: '#19affb',
-              '@media (hover: none)': {
-                  borderColor: 'rgba(0, 0, 0, 0.23)',
-              },
-          },
-          '&$focused $notchedOutline': {
-              borderColor: '#19affb',
-              borderWidth: 2,
-          },
+        },
+        '&$focused $notchedOutline': {
+          borderColor: '#19affb',
+          borderWidth: 2,
+        },
       },
-  },
-  MuiFormLabel: {
+    },
+    MuiFormLabel: {
       root: {
-          '&$focused': {
-              color: '#19affb'
-          }
-      }
-  },
+        '&$focused': {
+          color: '#19affb',
+        },
+      },
+    },
     MuiButton: {
       contained: {
         background:

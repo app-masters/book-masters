@@ -7,7 +7,9 @@ const axios = require('axios').default;
  */
 const fetchBookGoogle = async (isbn) => {
   try {
-    const response = await axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn);
+    const response = await axios.get(
+      'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn
+    );
     if (response.status !== 200) throw new Error('Erro ao buscar livro.');
     const bookData = await response.data;
     const bookResp = {};
