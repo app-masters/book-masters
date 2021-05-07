@@ -28,7 +28,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "check-prettier": "prettier-check \"{src,cypress}/**/*.{js,ts,tsx}\"",
+    "check-lint": "eslint \"{src,cypress}/**/*.{js,ts,tsx}\" --max-warnings 0",
+    "checks": "yarn run check-lint && yarn run check-prettier"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,8 +57,9 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "prettier-check": "^2.0.0"
   }
 }

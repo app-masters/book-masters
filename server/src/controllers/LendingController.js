@@ -110,8 +110,13 @@ class LendingController {
         lendingEndAt: addDaysToDate(date, deadline.borrow)
       };
 
-      const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, { new: true });
+      const response = await Lending.findOneAndUpdate({ _id: existingLending[0]._id }, lendingJson, {
+        returnOriginal: false,
+        new: true
+      });
       await response.notifyLending();
+
+      console.log('lending', response);
 
       return res.json(response).send();
     } catch (error) {

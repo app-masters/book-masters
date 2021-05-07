@@ -26,7 +26,11 @@ const ReserveModal = ({ bookId, handleSnack, callback }) => {
       }
     } catch (err) {
       if (err.response) {
-        handleSnack('error', err?.response?.data?.error?.message || 'Não foi possível reservar o livro');
+        handleSnack(
+          'error',
+          err?.response?.data?.error?.message ||
+            'Não foi possível reservar o livro'
+        );
       } else handleSnack('error', 'Ocorreu um erro durante a requisição');
     }
   };

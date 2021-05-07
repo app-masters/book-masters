@@ -10,7 +10,10 @@ const Header = ({ extra }) => {
   return (
     <main
       className={classes.container}
-      style={{ paddingBottom: size.compact ? 145 : 64, marginBottom: size.compact ? 32 : 80 }}
+      style={{
+        paddingBottom: size.compact ? 145 : 64,
+        marginBottom: size.compact ? 32 : 80,
+      }}
     >
       <div
         className={classes.content}

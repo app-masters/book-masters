@@ -74,7 +74,7 @@ export const loading = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   book: {
     width: 130,
@@ -86,7 +86,7 @@ export const loading = makeStyles((theme) => ({
   loadingText: {
     fontWeight: '200 !important',
     fontSize: '18px !important',
-  }
+  },
 }));
 
 export const header = makeStyles((theme) => ({
@@ -162,7 +162,7 @@ export const bookCard = makeStyles((theme) => ({
       boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.15)',
     },
   },
-  footer :{
+  footer: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',

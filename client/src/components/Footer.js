@@ -104,7 +104,7 @@ const Footer = () => {
           style={{ paddingTop: 32 }}
         >
           <label>
-            Projeto open source - {' '}
+            Projeto open source -{' '}
             <a
               href="https://github.com/app-masters/book-masters"
               target="_blank"

@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   explanation: {
-    paddingTop: '20px'
-  }
+    paddingTop: '20px',
+  },
 }));
 
 const FormLogin = ({ callback }) => {
@@ -73,7 +73,10 @@ const FormLogin = ({ callback }) => {
         signin(responseBackend.data);
       }
     } catch (err) {
-      if (err.response && (err.response.status === 404 || err.response.status === 400))
+      if (
+        err.response &&
+        (err.response.status === 404 || err.response.status === 400)
+      )
         setDialogMessage(err.response.data);
       else setDialogMessage('Erro ao fazer login');
 
